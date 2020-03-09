@@ -1,0 +1,102 @@
+/*
+ * Lean tool - hypothesis testing application
+ *
+ * https://github.com/MikaelLazarev/lean-tool/
+ * Copyright (c) 2020. Mikhail Lazarev
+ *
+ */
+
+
+/*
+ * RESEND SCREEN CSS
+ */
+
+.resend-screen {
+    /*background-image: url('./Untitled 3.001.jpeg');*/
+    /*background-color: #1f3f7e;*/
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    flex-direction: column!important;
+    display: flex!important;
+}
+
+.resend-screen h1{
+    margin-top: 50px;
+}
+
+.resend-screen h2{
+    margin-top: 20px;
+    margin-bottom: 30px;
+    color: black!important;
+}
+
+.resend-screen h4{
+    text-align: left;
+    font-size: 1.2em;
+    padding: 5px;
+    margin-top: 20px;
+
+}
+
+.resend-screen .row {
+    height: 80vh;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.resend-screen .row button {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.resend-screen .card {
+    /*margin: 0px 40px 40px 40px;*/
+    padding: 20px;
+    height: auto;
+    min-height: 90%;
+    background-color: #d5d5d5;
+    border: 1px solid grey;
+    display: block;
+    align-items: flex-start;
+    align-content: normal;
+}
+
+.resend-screen .card .statebutton {
+    width: max-content;
+    padding-left: 40px;
+    padding-right: 40px;
+    background-color: white;
+    border: 1px solid #005cff;
+    color: #005cff;
+    background-color: white;
+    border: 1px solid grey;
+    color: black;
+    width: max-content;
+    margin: 5px;
+}
+
+.resend-screen .card .statebutton:hover {
+    background-color: white;
+    border: 1px solid #005cff;
+    color: #005cff;
+    width: max-content;
+}
+.resend-screen .card .pressed,
+.resend-screen .card .pressed:hover {
+    background-color: #005cff;
+    border: 1px solid #005cff;
+    color: white;
+}
+
+.resend-screen .notice {
+    margin-top: 40px;
+    font-size: 1.3em;
+    margin-bottom: 0;
+}
+
+.resend-screen .thanks-block{
+    font-size: 1.3em;
+    margin-bottom: 0;
+}
+
