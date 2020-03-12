@@ -122,7 +122,7 @@ export const AppBar = () => {
           {/*    <i data-feather="archive" /> Collections*/}
           {/*  </Link>*/}
           {/*</li>*/}
-          {isSignIn ? authMenu : nonAutheticatedMenu}
+          {isSignIn ? [authMenu, authetictedProfileMenu]: nonAutheticatedMenu}
         </Nav>
       </div>
     </Navbar>

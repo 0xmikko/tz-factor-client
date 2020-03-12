@@ -1,12 +1,28 @@
 import React from 'react';
-import { PrivateRoute } from '../../components/PrivateRoute';
-import { withTracker } from '../../utils/ga';
-import { PaymentsScreen } from './Payments/PaymentsScreen';
+import {PrivateRoute} from '../../components/PrivateRoute';
+import {withTracker} from '../../utils/ga';
+import {PaymentsListScreen} from './Payments/PaymentsListScreen';
+import {Redirect, Route, Switch} from 'react-router';
+import {SuppliersListScreen} from './Suppliers/SuppliersList';
 
-const RetailerRouter : React.FC = () =>  {
-return (<>
-    <PrivateRoute path="/" component={withTracker(PaymentsScreen)} />
-    <PrivateRoute path="/" component={withTracker(PaymentsScreen)} />
-
-</>);
-}
+export const RetailerRouter: React.FC = () => {
+  return (
+    <>
+      <Switch>
+        <PrivateRoute
+          exact
+          path="/payments"
+          component={withTracker(PaymentsListScreen)}
+        />
+        <PrivateRoute
+          exact
+          path="/suppliers"
+          component={withTracker(SuppliersListScreen)}
+        />
+        <Route path={'*'}>
+          <Redirect to={'/payments'} />
+        </Route>
+      </Switch>
+    </>
+  );
+};

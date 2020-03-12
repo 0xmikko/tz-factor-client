@@ -18,7 +18,8 @@ export interface Profile {
     job: string,
     industry: string,
     plan?: string,
-    avatarURL?: string
+    avatarURL?: string,
+    role?: Role,
 }
 
 export const APP_STATUS_SPLASH = "SPLASH";

@@ -27,11 +27,12 @@ import {
     APP_STATUS_CHOOSING_PLAN,
     APP_STATUS_ERROR,
     APP_STATUS_FILLING_PROFILE,
-    APP_STATUS_READY,
+    APP_STATUS_READY, Role,
 } from './core/profile';
 
 import './App.css';
-
+import {RetailerRouter} from './screens/Issuers/Router';
+import {SupplierRouter} from './screens/Suppliers/Router';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -40,7 +41,10 @@ const App = () => {
   }, [dispatch]);
 
   const appStatus = useSelector((state: RootState) => state.profile.status);
-  const role = useSelector((state: RootState) => state.auth.access?.role)
+  // const role = useSelector((state: RootState) => state.auth.access?.role);
+  const role = useSelector((state: RootState) => state.profile.role);
+
+  console.log(role)
 
   switch (appStatus) {
     case APP_STATUS_AUTH_REQUIRED:
@@ -72,11 +76,12 @@ const App = () => {
 
     case APP_STATUS_FILLING_PROFILE:
     case APP_STATUS_READY:
-      switch(role) {
+      switch (role) {
         case 'ISSUER':
-          return (
-            <PrivateRoute path="/" component={withTracker()} />
-          )
+          return <RetailerRouter />;
+
+        case 'SUPPLIER':
+          return <SupplierRouter />;
       }
       return (
         <Switch>
