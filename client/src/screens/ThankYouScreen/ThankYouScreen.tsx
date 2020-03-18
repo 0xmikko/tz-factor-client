@@ -17,16 +17,6 @@ import {useDispatch} from "react-redux";
 import actions from "../../store/actions";
 import {BACKEND_ADDR} from "../../config";
 
-const socket = io(BACKEND_ADDR , {
-  transportOptions: {
-    polling: {
-      // extraHeaders: {
-      //   'Authorization': 'Bearer abc',
-      // },
-    },
-  },
-})
-
 export const ThankYouScreen: React.FC = () => {
 
   const history = useHistory();
@@ -45,7 +35,6 @@ export const ThankYouScreen: React.FC = () => {
   useEffect(() => {
     console.log("Open TYS")
 
-      dispatch(actions.events.sendEvent(socket))
     return () => {
       // socket.disconnect();
     };

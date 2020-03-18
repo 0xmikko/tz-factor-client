@@ -11,6 +11,7 @@ import reducer from './reducer';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import createApiMiddleware from './middleware';
+import createSocketMiddleware from './socketMiddleware';
 
 
 let composeEnhancers : typeof compose;
@@ -26,6 +27,6 @@ export type RootState = ReturnType<typeof reducer>;
 export default function configureStore() {
   return createStore(
     reducer,
-    composeEnhancers(applyMiddleware(createApiMiddleware, thunk)),
+    composeEnhancers(applyMiddleware(createApiMiddleware, thunk, createSocketMiddleware)),
   );
 }

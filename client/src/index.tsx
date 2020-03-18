@@ -13,12 +13,13 @@ import App from './App';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import configureStore from './store';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import ReactPixel from 'react-facebook-pixel';
 import * as serviceWorker from './serviceWorker';
 import ReactGA from "react-ga";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 library.add(fas);
 

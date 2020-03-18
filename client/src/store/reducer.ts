@@ -10,12 +10,16 @@ import {combineReducers} from 'redux';
 import auth from './auth/reducer';
 import profile from './profile/reducer';
 import features from './features/reducer';
+import payments from './payments/reducer';
+import companies from './companies/reducer';
 
 
 export default combineReducers({
   auth,
   profile,
-  features2: features,
+  features,
+  payments,
+  companies,
 });
 
 

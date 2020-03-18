@@ -12,9 +12,9 @@ import {ErrorMessage, Field, Form, Formik} from 'formik';
 import ReactGA from 'react-ga';
 import * as yup from 'yup';
 import {useDispatch, useSelector} from 'react-redux';
-import actions from '../../../store/actions';
-import {Profile} from '../../../core/profile';
-import {RootState} from '../../../store';
+import actions from '../../store/actions';
+import {Profile} from '../../core/profile';
+import {RootState} from '../../store';
 import './JoinScreen.css'
 import {useHistory} from "react-router";
 

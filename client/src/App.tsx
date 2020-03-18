@@ -31,8 +31,8 @@ import {
 } from './core/profile';
 
 import './App.css';
-import {RetailerRouter} from './screens/Issuers/Router';
-import {SupplierRouter} from './screens/Suppliers/Router';
+import {RetailerRouter} from './screens/R_Router';
+import {SupplierRouter} from './screens/S_Router';
 
 const App = () => {
   const dispatch = useDispatch();

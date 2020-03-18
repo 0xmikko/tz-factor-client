@@ -8,12 +8,12 @@
 
 import * as auth from './auth/actions';
 import * as profile from './profile/actions';
-import * as events from './events/actions';
+import * as actions from './companies/actions';
 import * as features from './features/actions'
 
 export default {
   auth,
-  events,
+  actions,
   features,
   profile,
 
