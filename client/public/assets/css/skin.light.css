@@ -1,0 +1,13 @@
+/*
+ * Lean tool - hypothesis testing application
+ *
+ * https://github.com/MikaelLazarev/lean-tool/
+ * Copyright (c) 2020. Mikhail Lazarev
+ *
+ */
+
+body {
+  background-color: #f5f6fa; }
+
+.card {
+  box-shadow: 0 0 10px rgba(28, 39, 60, 0.05); }
