@@ -10,21 +10,23 @@ import React from 'react';
 import {Table} from 'react-bootstrap';
 import {Company} from '../../core/companies';
 
-interface CompanysListProps {
+interface CompaniesListProps {
   items: Company[];
   onItemSelected: (id: string) => void;
 }
 
-export const R_CompanysList: React.FC<CompanysListProps> = ({
+export const CompaniesList: React.FC<CompaniesListProps> = ({
   items,
     onItemSelected
-}: CompanysListProps) => {
+}: CompaniesListProps) => {
   const renderLine = (h: Company) => (
     <tr onClick={() => onItemSelected(h.id)}>
       <td className="tx-color-03 tx-normal">{h.name}</td>
-      <td style={{textAlign: 'left'}}>{h.address}</td>
+      <td className="tx-medium text-xl-left">{h.type}</td>
 
-      <td className="text-right tx-medium">{h.taxId}</td>
+
+      <td className="tx-medium text-xl-left">{h.web}</td>
+        <td className="tx-medium text-xl-left">{h.address}</td>
 
     </tr>
   );
@@ -32,18 +34,16 @@ export const R_CompanysList: React.FC<CompanysListProps> = ({
   const renderTableContent = items.map(h => renderLine(h));
 
   return (
-    <div className="container pd-x-0 pd-lg-x-10 pd-xl-x-0 m-t-20-f pd-t-30-f">
-      <div className="card card-dashboard-table">
+      <div className="card card-dashboard-table mg-t-20">
         {/*<!-- card-body -->}*/}
         <div className="table-responsive">
           <Table className="table-dashboard mg-b-0" hover={true}>
             <thead>
               <tr>
                 <th>Name</th>
-                <th>URL</th>
-                <th className="text-right">Opened</th>
-                <th className="text-right">Goals</th>
-                <th className="text-right">Signups</th>
+                <th>Address</th>
+                <th>Web</th>
+                <th>Address</th>
               </tr>
             </thead>
             <tbody>
@@ -53,6 +53,5 @@ export const R_CompanysList: React.FC<CompanysListProps> = ({
           </Table>
         </div>
       </div>
-    </div>
   );
 };

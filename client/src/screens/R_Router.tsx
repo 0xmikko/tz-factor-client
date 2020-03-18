@@ -6,29 +6,32 @@ import {Redirect, Route, Switch} from 'react-router';
 import {SuppliersListScreen} from './R_Suppliers/SuppliersList';
 import {R_PaymentsListScreen} from './Payments/PaymentsListScreen';
 import AppBar from '../components/AppBar/AppBar';
-import {PaymentsEditScreen} from "./Payments/PaymentsEditScreen";
-import {PaymentDetailsScreen} from "./Payments/PaymentDetailsScreen";
+import {PaymentsEditScreen} from './Payments/PaymentsEditScreen';
+import {PaymentDetailsScreen} from './Payments/PaymentDetailsScreen';
+import {CompaniesListScreen} from "./Companies/CompaniesListScreen";
+import {CompanyDetailsScreen} from "./Companies/CompanyDetailsScreen";
 
 export const RetailerRouter: React.FC = () => {
   return (
     <>
       <AppBar />
       <Switch>
-          <PrivateRoute
-              exact
-              path="/payments/new/edit"
-              component={withTracker(PaymentsEditScreen)}
-          />
-          <PrivateRoute
-              exact
-              path="/payments/:id"
-              component={withTracker(PaymentDetailsScreen)}
-          />
+        <PrivateRoute
+          exact
+          path="/payments/new/edit"
+          component={withTracker(PaymentsEditScreen)}
+        />
+        <PrivateRoute
+          exact
+          path="/payments/:id"
+          component={withTracker(PaymentDetailsScreen)}
+        />
         <PrivateRoute
           exact
           path="/payments"
           component={withTracker(R_PaymentsListScreen)}
         />
+
         <PrivateRoute
           exact
           path="/bonds"
@@ -36,9 +39,14 @@ export const RetailerRouter: React.FC = () => {
         />
         <PrivateRoute
           exact
-          path="/suppliers"
-          component={withTracker(SuppliersListScreen)}
+          path="/companies"
+          component={withTracker(CompaniesListScreen)}
         />
+          <PrivateRoute
+              exact
+              path="/companies/:id"
+              component={withTracker(CompanyDetailsScreen)}
+          />
         <Route path={'*'}>
           <Redirect to={'/payments'} />
         </Route>

@@ -27,12 +27,16 @@ export type DataLoaderListState<T> = {
   status: STATUS;
 };
 
-export type DataloaderState<T> = {
+export type DataObjectWithID = {
+  id: string
+}
+
+export type DataloaderState<T extends DataObjectWithID> = {
   readonly List: DataLoaderListState<T>;
   readonly Details: DataLoaderDetailsState<T>;
 };
 
-export function createDataLoaderReducer<T>(prefix: string = '') {
+export function createDataLoaderReducer<T extends DataObjectWithID>(prefix: string = '') {
   const initialState: DataloaderState<T> = {
     List: {
       data: [],
@@ -95,7 +99,7 @@ export function createDataLoaderReducer<T>(prefix: string = '') {
       },
     });
 
-    const id = action?.meta?.id;
+    const id = action?.meta?.id || action?.payload?.id || '-';
     const hash = action?.meta?.hash;
 
     console.log(action.payload);

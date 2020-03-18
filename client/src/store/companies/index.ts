@@ -7,4 +7,4 @@
  */
 // HYPOTHESES
 export const COMPANIES_PREFIX = 'COMPANIES@@';
-export const namespace = '/companies/';
+export const namespace = '/companies';

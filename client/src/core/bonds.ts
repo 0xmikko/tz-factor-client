@@ -4,6 +4,6 @@ export interface Bond {
   id: string;
   issuedAt: Date;
   issuer: Company;
-  dateOfPayment: Date;
+  matureDate: Date;
   amount: number;
 }

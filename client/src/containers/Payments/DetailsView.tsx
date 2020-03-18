@@ -27,7 +27,7 @@ export const DetailsView: React.FC<PaymentDetailsProps> = ({
       <TabPane hash={'#info'}>
         <InfoWidget data={data} />
       </TabPane>
-      <TabPane hash={'#budget'}>Budget</TabPane>
+      <TabPane hash={'#bonds'}>Bonds</TabPane>
       {/*<TabPane hash={'budget'}>Hello, budget</TabPane>*/}
     </div>
   );

@@ -22,13 +22,13 @@ export const connectSocket = (): ThunkAction<
   dispatch({
     type: 'SOCKET_ON',
     namespace,
-    event: 'list',
+    event: 'updateList',
     typeOnSuccess: COMPANIES_PREFIX + LIST_SUCCESS,
   });
   dispatch({
     type: 'SOCKET_ON',
     namespace,
-    event: 'details',
+    event: 'updateDetails',
     typeOnSuccess: COMPANIES_PREFIX + DETAIL_SUCCESS,
   });
 };
@@ -36,7 +36,7 @@ export const connectSocket = (): ThunkAction<
 export const getDetails: (id: string) => SocketEmitAction = id => ({
   type: 'SOCKET_EMIT',
   namespace,
-  event: 'details',
+  event: 'retrieve',
   typeOnFailure: COMPANIES_PREFIX + LIST_FAILURE,
   payload: {id},
 });

@@ -9,5 +9,6 @@
 import {createDataLoaderReducer} from "../dataloader/reducer";
 import {Feature} from "../../core/features";
 import {COMPANIES_PREFIX} from "./";
+import {Company} from "../../core/companies";
 
-export default createDataLoaderReducer<Feature>(COMPANIES_PREFIX)
+export default createDataLoaderReducer<Company>(COMPANIES_PREFIX)

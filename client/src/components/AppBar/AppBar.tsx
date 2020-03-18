@@ -33,7 +33,7 @@ export const AppBar = () => {
     ISSUER: (<>
     <AppBarElement title="Payments Calendar" to="/payments" />
     <AppBarElement title="Issued Bonds" to="/bonds" />
-    <AppBarElement title="Suppliers" to="/suppliers" />
+    <AppBarElement title="Companies" to="/companies" />
   </>),
 
     SUPPLIER: (<>
@@ -47,7 +47,7 @@ export const AppBar = () => {
      <AppBarElement title="Bonds offers" to="/offers" />
     <AppBarElement title="Waller" to="/wallet" />
     <AppBarElement title="Retailers" to="/retailers" />
-    </>)  
+    </>)
   }
 
 
@@ -78,7 +78,7 @@ export const AppBar = () => {
       </div>
   );
 
-  const authMenu = role ? authetictedMenu[role] || nonAutheticatedMenu : nonAutheticatedMenu;
+  const authMenu = role ? authetictedMenu['ISSUER'] || nonAutheticatedMenu : nonAutheticatedMenu;
 
   return (
     <Navbar className="navbar-header navbar-header-fixed">

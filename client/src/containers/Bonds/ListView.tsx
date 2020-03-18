@@ -24,7 +24,7 @@ export const BondsList: React.FC<BondsListProps> = ({
       <td className="tx-color-03 tx-normal">{h.issuer.name}</td>
       <td style={{textAlign: 'left'}}>{"/" + h.issuer.id}</td>
 
-      <td className="text-right tx-medium">{h.dateOfPayment}</td>
+      <td className="text-right tx-medium">{h.matureDate}</td>
       <td className="text-right tx-medium">{h.amount}</td>
       <td className="text-right tx-medium">
           {h.issuedAt}

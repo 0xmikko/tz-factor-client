@@ -5,6 +5,7 @@ export interface Company {
     type: 'ISSUER' | 'SUPPLIER' | 'INVESTOR';
     name: string;
     address: string;
+    web?: string;
     taxId: string;
 }
 

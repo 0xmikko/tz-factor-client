@@ -58,7 +58,7 @@ export const R_PaymentsListScreen: React.FC = () => {
         id: '123-23',
         issuedAt: new Date(),
         amount: 232323,
-        dateOfPayment: new Date(),
+        matureDate: new Date(),
         issuer: {
           id: '123124',
           name: 'Spar',

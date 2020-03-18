@@ -19,7 +19,7 @@ interface CompanyDetailsProps {
 export const DetailsView: React.FC<CompanyDetailsProps> = ({
   data,
 }: CompanyDetailsProps) => {
-  const tabs: string[] = ['Info', 'Budget'];
+  const tabs: string[] = ['Info', 'Bonds'];
 
   return (
     <div className="container pd-x-0 pd-lg-x-10 pd-xl-x-0 m-t-20-f pd-t-30-f">
@@ -27,7 +27,7 @@ export const DetailsView: React.FC<CompanyDetailsProps> = ({
       <TabPane hash={'#info'}>
         <InfoWidget data={data} />
       </TabPane>
-      <TabPane hash={'#budget'}>Budget</TabPane>
+      <TabPane hash={'#bonds'}>Bonds</TabPane>
       {/*<TabPane hash={'budget'}>Hello, budget</TabPane>*/}
     </div>
   );

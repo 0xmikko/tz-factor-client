@@ -16,7 +16,7 @@ interface InfoWidgetProps {
 
 export const InfoWidget: React.FC<InfoWidgetProps> = ({data}) => {
   return <>
-      URL: <a href={`${BACKEND_ADDR}/pr/${data.issuer}`}>/{data.dateOfPayment}</a> <br/>
+      URL: <a href={`${BACKEND_ADDR}/pr/${data.issuer}`}>/{data.matureDate}</a> <br/>
         <br/>
       {/* Oneliner: {data.one_liner} <br/>
       Description: {data.description} <br/>

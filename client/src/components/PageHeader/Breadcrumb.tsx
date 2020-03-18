@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import {Link} from "react-router-dom";
 
 export interface Breadcrumb {
   url: string;
@@ -22,7 +23,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
 }: BreadcrumbProps) => {
   const renderedItems = items.map(e => (
     <li className="breadcrumb-item" key={e.url+e.title}>
-      <a href={e.url}>{e.title}</a>
+      <Link to={e.url}>{e.title}</Link>
     </li>
   ));
 
