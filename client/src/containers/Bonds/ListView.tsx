@@ -9,6 +9,7 @@
 import React from 'react';
 import {Table} from 'react-bootstrap';
 import {Bond, getBondTicker} from '../../core/bonds';
+import moment from 'moment';
 
 interface BondsListProps {
   items: Bond[];
@@ -22,12 +23,10 @@ export const BondsList: React.FC<BondsListProps> = ({
   const renderLine = (h: Bond) => (
     <tr onClick={() => onItemSelected(h.id)}>
       <td className="tx-color-03 tx-normal">{getBondTicker(h)}</td>
-      <td style={{textAlign: 'left'}}>{"/" + h.issuer.id}</td>
-
-      <td className="text-right tx-medium">{h.matureDate}</td>
+      <td className="text-center tx-medium">{moment(h.matureDate).format('YYYY-MM-DD')}</td>
       <td className="text-right tx-medium">{h.amount}</td>
-      <td className="text-right tx-medium">
-          {h.issuedAt}
+      <td className="text-center tx-medium">
+          {moment(h.createdAt).format('YYYY-MM-DD')}
         {/*<span className="mg-l-5 tx-10 tx-normal tx-success">*/}
         {/*  <i className="icon ion-md-arrow-up"></i> 4.5%*/}
         {/*</span>*/}
@@ -45,11 +44,10 @@ export const BondsList: React.FC<BondsListProps> = ({
           <Table className="table-dashboard mg-b-0" hover={true}>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>URL</th>
-                <th className="text-right">Opened</th>
-                <th className="text-right">Goals</th>
-                <th className="text-right">Signups</th>
+                <th>Ticker</th>
+                <th className="text-center">Mature date</th>
+                <th className="text-right">Amount</th>
+                <th className="text-center">Date of issue</th>
               </tr>
             </thead>
             <tbody>

@@ -56,7 +56,7 @@ export const R_PaymentsListScreen: React.FC = () => {
       status: 'CONFIRMED',
       bond: {
         id: '123-23',
-        issuedAt: new Date(),
+        createdAt: new Date(),
         amount: 232323,
         matureDate: new Date(),
         issuer: {

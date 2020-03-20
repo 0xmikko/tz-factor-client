@@ -42,7 +42,7 @@ export const IssuerDetailsView: React.FC<CompanyDetailsProps> = ({
         type: 'ISSUER',
         taxId: '123',
       },
-      issuedAt: new Date(),
+      createdAt: new Date(),
       amount: 23.12,
     },
   ];

@@ -3,7 +3,7 @@ import moment from 'moment';
 
 export interface Bond {
   id: string;
-  issuedAt: Date;
+  createdAt: Date;
   issuer: Company;
   matureDate: Date;
   amount: number;
