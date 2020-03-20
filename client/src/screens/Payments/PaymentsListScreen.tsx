@@ -16,7 +16,7 @@ import {useHistory} from 'react-router';
 import {Loading} from '../../components/Loading';
 import {STATUS} from '../../store/utils/status';
 import {Payment} from '../../core/payments';
-import {ToolbarButton} from "../../containers/ToolbarButton";
+import {ToolbarButton} from '../../containers/ToolbarButton';
 
 export const R_PaymentsListScreen: React.FC = () => {
   const dispatch = useDispatch();
@@ -80,14 +80,14 @@ export const R_PaymentsListScreen: React.FC = () => {
   ];
 
   const onPay = () => {
-    history.push("/payments/new/edit/")
+    history.push('/payments/new/edit/');
     // dispatch(actions.reload());
   };
 
   const rightToolbar = (
-      <>
-        <ToolbarButton title={'Pay'} onClick={onPay}/>
-        </>
+    <>
+      <ToolbarButton title={'Pay'} onClick={onPay} />
+    </>
   );
 
   const onItemSelected = (id: string) => history.push(`/payments/${id}`);

@@ -20,7 +20,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
     onItemSelected
 }: CompaniesListProps) => {
   const renderLine = (h: Company) => (
-    <tr onClick={() => onItemSelected(h.id)}>
+    <tr onClick={() => onItemSelected(h.id)} key={h.id}>
       <td className="tx-color-03 tx-normal">{h.name}</td>
       <td className="tx-medium text-xl-left">{h.type}</td>
 

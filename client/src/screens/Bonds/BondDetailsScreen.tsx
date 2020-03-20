@@ -7,7 +7,7 @@
  */
 import React, {useEffect} from 'react';
 import PageHeader from '../../components/PageHeader/PageHeader';
-import {DetailsView} from '../../containers/Companies/DetailsView';
+import {DetailsView} from '../../containers/Bonds/DetailsView';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {RootState} from '../../store';
@@ -16,35 +16,35 @@ import {Button} from 'react-bootstrap';
 import {RouteComponentProps, useHistory} from 'react-router';
 
 import actions from '../../store/actions';
-import {Payment} from "../../core/payments";
-import {Company} from "../../core/companies";
-import {IssuerDetailsView} from "../../containers/Companies/IssuerDetailsView";
 import {STATUS} from "../../store/utils/status";
 import {Loading} from "../../components/Loading";
 import {getDetailsItem} from "../../store/dataloader";
+import moment from 'moment';
+import {getBondTicker} from "../../core/bonds";
 
 interface MatchParams {
   id: string;
   tab?: string;
 }
 
-interface CompanyDetailsScreenProps
+interface BondDetailsScreenProps
   extends RouteComponentProps<MatchParams> {}
 
-export const CompanyDetailsScreen: React.FC<CompanyDetailsScreenProps> = ({
+export const BondDetailsScreen: React.FC<BondDetailsScreenProps> = ({
   match: {
     params: {id, tab},
   },
-}: CompanyDetailsScreenProps) => {
+}: BondDetailsScreenProps) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(actions.companies.getDetails(id));
+    dispatch(actions.bonds.connectSocket());
+    dispatch(actions.bonds.getDetails(id));
   }, [dispatch, id]);
 
   const dataItem = useSelector((state: RootState) =>
-    getDetailsItem(state.companies.Details, id),
+    getDetailsItem(state.bonds.Details, id),
   );
 
 
@@ -55,19 +55,10 @@ export const CompanyDetailsScreen: React.FC<CompanyDetailsScreenProps> = ({
 
   const {data} = dataItem;
 
-  // const data : Company = {
-  //       id: '123124',
-  //       name: 'Spar Limited Co.',
-  //       address: '12323',
-  //       type: 'ISSUER',
-  //       taxId: '123',
-  //
-  // }
-
   const breadcrumbs: Breadcrumb[] = [
     {
-      url: '/companies',
-      title: 'Companies',
+      url: '/bonds',
+      title: 'Bonds',
     },
   ];
 
@@ -82,10 +73,10 @@ export const CompanyDetailsScreen: React.FC<CompanyDetailsScreenProps> = ({
   return (
     <div className="content content-fixed">
       <PageHeader
-        title={data.name}
+        title={getBondTicker(data)}
         breadcrumbs={breadcrumbs}
       />
-      <IssuerDetailsView data={data} />
+      <DetailsView data={data} />
     </div>
   );
 };

@@ -8,7 +8,7 @@
 
 import React from 'react';
 import {Table} from 'react-bootstrap';
-import {Bond} from '../../core/bonds';
+import {Bond, getBondTicker} from '../../core/bonds';
 
 interface BondsListProps {
   items: Bond[];
@@ -21,7 +21,7 @@ export const BondsList: React.FC<BondsListProps> = ({
 }: BondsListProps) => {
   const renderLine = (h: Bond) => (
     <tr onClick={() => onItemSelected(h.id)}>
-      <td className="tx-color-03 tx-normal">{h.issuer.name}</td>
+      <td className="tx-color-03 tx-normal">{getBondTicker(h)}</td>
       <td style={{textAlign: 'left'}}>{"/" + h.issuer.id}</td>
 
       <td className="text-right tx-medium">{h.matureDate}</td>

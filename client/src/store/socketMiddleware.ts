@@ -18,7 +18,6 @@ export interface JwtData {
 
 export interface SocketEmitAction {
   type: 'SOCKET_EMIT';
-  namespace: string;
   event: string;
   payload: unknown;
   typeOnFailure: string;
@@ -26,7 +25,6 @@ export interface SocketEmitAction {
 
 export interface SocketOnAction {
   type: 'SOCKET_ON';
-  namespace: string;
   event: string;
   typeOnSuccess: string;
 }
@@ -48,46 +46,40 @@ export function createSocketMiddleware(): ThunkMiddleware<
   Action<string>
 > {
   let socket = io(BACKEND_ADDR);
-  let socketAuth: Record<string, SocketIOClient.Socket | undefined> = {};
-  let isConnecting: Record<string, boolean | undefined> = {};
+  let socketAuth: SocketIOClient.Socket | undefined = undefined;
+  let isConnecting: boolean = false;
   let waitingPromises: Record<string, resolver[]> = {};
 
   /*
    * getNamespace returns promise for connected and authentificated namespace
    */
   const getNamespace: (
-    namespace: string,
     jwtToken: string,
-  ) => Promise<SocketIOClient.Socket> = (namespace, jwtToken) => {
+  ) => Promise<SocketIOClient.Socket> = jwtToken => {
     return new Promise<SocketIOClient.Socket>((resolve, reject) => {
-      if (socketAuth && socketAuth[namespace]) {
-        resolve(socketAuth[namespace]);
+      if (socketAuth) {
+        resolve(socketAuth);
       }
 
       // If connection in progress we add resolver in queue
-      if (isConnecting[namespace]) {
-        waitingPromises[namespace].push(resolve)
-        return
+      if (isConnecting) {
+        waitingPromises[namespace].push(resolve);
+        return;
       } else {
-        isConnecting[namespace] = true;
+        isConnecting = true;
         waitingPromises[namespace] = [];
       }
 
-      const nsp = io(BACKEND_ADDR + namespace);
-
-      nsp
+      socket
         .emit('authenticate', {token: jwtToken}) //send the jwt
         .on('authenticated', () => {
-          socketAuth[namespace] = nsp;
+          socketAuth = socket;
           console.log('CONNECTED', socketAuth);
-          resolve(nsp);
-
+          resolve(socket);
 
           for (const f of waitingPromises[namespace]) {
-            f(nsp);
+            f(socket);
           }
-
-
         })
         .on('unauthorized', (msg: UnauthorizedError) => {
           console.log(`ERROR unauthorized: ${JSON.stringify(msg.data)}`);
@@ -95,7 +87,7 @@ export function createSocketMiddleware(): ThunkMiddleware<
           throw new Error(msg.data.type);
         })
         .on('disconnect', () => {
-          if (socketAuth) socketAuth[namespace] = undefined;
+          if (socketAuth) socketAuth = undefined;
         });
     });
   };
@@ -112,13 +104,11 @@ export function createSocketMiddleware(): ThunkMiddleware<
     console.log('DISPATCH', action);
     switch (action.type) {
       case 'SOCKET_EMIT':
-
         if (jwt) {
-          getNamespace(action.namespace, jwt).then(nsp => {
-            nsp.emit(action.event, action.payload);
-            console.log('EMIT', action.event, action.namespace);
+          getNamespace(jwt).then(socket => {
+            socket.emit(action.event, action.payload);
+            console.log('[SOCKET.IO] : EMIT : ', action.event);
           });
-
         } else {
           dispatch({type: action.typeOnFailure});
         }
@@ -127,15 +117,15 @@ export function createSocketMiddleware(): ThunkMiddleware<
 
       case 'SOCKET_ON':
         if (jwt) {
-          getNamespace(action.namespace, jwt).then(nsp => {
-            nsp.on(action.event, (payload: any) => {
-              console.log("GET NEW INFO", payload)
+          getNamespace(jwt).then(socket => {
+            socket.on(action.event, (payload: any) => {
+              console.log('[SOCKET.IО] : GET NEW INFO : ', payload);
               dispatch({
                 type: action.typeOnSuccess,
                 payload: payload,
               });
             });
-            console.log("LISTENER ADDED", action.namespace, action.event);
+            console.log('[SOCKET.IO] : LISTENER ADDED : ', action.event);
           });
         } else {
           console.log('Cant connect');

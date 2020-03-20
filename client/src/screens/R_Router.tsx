@@ -1,7 +1,7 @@
 import React from 'react';
 import {PrivateRoute} from '../components/PrivateRoute';
 import {withTracker} from '../utils/ga';
-import {R_ObligationsListScreen} from './Bonds/R_ObligationsListScreen';
+import {BondsListScreen} from './Bonds/BondsListScreen';
 import {Redirect, Route, Switch} from 'react-router';
 import {SuppliersListScreen} from './R_Suppliers/SuppliersList';
 import {R_PaymentsListScreen} from './Payments/PaymentsListScreen';
@@ -10,6 +10,8 @@ import {PaymentsEditScreen} from './Payments/PaymentsEditScreen';
 import {PaymentDetailsScreen} from './Payments/PaymentDetailsScreen';
 import {CompaniesListScreen} from "./Companies/CompaniesListScreen";
 import {CompanyDetailsScreen} from "./Companies/CompanyDetailsScreen";
+import {BondDetailsScreen} from "./Bonds/BondDetailsScreen";
+import {BondIssueScreen} from "./Bonds/BondIssueScreen";
 
 export const RetailerRouter: React.FC = () => {
   return (
@@ -35,7 +37,17 @@ export const RetailerRouter: React.FC = () => {
         <PrivateRoute
           exact
           path="/bonds"
-          component={withTracker(R_ObligationsListScreen)}
+          component={withTracker(BondsListScreen)}
+        />
+        <PrivateRoute
+            exact
+            path="/bonds/new"
+            component={withTracker(BondIssueScreen)}
+        />
+        <PrivateRoute
+            exact
+            path="/bonds/:id"
+            component={withTracker(BondDetailsScreen)}
         />
         <PrivateRoute
           exact
