@@ -11,7 +11,7 @@ import {RootState} from '../index';
 import {Action} from 'redux';
 import {LIST_SUCCESS, DETAIL_SUCCESS, LIST_FAILURE, DETAIL_FAILURE} from '../dataloader';
 import {SocketEmitAction} from '../socketMiddleware';
-import {namespace, PAYMENTS_PREFIX} from './';
+import {ACCOUNTS_PREFIX, namespace, PAYMENTS_PREFIX} from './';
 import {PaymentCreateDTO} from "../../core/payments";
 
 export const connectSocket = (): ThunkAction<
@@ -31,6 +31,12 @@ export const connectSocket = (): ThunkAction<
         namespace,
         event: 'payments:updateDetails',
         typeOnSuccess: PAYMENTS_PREFIX + DETAIL_SUCCESS,
+    });
+    dispatch({
+        type: 'SOCKET_ON',
+        namespace,
+        event: 'payments:updateAccountsList',
+        typeOnSuccess: ACCOUNTS_PREFIX + LIST_SUCCESS,
     });
 };
 
@@ -56,5 +62,13 @@ export const getList: () => SocketEmitAction = () => ({
     namespace,
     event: 'payments:list',
     typeOnFailure: PAYMENTS_PREFIX + LIST_FAILURE,
+    payload: undefined,
+});
+
+export const getAccountsList: () => SocketEmitAction = () => ({
+    type: 'SOCKET_EMIT',
+    namespace,
+    event: 'payments:contractorAccounts',
+    typeOnFailure: ACCOUNTS_PREFIX + LIST_FAILURE,
     payload: undefined,
 });

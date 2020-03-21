@@ -13,41 +13,69 @@ import {
   FormikForm,
   FormikFormViewProps,
 } from '../../components/Forms/FormikForm';
+import {Bond, getBondTicker} from '../../core/bonds';
+import {TypeaheadOptions} from '../../components/Forms/AutoCompleteField';
+import {Account} from "../../core/companies";
 
 const formSchema = yup.object({
   bond: yup.string().required(),
   from: yup.string().required(),
-  to: yup.string().required(),
+  to: yup.string(),
   amount: yup.number().required(),
 });
 
-const fields = {
-  bond: {
-    label: 'Bond',
-  },
+interface PaymentFormViewProps extends FormikFormViewProps<PaymentCreateDTO> {
+  bondsAvaible: Bond[];
+  toAccounts: Account[];
+}
 
-  from: {
-    label: 'From account',
-  },
+export const PaymentFormView: React.FC<PaymentFormViewProps> = ({
+  data,
+  onSubmit,
+  isSubmitted,
+  bondsAvaible,
+  toAccounts,
+}) => {
 
-  to: {
-    label: 'To account',
-  },
+  const fields = {
+    bond: {
+      label: 'Bond',
+      type: 'autocomplete',
+      options: bondsAvaible.map<TypeaheadOptions>(bond => ({
+        id: bond.id,
+        value: getBondTicker(bond),
+      })),
+    },
 
-  amount: {
-    label: 'Amount',
-  },
-};
+    from: {
+      label: 'From account',
+    },
 
-export const PaymentFormView: React.FC<FormikFormViewProps<
-  PaymentCreateDTO
->> = ({data, onSubmit, isSubmitted}) => {
+    to: {
+      label: 'To account',
+      type: 'autocomplete',
+      options: toAccounts.map<TypeaheadOptions>(account => ({
+        id: account.id,
+        value: `${account.id} (${account.company.name})`,
+      })),
+    },
+
+    amount: {
+      label: 'Amount',
+    },
+  };
+
+  const alignTypesAndSubmit =(values: PaymentCreateDTO) => {
+    values.amount = parseInt(values.amount.toString())
+    onSubmit(values)
+  }
+
   return (
     <FormikForm
       formSchema={formSchema}
       fields={fields}
       initialValues={data}
-      onSubmit={onSubmit}
+      onSubmit={alignTypesAndSubmit}
       isSubmitted={isSubmitted}
     />
   );

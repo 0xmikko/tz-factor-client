@@ -6,73 +6,63 @@
  *
  */
 import React, {useEffect, useState} from 'react';
-import PageHeader from '../../components/PageHeader/PageHeader';
 import {useDispatch, useSelector} from 'react-redux';
-import * as actions from '../../store/payments/actions';
-import {RootState} from '../../store';
+import {useHistory} from 'react-router';
+
+import PageHeader from '../../components/PageHeader/PageHeader';
 import {Breadcrumb} from '../../components/PageHeader/Breadcrumb';
-import {Button} from 'react-bootstrap';
-import {STATUS} from '../../store/utils/status';
-import {Loading} from '../../components/Loading';
-import {getDetailsItem} from '../../store/dataloader';
-import {RouteComponentProps, useHistory} from 'react-router';
 import {CompanyFormView} from '../../containers/Companies/FormView';
-import {Payment} from "../../core/payments";
+import {Loading} from '../../components/Loading';
 
-interface MatchParams {
-  id: string;
-  tab?: string;
-}
+import {getDetailsItem} from '../../store/dataloader';
+import {STATUS} from '../../store/utils/status';
+import {RootState} from '../../store';
+import {Company} from '../../core/companies';
+import actions from '../../store/actions';
 
-interface CompanyDetailsScreenProps extends RouteComponentProps<MatchParams> {}
-
-export const CompanyEditScreen: React.FC<CompanyDetailsScreenProps> = ({
-  match: {
-    params: {id, tab},
-  },
-}: CompanyDetailsScreenProps) => {
+export const CompanyEditScreen: React.FC = () => {
   const dispatch = useDispatch();
 
   const history = useHistory();
-  let operationStatus : STATUS;
+  let operationStatus: STATUS;
 
-
-  const [hash, setHash] = useState("0");
+  const [hash, setHash] = useState('0');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  operationStatus = useSelector((state: RootState) =>
-      state.payments.Details.hashes[hash].status);
+  const id = useSelector((state: RootState) => state.profile.id);
+
+  operationStatus = useSelector(
+    (state: RootState) => state.payments.Details.hashes[hash].status,
+  );
 
   useEffect(() => {
     if (hash !== '0') {
       switch (operationStatus) {
-
         case STATUS.SUCCESS:
-          history.push('/payments/' + data.id );
+          history.push('/payments/' + data.id);
           break;
 
         case STATUS.FAILURE:
           setHash('0');
           setIsSubmitted(false);
-          alert("Cant submit your operation to server")
+          alert('Cant submit your operation to server');
       }
     }
   }, [hash, operationStatus]);
 
-  const onSubmit = (values: Payment) => {
+  const onSubmit = (values: Company) => {
     setIsSubmitted(true);
     const newHash = Date.now().toString();
     setHash(newHash);
     // dispatch(actions.createUpdateDetails(data.id, values, newHash))
   };
 
-
   useEffect(() => {
-    // dispatch(actions.getDetails(id));
+    if (id) dispatch(actions.companies.getDetails(id));
   }, [dispatch, id]);
 
   const dataItem = useSelector((state: RootState) =>
-    getDetailsItem(state.payments.Details, id),
+    getDetailsItem(state.companies.Details, id || '0'),
   );
 
   if (!dataItem || !dataItem.data) {
@@ -82,7 +72,6 @@ export const CompanyEditScreen: React.FC<CompanyDetailsScreenProps> = ({
   if (dataItem.status === STATUS.FAILURE) {
     return <>"Oops! Error happened!"</>;
   }
-
 
   if (dataItem.status === STATUS.LOADING) {
     return <Loading />;
@@ -97,22 +86,18 @@ export const CompanyEditScreen: React.FC<CompanyDetailsScreenProps> = ({
     },
   ];
 
-  const rightToolbar = (
-    <div className="d-none d-md-block">
-      <Button className="btn-sm pd-x-15 btn-brand-01 btn-uppercase">
-        Edit
-      </Button>
-    </div>
-  );
 
   return (
     <div className="content content-fixed">
       <PageHeader
-        title={'Payment #' + data.id}
+        title={data.name}
         breadcrumbs={breadcrumbs}
-        rightPanel={rightToolbar}
       />
-      <CompanyFormView data={data} onSubmit={onSubmit} isSubmitted={isSubmitted}/>
+      <CompanyFormView
+        data={data}
+        onSubmit={onSubmit}
+        isSubmitted={isSubmitted}
+      />
     </div>
   );
 };

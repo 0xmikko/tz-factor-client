@@ -17,11 +17,7 @@ import {PaymentFormView} from '../../containers/Payments/FormView';
 import {Payment, PaymentCreateDTO} from '../../core/payments';
 import actions from '../../store/actions';
 
-interface PaymentsPayScreenProps {
-  data: PaymentCreateDTO;
-}
-
-export const PaymentsPayScreen: React.FC<PaymentsPayScreenProps> = ({data}) => {
+export const PaymentsPayScreen: React.FC = () => {
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -30,9 +26,28 @@ export const PaymentsPayScreen: React.FC<PaymentsPayScreenProps> = ({data}) => {
   const [hash, setHash] = useState('0');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  operationStatus = useSelector(
-    (state: RootState) => state.payments.Details.hashes[hash].status,
-  );
+  const data: PaymentCreateDTO = {
+    from: '',
+    to: '',
+    amount: 0,
+  };
+
+  operationStatus = useSelector((state: RootState) =>
+      state.payments.Details?.hashes[hash]?.status);
+
+  const bondsAvaible = useSelector((state: RootState) =>
+      state.bonds.List.data);
+
+  const contractorsAccount = useSelector((state: RootState) =>
+      state.payments.AccountsList.data);
+
+  console.log("::::", contractorsAccount);
+
+  useEffect(() => {
+    dispatch(actions.bonds.getList());
+    dispatch(actions.payments.getAccountsList());
+  }, []);
+
 
   useEffect(() => {
     if (hash !== '0') {
@@ -50,10 +65,11 @@ export const PaymentsPayScreen: React.FC<PaymentsPayScreenProps> = ({data}) => {
   }, [hash, operationStatus]);
 
   const onSubmit = (values: PaymentCreateDTO) => {
+    console.log(values)
     setIsSubmitted(true);
     const newHash = Date.now().toString();
     setHash(newHash);
-    dispatch(actions.payments.pay(values))
+    dispatch(actions.payments.pay(values));
   };
 
   const breadcrumbs: Breadcrumb[] = [
@@ -63,6 +79,7 @@ export const PaymentsPayScreen: React.FC<PaymentsPayScreenProps> = ({data}) => {
     },
   ];
 
+
   return (
     <div className="content content-fixed">
       <PageHeader title={'New payment'} breadcrumbs={breadcrumbs} />
@@ -70,6 +87,8 @@ export const PaymentsPayScreen: React.FC<PaymentsPayScreenProps> = ({data}) => {
         data={data}
         onSubmit={onSubmit}
         isSubmitted={isSubmitted}
+        bondsAvaible={bondsAvaible}
+        toAccounts={contractorsAccount}
       />
     </div>
   );

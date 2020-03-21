@@ -6,7 +6,8 @@
  *
  */
 
-import {DataItem, DataLoaderDetailsState} from "./reducer";
+import {DataItem} from "./reducer";
+import {DataLoaderDetailsState} from "./details";
 
 export const LIST_REQUEST = 'LIST_REQUEST';
 export const LIST_UPDATE = 'LIST_UPDATE';

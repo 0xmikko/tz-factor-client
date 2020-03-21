@@ -71,7 +71,7 @@ export const PaymentDetailsScreen: React.FC<PaymentDetailsScreenProps> = ({
   return (
     <div className="content content-fixed">
       <PageHeader title={data.id} breadcrumbs={breadcrumbs} />
-      <DetailsView data={data as Payment} />
+      <DetailsView data={data} />
     </div>
   );
 };

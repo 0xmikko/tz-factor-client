@@ -60,7 +60,7 @@ export const R_PaymentsListScreen: React.FC = () => {
         rightPanel={rightToolbar}
       />
       {status === STATUS.SUCCESS ? (
-        <PaymentsList items={data as PaymentListItem[]} onItemSelected={onItemSelected} />
+        <PaymentsList items={data} onItemSelected={onItemSelected} />
       ) : (
         <Loading />
       )}

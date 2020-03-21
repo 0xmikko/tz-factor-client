@@ -6,5 +6,6 @@
  *
  */
 // HYPOTHESES
+export const ACCOUNTS_PREFIX = 'ACCOUNTS@@';
 export const PAYMENTS_PREFIX = 'PAYMENTS@@';
 export const namespace = 'payments';
