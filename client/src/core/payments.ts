@@ -11,3 +11,20 @@ export interface Payment {
     status: 'SUBMITTED' | 'CONFIRMED';
 
 }
+
+export interface PaymentCreateDTO {
+    from: string;
+    to: string;
+    amount: number;
+}
+
+export interface PaymentListItem {
+    id: string,
+    date: Date,
+    amount: number,
+    fromCompany: string,
+    toCompany: string,
+    issuer: string,
+    matureDate: Date,
+    status: string,
+}

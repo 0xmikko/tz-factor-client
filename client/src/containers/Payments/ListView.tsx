@@ -9,9 +9,11 @@
 import React from 'react';
 import {Table} from 'react-bootstrap';
 import {Payment} from '../../core/payments';
+import {PaymentListItem} from "../../core/payments";
+import moment from 'moment';
 
 interface PaymentsListProps {
-  items: Payment[];
+  items: PaymentListItem[];
   onItemSelected: (id: string) => void;
 }
 
@@ -19,13 +21,16 @@ export const PaymentsList: React.FC<PaymentsListProps> = ({
   items,
     onItemSelected
 }: PaymentsListProps) => {
-  const renderLine = (h: Payment) => (
+  const renderLine = (h: PaymentListItem) => (
     <tr onClick={() => onItemSelected(h.id)}>
-        <td className="tx-color-03 tx-normal">{h.bond.issuer.name}</td>
+        <td className="tx-color-03 tx-normal">{
+            h.issuer.toUpperCase() + moment(h.matureDate).format('YYYY-MM-DD')}
+        </td>
       <td className="tx-color-03 text-left tx-normal">{h.amount}</td>
       {/* <td style={{textAlign: 'left'}}>{"/" + h.}</td> */}
 
-      <td className="text-left tx-medium">{h.from.company.name}</td>
+      <td className="text-left tx-medium">{h.fromCompany}</td>
+      <td className="text-left tx-medium">{h.toCompany}</td>
       <td className="text-right tx-medium">
           {h.status}
         {/*<span className="mg-l-5 tx-10 tx-normal tx-success">*/}

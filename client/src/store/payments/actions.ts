@@ -6,12 +6,55 @@
  *
  */
 
-import {endpoint, PAYMENTS_PREFIX} from './';
+import {ThunkAction} from 'redux-thunk';
+import {RootState} from '../index';
+import {Action} from 'redux';
+import {LIST_SUCCESS, DETAIL_SUCCESS, LIST_FAILURE, DETAIL_FAILURE} from '../dataloader';
+import {SocketEmitAction} from '../socketMiddleware';
+import {namespace, PAYMENTS_PREFIX} from './';
+import {PaymentCreateDTO} from "../../core/payments";
 
-import {createDataLoaderListActions,} from '../dataloader/actions';
-import {SSO_ADDR} from "../../config";
+export const connectSocket = (): ThunkAction<
+    void,
+    RootState,
+    unknown,
+    Action<string>
+    > => async dispatch => {
+    dispatch({
+        type: 'SOCKET_ON',
+        namespace,
+        event: 'payments:updateList',
+        typeOnSuccess: PAYMENTS_PREFIX + LIST_SUCCESS,
+    });
+    dispatch({
+        type: 'SOCKET_ON',
+        namespace,
+        event: 'payments:updateDetails',
+        typeOnSuccess: PAYMENTS_PREFIX + DETAIL_SUCCESS,
+    });
+};
 
-export const getList = createDataLoaderListActions(
-  SSO_ADDR + endpoint,
-  PAYMENTS_PREFIX,
-);
+export const getDetails: (id: string) => SocketEmitAction = id => ({
+    type: 'SOCKET_EMIT',
+    namespace,
+    event: 'payments:retrieve',
+    typeOnFailure: PAYMENTS_PREFIX + LIST_FAILURE,
+    payload: {id},
+});
+
+export const pay: (dto: PaymentCreateDTO) => SocketEmitAction = (dto) => ({
+    type: 'SOCKET_EMIT',
+    namespace,
+    event: 'payments:pay',
+    typeOnFailure: PAYMENTS_PREFIX + DETAIL_FAILURE,
+    payload: dto,
+});
+
+
+export const getList: () => SocketEmitAction = () => ({
+    type: 'SOCKET_EMIT',
+    namespace,
+    event: 'payments:list',
+    typeOnFailure: PAYMENTS_PREFIX + LIST_FAILURE,
+    payload: undefined,
+});

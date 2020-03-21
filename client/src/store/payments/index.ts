@@ -7,4 +7,4 @@
  */
 // HYPOTHESES
 export const PAYMENTS_PREFIX = 'PAYMENTS@@';
-export const endpoint = '/api/payments/';
+export const namespace = 'payments';

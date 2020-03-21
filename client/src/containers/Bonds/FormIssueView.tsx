@@ -12,25 +12,13 @@ import * as yup from 'yup';
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import {Button, FormLabel} from 'react-bootstrap';
 import moment from 'moment';
+import {FormikForm, FormikFormViewProps} from "../../components/Forms/FormikForm";
 
 const formSchema = yup.object({
   matureDate: yup.date().required(),
   amount: yup.number().required().moreThan(0),
   account: yup.string().min(5),
 });
-
-interface Field {
-  label: string;
-  type?: 'input' | 'textarea';
-}
-
-type FormFields = {[T in keyof yup.InferType<typeof formSchema>]: Field};
-
-interface BondFormProps {
-  data: BondCreateDTO;
-  onSubmit: (values: BondCreateDTO) => void;
-  isSubmitted: boolean;
-}
 
 interface BondFormFields {
   matureDate: string,
@@ -39,11 +27,11 @@ interface BondFormFields {
 
 }
 
-export const BondIssueFormView: React.FC<BondFormProps> = ({
+export const BondIssueFormView: React.FC<FormikFormViewProps<BondCreateDTO>> = ({
   data,
   onSubmit,
   isSubmitted,
-}: BondFormProps) => {
+}) => {
 
   const initialValues : BondFormFields = {
     matureDate: moment(data.matureDate).format('YYYY-MM-DD'),
@@ -51,7 +39,7 @@ export const BondIssueFormView: React.FC<BondFormProps> = ({
     account: data.account,
   }
 
-  const fields: FormFields = {
+  const fields  = {
     matureDate: {
       label: 'Mature Date',
     },
@@ -74,39 +62,13 @@ export const BondIssueFormView: React.FC<BondFormProps> = ({
     })
   }
 
-  const fieldsRendered = Object.entries(fields).map(e => {
-    const name = e[0];
-
-    return (
-      <>
-        <FormLabel>{e[1]?.label}</FormLabel>
-        <Field
-          placeholder={e[1]?.label}
-          name={name}
-          component={e[1]?.type || 'input'}
-        />
-        <ErrorMessage name={name} component="div" className="feedback" />
-      </>
-    );
-  });
-
   return (
-    <div className="container pd-x-0 pd-lg-x-10 pd-xl-x-0 m-t-20-f pd-t-30-f">
-      <hr />
-      <Formik
-        validationSchema={formSchema}
-        initialValues={initialValues}
-        onSubmit={alignTypesAndSubmit}>
-        <Form className="form">
-          {fieldsRendered}
-          <Button
-            type={'submit'}
-            className="theme-button"
-            disabled={isSubmitted}>
-            Submit
-          </Button>
-        </Form>
-      </Formik>
-    </div>
+      <FormikForm
+          formSchema={formSchema}
+          fields={fields}
+          initialValues={initialValues}
+          onSubmit={alignTypesAndSubmit}
+          isSubmitted={isSubmitted}
+      />
   );
 };

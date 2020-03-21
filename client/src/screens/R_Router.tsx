@@ -6,7 +6,7 @@ import {Redirect, Route, Switch} from 'react-router';
 import {SuppliersListScreen} from './R_Suppliers/SuppliersList';
 import {R_PaymentsListScreen} from './Payments/PaymentsListScreen';
 import AppBar from '../components/AppBar/AppBar';
-import {PaymentsEditScreen} from './Payments/PaymentsEditScreen';
+import {PaymentsPayScreen} from './Payments/PaymentsPayScreen';
 import {PaymentDetailsScreen} from './Payments/PaymentDetailsScreen';
 import {CompaniesListScreen} from "./Companies/CompaniesListScreen";
 import {CompanyDetailsScreen} from "./Companies/CompanyDetailsScreen";
@@ -21,7 +21,7 @@ export const RetailerRouter: React.FC = () => {
         <PrivateRoute
           exact
           path="/payments/new/edit"
-          component={withTracker(PaymentsEditScreen)}
+          component={withTracker(PaymentsPayScreen)}
         />
         <PrivateRoute
           exact

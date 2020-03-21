@@ -9,5 +9,6 @@
 import {createDataLoaderReducer} from "../dataloader/reducer";
 import {PAYMENTS_PREFIX} from "./";
 import { Payment } from '../../core/payments';
+import {PaymentListItem} from "../../core/payments";
 
-export default createDataLoaderReducer<Payment>(PAYMENTS_PREFIX)
+export default createDataLoaderReducer<Payment | PaymentListItem>(PAYMENTS_PREFIX)

@@ -31,9 +31,9 @@ export const AppBar = () => {
 
   const authetictedMenu : AuthMenuOptions = {
     ISSUER: (<>
-    <AppBarElement title="Payments Calendar" to="/payments" />
-    <AppBarElement title="Issued Bonds" to="/bonds" />
-    <AppBarElement title="Companies" to="/companies" />
+    <AppBarElement title="Payments" to="/payments" key="payments"/>
+    <AppBarElement title="Bonds" to="/bonds" key="bonds"/>
+    <AppBarElement title="Companies" to="/companies" key="companies"/>
   </>),
 
     SUPPLIER: (<>

@@ -7,14 +7,14 @@
  */
 
 import React from 'react';
-import {Payment, PaymentCreateDTO} from '../../core/payments';
 import * as yup from 'yup';
+import {Company} from '../../core/companies';
 import {
   FormikForm,
   FormikFormViewProps,
 } from '../../components/Forms/FormikForm';
 
-const formSchema = yup.object({
+const formSchema: yup.ObjectSchema = yup.object({
   bond: yup.string().required(),
   from: yup.string().required(),
   to: yup.string().required(),
@@ -39,9 +39,11 @@ const fields = {
   },
 };
 
-export const PaymentFormView: React.FC<FormikFormViewProps<
-  PaymentCreateDTO
->> = ({data, onSubmit, isSubmitted}) => {
+export const CompanyFormView: React.FC<FormikFormViewProps<Company>> = ({
+  data,
+  onSubmit,
+  isSubmitted,
+}) => {
   return (
     <FormikForm
       formSchema={formSchema}

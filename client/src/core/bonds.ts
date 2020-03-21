@@ -15,6 +15,7 @@ export interface BondCreateDTO {
   account: string;
 }
 
+
 export function getBondTicker(b: Bond): string {
   return (
     b.issuer.name.toUpperCase() + moment(b.matureDate).format('-YYYY-MM-DD')

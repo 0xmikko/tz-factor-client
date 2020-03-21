@@ -12,11 +12,11 @@ import * as bonds from './bonds/actions';
 import * as features from './features/actions';
 import * as companies from './companies/actions';
 import * as payments from './payments/actions';
-import {Dispatch} from 'react';
 import {ThunkAction} from 'redux-thunk';
 import {RootState} from './index';
 import {Action} from 'redux';
 
+// Connect socket connects redux with socket server interface
 export const connectSocket = (): ThunkAction<
   void,
   RootState,
@@ -26,6 +26,7 @@ export const connectSocket = (): ThunkAction<
   // Connect sockets to listen server events
   dispatch(bonds.connectSocket());
   dispatch(companies.connectSocket());
+  dispatch(payments.connectSocket());
 };
 
 export default {

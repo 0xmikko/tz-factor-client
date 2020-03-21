@@ -16,7 +16,7 @@ import {STATUS} from '../../store/utils/status';
 import {Loading} from '../../components/Loading';
 import {getDetailsItem} from '../../store/dataloader';
 import {RouteComponentProps, useHistory} from 'react-router';
-import {PaymentFormView} from '../../containers/Payments/FormView';
+import {CompanyFormView} from '../../containers/Companies/FormView';
 import {Payment} from "../../core/payments";
 
 interface MatchParams {
@@ -24,13 +24,13 @@ interface MatchParams {
   tab?: string;
 }
 
-interface PaymentDetailsScreenProps extends RouteComponentProps<MatchParams> {}
+interface CompanyDetailsScreenProps extends RouteComponentProps<MatchParams> {}
 
-export const CompanyEditScreen: React.FC<PaymentDetailsScreenProps> = ({
+export const CompanyEditScreen: React.FC<CompanyDetailsScreenProps> = ({
   match: {
     params: {id, tab},
   },
-}: PaymentDetailsScreenProps) => {
+}: CompanyDetailsScreenProps) => {
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -112,7 +112,7 @@ export const CompanyEditScreen: React.FC<PaymentDetailsScreenProps> = ({
         breadcrumbs={breadcrumbs}
         rightPanel={rightToolbar}
       />
-      <PaymentFormView data={data} onSubmit={onSubmit} isSubmitted={isSubmitted}/>
+      <CompanyFormView data={data} onSubmit={onSubmit} isSubmitted={isSubmitted}/>
     </div>
   );
 };

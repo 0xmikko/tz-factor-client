@@ -15,16 +15,18 @@ import {Breadcrumb} from '../../components/PageHeader/Breadcrumb';
 import {Button} from 'react-bootstrap';
 import {RouteComponentProps, useHistory} from 'react-router';
 
-import * as actions from '../../store/payments/actions';
-import {Payment} from "../../core/payments";
+import actions from '../../store/actions';
+import {Payment} from '../../core/payments';
+import {getDetailsItem} from '../../store/dataloader';
+import {Loading} from '../../components/Loading';
+import {STATUS} from "../../store/utils/status";
 
 interface MatchParams {
   id: string;
   tab?: string;
 }
 
-interface PaymentDetailsScreenProps
-  extends RouteComponentProps<MatchParams> {}
+interface PaymentDetailsScreenProps extends RouteComponentProps<MatchParams> {}
 
 export const PaymentDetailsScreen: React.FC<PaymentDetailsScreenProps> = ({
   match: {
@@ -35,61 +37,19 @@ export const PaymentDetailsScreen: React.FC<PaymentDetailsScreenProps> = ({
   const history = useHistory();
 
   useEffect(() => {
-    // dispatch(actions.getDetails(id));
+    dispatch(actions.payments.getDetails(id));
   }, [dispatch, id]);
 
-  // const dataItem = useSelector((state: RootState) =>
-  //   getDetailsItem(state.payments.Details, id),
-  // );
-  //
+  const dataItem = useSelector((state: RootState) =>
+    getDetailsItem(state.payments.Details, id),
+  );
 
-
-  // if (!dataItem || !dataItem.data || dataItem.status !== STATUS.SUCCESS) {
-  //   return <Loading />;
-  // }
-  //
-  // const {data} = dataItem;
-
-  const data : Payment = {
-    id: '123-213-90',
-    date: new Date(),
-    from: {
-      id: 'qweqwe',
-      company: {
-        id: '123124',
-        name: 'Spar',
-        address: '12323',
-        type: 'ISSUER',
-        taxId: '123',
-      },
-    },
-
-    to: {
-      id: '312-123213-23',
-      company: {
-        id: '124124214',
-        name: 'Milk Austria',
-        address: '12323',
-        type: 'ISSUER',
-        taxId: '123',
-      },
-    },
-    amount: 23.23,
-    status: 'CONFIRMED',
-    bond: {
-      id: '123-23',
-      createdAt: new Date(),
-      amount: 232323,
-      matureDate: new Date(),
-      issuer: {
-        id: '123124',
-        name: 'Spar Limited Co.',
-        address: '12323',
-        type: 'ISSUER',
-        taxId: '123',
-      },
-    },
+  if (!dataItem || !dataItem.data || dataItem.status !== STATUS.SUCCESS) {
+    // eslint-disable-next-line react/jsx-no-undef
+    return <Loading />;
   }
+
+  const {data} = dataItem;
 
   const breadcrumbs: Breadcrumb[] = [
     {
@@ -100,7 +60,9 @@ export const PaymentDetailsScreen: React.FC<PaymentDetailsScreenProps> = ({
 
   const rightToolbar = (
     <div className="d-none d-md-block">
-      <Button className="btn-sm pd-x-15 btn-brand-01 btn-uppercase" onClick={() => history.push(`/payments/${id}/edit/`)}>
+      <Button
+        className="btn-sm pd-x-15 btn-brand-01 btn-uppercase"
+        onClick={() => history.push(`/payments/${id}/edit/`)}>
         Edit
       </Button>
     </div>
@@ -108,11 +70,8 @@ export const PaymentDetailsScreen: React.FC<PaymentDetailsScreenProps> = ({
 
   return (
     <div className="content content-fixed">
-      <PageHeader
-        title={data.id}
-        breadcrumbs={breadcrumbs}
-      />
-      <DetailsView data={data} />
+      <PageHeader title={data.id} breadcrumbs={breadcrumbs} />
+      <DetailsView data={data as Payment} />
     </div>
   );
 };
