@@ -32,6 +32,7 @@
     "@types/socket.io-client": "^1.4.32",
     "@types/yup": "^0.26.32",
     "bootstrap": "^4.4.1",
+    "conseiljs": "^0.3.7",
     "formik": "^2.1.4",
     "global": "^4.4.0",
     "history": "^4.10.1",

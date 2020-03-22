@@ -12,12 +12,18 @@ import {CompaniesListScreen} from "./Companies/CompaniesListScreen";
 import {CompanyDetailsScreen} from "./Companies/CompanyDetailsScreen";
 import {BondDetailsScreen} from "./Bonds/BondDetailsScreen";
 import {BondIssueScreen} from "./Bonds/BondIssueScreen";
+import {NewMnemonicScreen} from "./Wallet/NewMnemonicScreen";
 
 export const RetailerRouter: React.FC = () => {
   return (
     <>
       <AppBar />
       <Switch>
+        <PrivateRoute
+            exact
+            path="/wallet/accounts/new"
+            component={withTracker(NewMnemonicScreen)}
+        />
         <PrivateRoute
           exact
           path="/payments/new/edit"

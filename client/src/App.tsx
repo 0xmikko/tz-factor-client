@@ -23,11 +23,12 @@ import {RootState} from './store';
 import {withTracker} from './utils/ga';
 
 import {
-    APP_STATUS_AUTH_REQUIRED,
-    APP_STATUS_CHOOSING_PLAN,
-    APP_STATUS_ERROR,
-    APP_STATUS_FILLING_PROFILE,
-    APP_STATUS_READY, Role,
+  APP_STATUS_AUTH_REQUIRED,
+  APP_STATUS_CHOOSING_PLAN,
+  APP_STATUS_ERROR,
+  APP_STATUS_FILLING_PROFILE,
+  APP_STATUS_READY,
+  Role,
 } from './core/profile';
 
 import './App.css';
@@ -44,7 +45,7 @@ const App = () => {
   // const role = useSelector((state: RootState) => state.auth.access?.role);
   const role = useSelector((state: RootState) => state.profile.role);
 
-  console.log(role)
+
 
   switch (appStatus) {
     case APP_STATUS_AUTH_REQUIRED:

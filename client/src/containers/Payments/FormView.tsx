@@ -20,8 +20,8 @@ import {Account} from "../../core/companies";
 const formSchema = yup.object({
   bond: yup.string().required(),
   from: yup.string().required(),
-  to: yup.string(),
-  amount: yup.number().required(),
+  to: yup.string().required(),
+  amount: yup.number().moreThan(0).required(),
 });
 
 interface PaymentFormViewProps extends FormikFormViewProps<PaymentCreateDTO> {
