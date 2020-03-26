@@ -17,7 +17,7 @@ import {getProfile, updateStatusInternally} from '../profile/actions';
 import {APP_STATUS_AUTH_REQUIRED, Profile, ProfileStatus} from '../../core/profile';
 import {SSO_ADDR} from "../../config";
 import {LOGIN_SUCCESS} from "./";
-import actions, {connectSocket} from "../actions";
+import actions, {actionsAfterAuth} from "../actions";
 
 export const login = (
   email: string,
@@ -164,7 +164,7 @@ export const getTokenAtStartup = (): ThunkAction<
     payload: profile
   })
 
-  await dispatch(connectSocket());
+  await dispatch(actionsAfterAuth());
   //
   // const token = localStorage.getItem('token');
   // if (token) {

@@ -7,48 +7,49 @@
  */
 
 import React from 'react';
-import {Payment, PaymentCreateDTO} from '../../core/payments';
+import {Payment, TransferBondsDTO, TransferMoneyDTO} from '../../core/payments';
 import * as yup from 'yup';
 import {
   FormikForm,
   FormikFormViewProps,
 } from '../../components/Forms/FormikForm';
-import {Bond, getBondTicker} from '../../core/bonds';
 import {TypeaheadOptions} from '../../components/Forms/AutoCompleteField';
-import {Account} from "../../core/companies";
+import {Account, AccountKey} from '../../core/accounts';
 
 const formSchema = yup.object({
-  bond: yup.string().required(),
   from: yup.string().required(),
   to: yup.string().required(),
-  amount: yup.number().moreThan(0).required(),
+  amount: yup
+    .number()
+    .moreThan(0)
+    .required(),
 });
 
-interface PaymentFormViewProps extends FormikFormViewProps<PaymentCreateDTO> {
-  bondsAvaible: Bond[];
+interface PayFormViewProps extends FormikFormViewProps<TransferMoneyDTO> {
+  fromAccounts: AccountKey[];
   toAccounts: Account[];
 }
 
-export const PaymentFormView: React.FC<PaymentFormViewProps> = ({
-  data,
+interface TransferMoneyFormFields {
+  from: string;
+  to: string;
+  amount: string;
+}
+
+export const TransferMoneyFormView: React.FC<PayFormViewProps> = ({
   onSubmit,
   isSubmitted,
-  bondsAvaible,
+  fromAccounts,
   toAccounts,
 }) => {
-
   const fields = {
-    bond: {
-      label: 'Bond',
-      type: 'autocomplete',
-      options: bondsAvaible.map<TypeaheadOptions>(bond => ({
-        id: bond.id,
-        value: getBondTicker(bond),
-      })),
-    },
-
     from: {
       label: 'From account',
+      type: 'autocomplete',
+      options: fromAccounts.map<TypeaheadOptions>((account, index) => ({
+        id: index.toString(),
+        value: `${account.name} (${account.id})`,
+      })),
     },
 
     to: {
@@ -65,16 +66,25 @@ export const PaymentFormView: React.FC<PaymentFormViewProps> = ({
     },
   };
 
-  const alignTypesAndSubmit =(values: PaymentCreateDTO) => {
-    values.amount = parseInt(values.amount.toString())
-    onSubmit(values)
-  }
+  const initialValues: TransferMoneyFormFields = {
+    from: '',
+    to: '',
+    amount: '0',
+  };
+
+  const alignTypesAndSubmit = (values: TransferMoneyFormFields) => {
+    onSubmit({
+      from: fromAccounts[parseInt(values.from)],
+      to: values.to,
+      amount: parseInt(values.amount),
+    });
+  };
 
   return (
     <FormikForm
       formSchema={formSchema}
       fields={fields}
-      initialValues={data}
+      initialValues={initialValues}
       onSubmit={alignTypesAndSubmit}
       isSubmitted={isSubmitted}
     />

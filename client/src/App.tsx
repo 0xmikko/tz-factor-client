@@ -32,8 +32,7 @@ import {
 } from './core/profile';
 
 import './App.css';
-import {RetailerRouter} from './screens/R_Router';
-import {SupplierRouter} from './screens/S_Router';
+import {Router} from './screens/Router';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -77,19 +76,7 @@ const App = () => {
 
     case APP_STATUS_FILLING_PROFILE:
     case APP_STATUS_READY:
-      switch (role) {
-        case 'ISSUER':
-          return <RetailerRouter />;
-
-        case 'SUPPLIER':
-          return <SupplierRouter />;
-      }
-      return (
-        <Switch>
-          {' '}
-          <PrivateRoute path="*" component={withTracker(ThankYouScreen)} />
-        </Switch>
-      );
+        return <Router />;
 
     case APP_STATUS_ERROR:
       return <>'Internal error. Please, reload to continue'</>;

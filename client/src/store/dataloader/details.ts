@@ -36,10 +36,10 @@ export function createDataLoaderDetailsReducer<T extends DataObjectWithID>(prefi
             },
         });
 
-        const id = action?.meta?.id || action?.payload?.id || '-';
-        const hash = action?.meta?.hash;
+        let id = action?.meta?.id || action?.payload?.id ;
+        if (id === undefined) { id = "-"}
 
-        console.log(action.payload);
+        const hash = action?.meta?.hash;
 
         switch (action.type) {
             case prefix + actionTypes.DETAIL_REQUEST:

@@ -25,7 +25,7 @@ export const BondsListWidget: React.FC<BondsListProps> = ({
       <td>
         <strong>{moment(h.matureDate).format("YYYY/MM/DD")}</strong>
       </td>
-      <td className="text-right tx-rubik">${h.amount}</td>
+      <td className="text-right tx-rubik">${h.total}</td>
       <td className="text-right tx-rubik">
                   <span className="tx-danger">
                     0.77% <i className="icon ion-md-arrow-down"></i>

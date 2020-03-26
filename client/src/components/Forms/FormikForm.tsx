@@ -9,14 +9,14 @@ import {
   FormikProps,
 } from 'formik';
 import * as yup from 'yup';
-import {FieldProps} from 'formik/dist/Field';
 import AutoCompleteField, {TypeaheadOptions} from './AutoCompleteField';
-import {FormikConfig} from 'formik/dist/types';
 
 export interface FieldI {
   label: string;
+  placeholder?: string;
   type?: 'input' | 'textarea' | 'autocomplete';
   options?: TypeaheadOptions[];
+  onChange?: (value: string) => void;
 }
 
 export interface FormikFormViewProps<T> {
@@ -30,6 +30,7 @@ interface FormikFormProps<T, S> {
   fields: {[T in keyof yup.InferType<S>]: FieldI};
   initialValues: T;
   onSubmit: (values: T) => void;
+  onChange?: (event?: React.FormEvent<HTMLFormElement>) => void;
   isSubmitted: boolean;
 }
 
@@ -42,6 +43,7 @@ export function FormikForm<T, S>({
   formSchema,
   fields,
   initialValues,
+  onChange,
   onSubmit,
   isSubmitted,
 }: FormikFormProps<T, S>): React.ReactElement {
@@ -56,7 +58,7 @@ export function FormikForm<T, S>({
       case 'textarea':
         return (
           <Field
-            placeholder={f.label}
+            placeholder={f.placeholder || f.label}
             name={name}
             component={f.type || 'input'}
           />
@@ -66,8 +68,14 @@ export function FormikForm<T, S>({
           <AutoCompleteField
             name={name}
             label={f.label}
+            placeholder={f.placeholder || f.label}
             data={f.options || []}
-            onChange={(value: string) => setFieldValue(name, value)}
+            onChange={(value: string) => {
+              if (f.onChange) {
+                f.onChange(value);
+              }
+              setFieldValue(name, value);
+            }}
           />
         );
     }
@@ -100,7 +108,7 @@ export function FormikForm<T, S>({
         initialValues={initialValues}
         onSubmit={onSubmit}>
         {(props: FormikHelpers<T>) => (
-          <Form className="form">
+          <Form className="form" onBlur={onChange}>
             {fieldsRendered(props)}
             <Button
               type={'submit'}

@@ -3,31 +3,42 @@ import {PrivateRoute} from '../components/PrivateRoute';
 import {withTracker} from '../utils/ga';
 import {BondsListScreen} from './Bonds/BondsListScreen';
 import {Redirect, Route, Switch} from 'react-router';
-import {SuppliersListScreen} from './R_Suppliers/SuppliersList';
 import {R_PaymentsListScreen} from './Payments/PaymentsListScreen';
 import AppBar from '../components/AppBar/AppBar';
-import {PaymentsPayScreen} from './Payments/PaymentsPayScreen';
+import {TransferMoneyScreen} from './Payments/TransferMoneyScreen';
 import {PaymentDetailsScreen} from './Payments/PaymentDetailsScreen';
 import {CompaniesListScreen} from "./Companies/CompaniesListScreen";
 import {CompanyDetailsScreen} from "./Companies/CompanyDetailsScreen";
 import {BondDetailsScreen} from "./Bonds/BondDetailsScreen";
 import {BondIssueScreen} from "./Bonds/BondIssueScreen";
-import {NewMnemonicScreen} from "./Wallet/NewMnemonicScreen";
+import {NewAccountScreen} from "./Wallet/NewAccountScreen";
+import {AccountsListScreen} from "./Wallet/AccountsListScreen";
+import {TransferBondsScreen} from "./Payments/TransferBondsScreen";
 
-export const RetailerRouter: React.FC = () => {
+export const Router: React.FC = () => {
   return (
     <>
       <AppBar />
       <Switch>
         <PrivateRoute
             exact
+            path="/wallet"
+            component={withTracker(AccountsListScreen)}
+        />
+        <PrivateRoute
+            exact
             path="/wallet/accounts/new"
-            component={withTracker(NewMnemonicScreen)}
+            component={withTracker(NewAccountScreen)}
         />
         <PrivateRoute
           exact
-          path="/payments/new/edit"
-          component={withTracker(PaymentsPayScreen)}
+          path="/payments/transfer_money"
+          component={withTracker(TransferMoneyScreen)}
+        />
+        <PrivateRoute
+            exact
+            path="/payments/transfer_bonds"
+            component={withTracker(TransferBondsScreen)}
         />
         <PrivateRoute
           exact

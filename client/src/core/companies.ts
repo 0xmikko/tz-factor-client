@@ -10,8 +10,3 @@ export interface Company {
 }
 
 
-export interface Account {
-    id: string
-    company: Company
-
-}

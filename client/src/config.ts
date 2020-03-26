@@ -15,3 +15,6 @@ export const SSO_ADDR =
     process.env.NODE_ENV === 'development'
         ? 'http://localhost:5000'
         : window.location.protocol + "//crm." + window.location.host;
+
+export const tezosNode = 'https://carthagenet.tezos.org.ua';
+export const contractAddress = 'KT1T19rKYLJ7UoEG5paj34fYa14Y9soV1cf5';

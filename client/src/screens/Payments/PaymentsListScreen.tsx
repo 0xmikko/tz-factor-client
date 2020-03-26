@@ -17,8 +17,8 @@ import {Loading} from '../../components/Loading';
 import {STATUS} from '../../store/utils/status';
 import {Payment} from '../../core/payments';
 import {ToolbarButton} from '../../containers/ToolbarButton';
-import {RootState} from "../../store";
-import {PaymentListItem} from "../../core/payments";
+import {RootState} from '../../store';
+import {PaymentListItem} from '../../core/payments';
 
 export const R_PaymentsListScreen: React.FC = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ export const R_PaymentsListScreen: React.FC = () => {
 
   const {data, status} = useSelector((state: RootState) => state.payments.List);
 
-  console.log(data)
+  console.log(data);
 
   const breadcrumbs: Breadcrumb[] = [
     {
@@ -39,14 +39,16 @@ export const R_PaymentsListScreen: React.FC = () => {
     },
   ];
 
-  const onPay = () => {
-    history.push('/payments/new/edit/');
-    // dispatch(actions.reload());
-  };
-
   const rightToolbar = (
     <>
-      <ToolbarButton title={'Pay'} onClick={onPay} />
+      <ToolbarButton
+        title={'Pay'}
+        onClick={() => history.push('/payments/transfer_money/')}
+      />
+      <ToolbarButton
+        title={'Pay with Bonds'}
+        onClick={() => history.push('/payments/transfer_bonds/')}
+      />
     </>
   );
 

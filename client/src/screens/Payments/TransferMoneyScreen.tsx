@@ -8,29 +8,16 @@
 import React, {useEffect, useState} from 'react';
 import PageHeader from '../../components/PageHeader/PageHeader';
 import {useDispatch, useSelector} from 'react-redux';
-import actions from '../../store/actions';
+
 import {RootState} from '../../store';
 import {Breadcrumb} from '../../components/PageHeader/Breadcrumb';
 import {STATUS} from '../../store/utils/status';
-import {Loading} from '../../components/Loading';
-import {getDetailsItem} from '../../store/dataloader';
-import {RouteComponentProps, useHistory} from 'react-router';
-import {BondIssueFormView} from '../../containers/Bonds/FormIssueView';
-import {Bond, BondCreateDTO} from '../../core/bonds';
-import moment from 'moment';
+import { useHistory} from 'react-router';
+import {TransferMoneyFormView} from '../../containers/Payments/TransferMoneyFormView';
+import {Payment, TransferBondsDTO, TransferMoneyDTO} from '../../core/payments';
+import actions from '../../store/actions';
 
-interface MatchParams {
-  id: string;
-  tab?: string;
-}
-
-interface BondIssueScreenProps extends RouteComponentProps<MatchParams> {}
-
-export const BondIssueScreen: React.FC<BondIssueScreenProps> = ({
-  match: {
-    params: {id, tab},
-  },
-}: BondIssueScreenProps) => {
+export const TransferMoneyScreen: React.FC = () => {
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -39,18 +26,30 @@ export const BondIssueScreen: React.FC<BondIssueScreenProps> = ({
   const [hash, setHash] = useState('0');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const data: TransferMoneyDTO = {
+    to: '',
+    amount: 0,
+  };
+
   operationStatus = useSelector((state: RootState) =>
       state.operations.data[hash]?.status);
 
-  const fromAccounts = useSelector(
-    (state: RootState) => state.accounts.LocalList.data,
-  );
+  const fromAccounts = useSelector((state: RootState) =>
+      state.accounts.LocalList.data);
+
+  const toAccounts = useSelector((state: RootState) =>
+      state.accounts.List.data);
+
+  useEffect(() => {
+    dispatch(actions.accounts.getList());
+  }, []);
+
 
   useEffect(() => {
     if (hash !== '0') {
       switch (operationStatus) {
         case STATUS.SUCCESS:
-          history.push('/bonds/');
+          history.push('/payments/');
           break;
 
         case STATUS.FAILURE:
@@ -61,38 +60,31 @@ export const BondIssueScreen: React.FC<BondIssueScreenProps> = ({
     }
   }, [hash, operationStatus]);
 
-  const onSubmit = (values: BondCreateDTO) => {
+  const onSubmit = (values: TransferMoneyDTO) => {
+    console.log(values)
     setIsSubmitted(true);
     const newHash = Date.now().toString();
     setHash(newHash);
-
-    // Emit data
-    dispatch(actions.bonds.create(values, newHash));
-  };
-
-  const data: BondCreateDTO = {
-    amount: 0,
-    account: fromAccounts[0],
-    matureDate: moment(new Date())
-      .add(1, 'days')
-      .valueOf(),
+    dispatch(actions.payments.transferMoney(newHash, values));
   };
 
   const breadcrumbs: Breadcrumb[] = [
     {
-      url: '/bonds',
-      title: 'bonds',
+      url: '/payments',
+      title: 'payments',
     },
   ];
 
+
   return (
     <div className="content content-fixed">
-      <PageHeader title={'Issue new bond '} breadcrumbs={breadcrumbs} />
-      <BondIssueFormView
+      <PageHeader title={'New payment'} breadcrumbs={breadcrumbs} />
+      <TransferMoneyFormView
         data={data}
-        fromAccounts={fromAccounts}
         onSubmit={onSubmit}
         isSubmitted={isSubmitted}
+        fromAccounts={fromAccounts}
+        toAccounts={toAccounts}
       />
     </div>
   );

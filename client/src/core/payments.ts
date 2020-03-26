@@ -1,5 +1,5 @@
-import {Account} from "./companies";
 import {Bond} from "./bonds";
+import {Account, AccountKey} from "./accounts";
 
 export interface Payment {
     id: string;
@@ -12,8 +12,15 @@ export interface Payment {
 
 }
 
-export interface PaymentCreateDTO {
-    from: string;
+export interface TransferBondsDTO {
+    bond: string;
+    from?: AccountKey;
+    to: string;
+    amount: number;
+}
+
+export interface TransferMoneyDTO {
+    from?: AccountKey;
     to: string;
     amount: number;
 }

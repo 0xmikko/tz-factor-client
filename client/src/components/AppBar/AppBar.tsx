@@ -45,8 +45,7 @@ export const AppBar = () => {
           </NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={onLogout}>
-            <i data-feather="log-out" />
-            Logout
+            <i data-feather="log-out" />Logout
           </NavDropdown.Item>
         </NavDropdown>
       </div>

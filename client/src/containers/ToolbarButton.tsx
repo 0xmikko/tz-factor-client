@@ -12,7 +12,7 @@ export const ToolbarButton: React.FC<ToolbarButtonProps> = ({
 }) => (
   <div className="d-none d-md-block">
     <Button
-      className="btn-sm pd-x-15 btn-brand-01 btn-uppercase"
+      className="btn-sm pd-x-15 btn-brand-01 btn-uppercase mg-l-10"
       onClick={onClick}>
       {title}
     </Button>

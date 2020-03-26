@@ -16,20 +16,19 @@ import {Button} from 'react-bootstrap';
 import {RouteComponentProps, useHistory} from 'react-router';
 
 import actions from '../../store/actions';
-import {Payment} from "../../core/payments";
-import {Company} from "../../core/companies";
-import {IssuerDetailsView} from "../../containers/Companies/IssuerDetailsView";
-import {STATUS} from "../../store/utils/status";
-import {Loading} from "../../components/Loading";
-import {getDetailsItem} from "../../store/dataloader";
+import {Payment} from '../../core/payments';
+import {Company} from '../../core/companies';
+import {IssuerDetailsView} from '../../containers/Companies/IssuerDetailsView';
+import {STATUS} from '../../store/utils/status';
+import {Loading} from '../../components/Loading';
+import {getDetailsItem} from '../../store/dataloader';
 
 interface MatchParams {
   id: string;
   tab?: string;
 }
 
-interface CompanyDetailsScreenProps
-  extends RouteComponentProps<MatchParams> {}
+interface CompanyDetailsScreenProps extends RouteComponentProps<MatchParams> {}
 
 export const CompanyDetailsScreen: React.FC<CompanyDetailsScreenProps> = ({
   match: {
@@ -41,13 +40,14 @@ export const CompanyDetailsScreen: React.FC<CompanyDetailsScreenProps> = ({
 
   useEffect(() => {
     dispatch(actions.companies.getDetails(id));
+    dispatch(actions.bonds.getList());
   }, [dispatch, id]);
 
   const dataItem = useSelector((state: RootState) =>
     getDetailsItem(state.companies.Details, id),
   );
 
-
+  const bondsList = useSelector((state: RootState) => state.bonds.List.data);
 
   if (!dataItem || !dataItem.data || dataItem.status !== STATUS.SUCCESS) {
     return <Loading />;
@@ -55,14 +55,7 @@ export const CompanyDetailsScreen: React.FC<CompanyDetailsScreenProps> = ({
 
   const {data} = dataItem;
 
-  // const data : Company = {
-  //       id: '123124',
-  //       name: 'Spar Limited Co.',
-  //       address: '12323',
-  //       type: 'ISSUER',
-  //       taxId: '123',
-  //
-  // }
+  const companyBonds = bondsList.filter(a => a.issuer.id === id);
 
   const breadcrumbs: Breadcrumb[] = [
     {
@@ -73,7 +66,9 @@ export const CompanyDetailsScreen: React.FC<CompanyDetailsScreenProps> = ({
 
   const rightToolbar = (
     <div className="d-none d-md-block">
-      <Button className="btn-sm pd-x-15 btn-brand-01 btn-uppercase" onClick={() => history.push(`/payments/${id}/edit/`)}>
+      <Button
+        className="btn-sm pd-x-15 btn-brand-01 btn-uppercase"
+        onClick={() => history.push(`/payments/${id}/edit/`)}>
         Edit
       </Button>
     </div>
@@ -81,11 +76,8 @@ export const CompanyDetailsScreen: React.FC<CompanyDetailsScreenProps> = ({
 
   return (
     <div className="content content-fixed">
-      <PageHeader
-        title={data.name}
-        breadcrumbs={breadcrumbs}
-      />
-      <IssuerDetailsView data={data} />
+      <PageHeader title={data.name} breadcrumbs={breadcrumbs} />
+      <IssuerDetailsView data={data} companyBonds={companyBonds} />
     </div>
   );
 };

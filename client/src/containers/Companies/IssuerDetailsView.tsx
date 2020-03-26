@@ -17,35 +17,23 @@ import {PriceChart} from '../../components/PriceChart';
 import {BondsListWidget} from '../Bonds/ListWidget';
 import {useHistory} from 'react-router';
 import {Bond} from '../../core/bonds';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store';
 
 interface CompanyDetailsProps {
   data: Company;
+  companyBonds: Bond[];
 }
 
 export const IssuerDetailsView: React.FC<CompanyDetailsProps> = ({
   data,
+  companyBonds,
 }: CompanyDetailsProps) => {
   const history = useHistory();
 
   const onBondSelected = (id: string) => {
     history.push('/bonds/' + id);
   };
-
-  const bonds: Bond[] = [
-    {
-      id: '123213',
-      matureDate: new Date(),
-      issuer: {
-        id: '123124',
-        name: 'Spar Limited Co.',
-        address: '12323',
-        type: 'ISSUER',
-        taxId: '123',
-      },
-      createdAt: new Date(),
-      amount: 23.12,
-    },
-  ];
 
   return (
     <Container className="pd-x-0 pd-lg-x-10 pd-xl-x-0 m-t-20-f pd-t-30-f">
@@ -59,7 +47,10 @@ export const IssuerDetailsView: React.FC<CompanyDetailsProps> = ({
           <PriceChart />
         </Col>
         <Col lg={4} md={4} xs={12}>
-          <BondsListWidget items={bonds} onItemSelected={onBondSelected} />
+          <BondsListWidget
+            items={companyBonds}
+            onItemSelected={onBondSelected}
+          />
         </Col>
       </Row>
     </Container>

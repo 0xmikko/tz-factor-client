@@ -21,10 +21,10 @@ export const BondsList: React.FC<BondsListProps> = ({
     onItemSelected
 }: BondsListProps) => {
   const renderLine = (h: Bond) => (
-    <tr onClick={() => onItemSelected(h.id)}>
+    <tr onClick={() => onItemSelected(h.id)} key={h.id}>
       <td className="tx-color-03 tx-normal">{getBondTicker(h)}</td>
       <td className="text-center tx-medium">{moment(h.matureDate).format('YYYY-MM-DD')}</td>
-      <td className="text-right tx-medium">{h.amount}</td>
+      <td className="text-right tx-medium">{h.total}</td>
       <td className="text-center tx-medium">
           {moment(h.createdAt).format('YYYY-MM-DD')}
         {/*<span className="mg-l-5 tx-10 tx-normal tx-success">*/}

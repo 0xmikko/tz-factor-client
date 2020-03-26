@@ -12,63 +12,80 @@ import * as yup from 'yup';
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import {Button, FormLabel} from 'react-bootstrap';
 import moment from 'moment';
-import {FormikForm, FormikFormViewProps} from "../../components/Forms/FormikForm";
+import {
+  FormikForm,
+  FormikFormViewProps,
+} from '../../components/Forms/FormikForm';
+import {TypeaheadOptions} from '../../components/Forms/AutoCompleteField';
+import {TransferBondsDTO} from '../../core/payments';
+import {AccountKey} from '../../core/accounts';
 
 const formSchema = yup.object({
   matureDate: yup.date().required(),
-  amount: yup.number().required().moreThan(0),
-  account: yup.string().min(5),
+  amount: yup
+    .number()
+    .required()
+    .moreThan(0),
+  account: yup.number().required(),
 });
 
 interface BondFormFields {
-  matureDate: string,
-  amount: string,
-  account: string,
-
+  matureDate: string;
+  amount: string;
+  account: string;
 }
 
-export const BondIssueFormView: React.FC<FormikFormViewProps<BondCreateDTO>> = ({
+interface BondIssueViewProps extends FormikFormViewProps<BondCreateDTO> {
+  fromAccounts: AccountKey[];
+}
+
+export const BondIssueFormView: React.FC<BondIssueViewProps> = ({
   data,
+  fromAccounts,
   onSubmit,
   isSubmitted,
 }) => {
-
-  const initialValues : BondFormFields = {
+  const initialValues: BondFormFields = {
     matureDate: moment(data.matureDate).format('YYYY-MM-DD'),
     amount: data.amount.toString(),
-    account: data.account,
-  }
+    account: '0',
+  };
 
-  const fields  = {
-    matureDate: {
-      label: 'Mature Date',
+  const fields = {
+    account: {
+      label: 'Account',
+      type: 'autocomplete',
+      options: fromAccounts.map<TypeaheadOptions>((account, index) => ({
+        id: index.toString(),
+        value: `${account.name} (${account.id})`,
+      })),
     },
 
     amount: {
       label: 'Amount',
     },
 
-    account: {
-      label: 'Account',
+    matureDate: {
+      label: 'Mature Date',
     },
   };
 
-  function alignTypesAndSubmit (values: BondFormFields) {
+  function alignTypesAndSubmit(values: BondFormFields) {
     onSubmit({
       // Convert items from string to int & data
       amount: parseInt(values.amount),
       matureDate: Date.parse(values.matureDate).valueOf(),
-      account: values.account,
-    })
+      account: fromAccounts[parseInt(values.account)],
+    });
   }
 
   return (
-      <FormikForm
-          formSchema={formSchema}
-          fields={fields}
-          initialValues={initialValues}
-          onSubmit={alignTypesAndSubmit}
-          isSubmitted={isSubmitted}
-      />
+    <FormikForm
+      formSchema={formSchema}
+      fields={fields}
+      initialValues={initialValues}
+      onSubmit={alignTypesAndSubmit}
+      isSubmitted={isSubmitted}
+    />
   );
 };

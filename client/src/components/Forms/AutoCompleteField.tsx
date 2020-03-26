@@ -13,12 +13,14 @@ interface AutoCompleteFieldProps {
   name: string;
   label: string;
   data: TypeaheadOptions[];
+  placeholder?: string;
   onChange: (value: string) => void;
 }
 
 const AutoCompleteField: React.FC<AutoCompleteFieldProps> = ({
   name,
   label,
+  placeholder,
   data,
   onChange,
 }) => {
@@ -45,13 +47,14 @@ const AutoCompleteField: React.FC<AutoCompleteFieldProps> = ({
           onChange={selected => {
             const value = selected.length > 0 ? selected[0].id : '';
             console.log(value);
-           onChange(value);
+            onChange(value);
           }}
           onBlur={e => {
             console.log('BLUR', e);
             field.onBlur(name);
           }}
-          placeholder={label}
+          placeholder={placeholder || label}
+
           // defaultSelected={data.filter(item => item.id === defaultItem)}
         />
       )}

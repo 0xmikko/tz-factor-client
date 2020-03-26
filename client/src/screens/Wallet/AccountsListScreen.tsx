@@ -7,6 +7,7 @@
  */
 import React, {useEffect} from 'react';
 import PageHeader from '../../components/PageHeader/PageHeader';
+import {PaymentsList} from '../../containers/Payments/ListView';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '../../store/actions';
 import {Breadcrumb} from '../../components/PageHeader/Breadcrumb';
@@ -14,42 +15,53 @@ import {Button, Card, Col, Container, Row} from 'react-bootstrap';
 import {useHistory} from 'react-router';
 import {Loading} from '../../components/Loading';
 import {STATUS} from '../../store/utils/status';
-import {BondsList} from '../../containers/Bonds/ListView';
+import {CompaniesList} from '../../containers/Companies/ListView';
 import {RootState} from '../../store';
+import {AccountsList} from '../../containers/Accounts/ListView';
 import {ToolbarButton} from '../../containers/ToolbarButton';
 
-export const BondsListScreen: React.FC = () => {
+export const AccountsListScreen: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(actions.bonds.getList());
+    dispatch(actions.accounts.getLocalAccountsList());
+    dispatch(actions.accounts.getList());
   }, [dispatch]);
 
-  const {data, status} = useSelector((state: RootState) => state.bonds.List);
+  const {data, status} = useSelector(
+    (state: RootState) => state.accounts.LocalList,
+  );
+  const registeredAccounts = useSelector(
+    (state: RootState) => state.accounts.List.data,
+  );
 
   const breadcrumbs: Breadcrumb[] = [
     {
-      url: '/bonds',
-      title: 'Bonds',
+      url: '/wallet',
+      title: 'Wallet',
+    },
+    {
+      url: '/wallet/accounts',
+      title: 'Accounts',
     },
   ];
 
-  const onIssue = () => {
-    history.push('/bonds/new');
+  const onNewAccount = () => {
+    history.push('/wallet/accounts/new/');
   };
 
-  const rightToolbar = <ToolbarButton title={'ISSUE'} onClick={onIssue} />;
+  const rightToolbar = (
+    <>
+      <ToolbarButton title={'Create'} onClick={onNewAccount} />
+    </>
+  );
 
-  const onItemSelected = (id: string) => history.push(`/bonds/${id}`);
-  const onFilter = (filter: string) => {
-    history.push('/bonds#' + filter);
-  };
 
   return (
     <div className="content content-fixed">
       <PageHeader
-        title={'Bonds'}
+        title={'Accounts'}
         breadcrumbs={breadcrumbs}
         rightPanel={rightToolbar}
       />
@@ -57,19 +69,14 @@ export const BondsListScreen: React.FC = () => {
         <Container style={{padding: 0}}>
           <Row>
             <Col lg={12} md={12} xs={12}>
-              <BondsList items={data} onItemSelected={onItemSelected} />
+              <AccountsList
+                items={data}
+                registeredAccounts={registeredAccounts}
+              />
             </Col>
           </Row>
         </Container>
       ) : (
-        //       <Card.Body>
-        //         className={'pd-y-30 pd-x-0'}
-        //         style={{paddingLeft: 0, paddingRight: 0}}>
-        //         <BondsList items={data} onItemSelected={onItemSelected} />
-        //       </Card.Body>
-        //     </Card>
-        //   </div>
-        // </div>
         <Loading />
       )}
     </div>

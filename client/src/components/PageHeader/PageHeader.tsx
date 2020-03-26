@@ -29,8 +29,9 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             <Breadcrumb items={breadcrumbs} />
             <h4 className="mg-b-0">{title}</h4>
           </div>
-
+          <div className="d-sm-flex align-items-center justify-content-between">
           {rightPanel}
+          </div>
         </div>
       </div>
     </>

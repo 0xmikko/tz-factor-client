@@ -13,11 +13,11 @@ import {RootState} from '../../store';
 import {Breadcrumb} from '../../components/PageHeader/Breadcrumb';
 import {STATUS} from '../../store/utils/status';
 import {RouteComponentProps, useHistory} from 'react-router';
-import {PaymentFormView} from '../../containers/Payments/FormView';
-import {Payment, PaymentCreateDTO} from '../../core/payments';
+import {TransferBondsFormView} from '../../containers/Payments/TransferBondsFormView';
+import {Payment, TransferBondsDTO} from '../../core/payments';
 import actions from '../../store/actions';
 
-export const PaymentsPayScreen: React.FC = () => {
+export const TransferBondsScreen: React.FC = () => {
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -26,26 +26,27 @@ export const PaymentsPayScreen: React.FC = () => {
   const [hash, setHash] = useState('0');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const data: PaymentCreateDTO = {
-    from: '',
+  const data: TransferBondsDTO = {
+    bond: '',
     to: '',
     amount: 0,
   };
 
   operationStatus = useSelector((state: RootState) =>
-      state.payments.Details?.hashes[hash]?.status);
+      state.operations.data[hash]?.status);
 
   const bondsAvaible = useSelector((state: RootState) =>
       state.bonds.List.data);
 
-  const contractorsAccount = useSelector((state: RootState) =>
-      state.payments.AccountsList.data);
+  const fromAccounts = useSelector((state: RootState) =>
+      state.accounts.LocalList.data);
 
-  console.log("::::", contractorsAccount);
+  const toAccounts = useSelector((state: RootState) =>
+      state.accounts.List.data);
 
   useEffect(() => {
     dispatch(actions.bonds.getList());
-    dispatch(actions.payments.getAccountsList());
+    dispatch(actions.accounts.getList());
   }, []);
 
 
@@ -64,12 +65,12 @@ export const PaymentsPayScreen: React.FC = () => {
     }
   }, [hash, operationStatus]);
 
-  const onSubmit = (values: PaymentCreateDTO) => {
+  const onSubmit = (values: TransferBondsDTO) => {
     console.log(values)
     setIsSubmitted(true);
     const newHash = Date.now().toString();
     setHash(newHash);
-    dispatch(actions.payments.pay(values));
+    dispatch(actions.payments.transferBonds(values));
   };
 
   const breadcrumbs: Breadcrumb[] = [
@@ -83,12 +84,13 @@ export const PaymentsPayScreen: React.FC = () => {
   return (
     <div className="content content-fixed">
       <PageHeader title={'New payment'} breadcrumbs={breadcrumbs} />
-      <PaymentFormView
+      <TransferBondsFormView
         data={data}
         onSubmit={onSubmit}
         isSubmitted={isSubmitted}
         bondsAvaible={bondsAvaible}
-        toAccounts={contractorsAccount}
+        fromAccounts={fromAccounts}
+        toAccounts={toAccounts}
       />
     </div>
   );
