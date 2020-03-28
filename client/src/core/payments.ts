@@ -4,16 +4,16 @@ import {Account, AccountKey} from "./accounts";
 export interface Payment {
     id: string;
     date: Date;
-    bond: Bond;
-    from: Account;
-    to: Account;
+    sender?: Account;
+    recipient?: Account;
     amount: number;
-    status: 'SUBMITTED' | 'CONFIRMED';
-
+    isMoney: boolean;
+    isIncoming?: boolean;
+    bond? : Bond;
 }
 
 export interface TransferBondsDTO {
-    bond: string;
+    bond: number;
     from?: AccountKey;
     to: string;
     amount: number;
@@ -23,15 +23,4 @@ export interface TransferMoneyDTO {
     from?: AccountKey;
     to: string;
     amount: number;
-}
-
-export interface PaymentListItem {
-    id: string,
-    date: Date,
-    amount: number,
-    fromCompany: string,
-    toCompany: string,
-    issuer: string,
-    matureDate: Date,
-    status: string,
 }

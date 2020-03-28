@@ -36,8 +36,6 @@ export const FundraiserFormView: React.FC<AccountFundraiserFormViewProps> = ({
 }) => {
 
 
-
-
   const fields = {
     name: {
       label: 'Account name',
@@ -59,6 +57,15 @@ export const FundraiserFormView: React.FC<AccountFundraiserFormViewProps> = ({
     },
   };
 
+  const initialValues : FaucetAccount = {
+    name: 'New account',
+    mnemonic: '',
+    secret: '',
+    pkh: '',
+    password: '',
+    email: '',
+  }
+
   const alignTypesAndSubmit = (values: FaucetAccount) => {
     values.mnemonic = values.mnemonic
         .split('"').join("")
@@ -74,7 +81,7 @@ export const FundraiserFormView: React.FC<AccountFundraiserFormViewProps> = ({
     <FormikForm
       formSchema={formSchema}
       fields={fields}
-      initialValues={data}
+      initialValues={data || initialValues}
       onSubmit={alignTypesAndSubmit}
       isSubmitted={isSubmitted}
     />

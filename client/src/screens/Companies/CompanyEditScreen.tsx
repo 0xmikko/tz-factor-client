@@ -24,20 +24,19 @@ export const CompanyEditScreen: React.FC = () => {
   const dispatch = useDispatch();
 
   const history = useHistory();
-  let operationStatus: STATUS;
 
   const [hash, setHash] = useState('0');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const id = useSelector((state: RootState) => state.profile.id);
 
-  operationStatus = useSelector(
-    (state: RootState) => state.payments.Details.hashes[hash].status,
+  const operationStatus = useSelector(
+      (state: RootState) => state.operations.data[hash]?.data,
   );
 
   useEffect(() => {
     if (hash !== '0') {
-      switch (operationStatus) {
+      switch (operationStatus?.status) {
         case STATUS.SUCCESS:
           history.push('/payments/' + data.id);
           break;

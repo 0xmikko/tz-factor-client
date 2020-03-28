@@ -4,9 +4,14 @@ export interface Company {
     id: string;
     type: 'ISSUER' | 'SUPPLIER' | 'INVESTOR';
     name: string;
-    address: string;
-    web?: string;
-    taxId: string;
+    orgType?: string;
+    industry?: string;
+    founder?: string;
+    headquaters?: string;
+    numberOfEmployees?: number;
+    product?: string;
+    revenue?: string;
+    website?: string;
 }
 
 

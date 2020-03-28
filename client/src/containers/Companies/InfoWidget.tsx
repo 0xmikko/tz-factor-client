@@ -8,23 +8,41 @@
 
 import React from 'react';
 import {Company} from '../../core/companies';
-import {BACKEND_ADDR} from "../../config";
+import {BACKEND_ADDR} from '../../config';
+import {Card, Table} from 'react-bootstrap';
+import moment from 'moment';
 
 interface InfoWidgetProps {
   data: Company;
 }
 
 export const InfoWidget: React.FC<InfoWidgetProps> = ({data}) => {
-  return <>
-      {/* URL: <a href={`${BACKEND_ADDR}/pr/${data.url}`}>/{data.url}</a> <br/>
-        <br/>
-      Oneliner: {data.one_liner} <br/>
-      Description: {data.description} <br/>
-      Title: {data.title}<br/>
-      Meta keywords: {data.meta_keywords} <br/>
-      Meta description: {data.meta_description}<br/> */}
+  const fields = [
+    'Type',
+    'Industry',
+    'Founded',
+    'Headquaters',
+    'Number of employees',
+    'Product',
+    'Revenue',
+    'Website',
+  ];
 
-      {/*Total clicks: {data.total_clicks} <br/>*/}
+  const renderedFields = fields.map(a => (
+    <tr key={a}>
+      <td>
+        <b>{a}</b>
+      </td>
+      <td>{a}</td>
+    </tr>
+  ));
 
-  </>;
+  return (
+    <Card>
+      <Card.Body className="pd-0">
+        <h6 className="mg-b-0 pd-15-f">Company info</h6>
+        <Table>{renderedFields}</Table>
+      </Card.Body>
+    </Card>
+  );
 };

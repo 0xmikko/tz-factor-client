@@ -9,22 +9,27 @@
 import React from 'react';
 import {Bond} from '../../core/bonds';
 import {BACKEND_ADDR} from "../../config";
+import moment from 'moment';
+import {Card, Table} from "react-bootstrap";
 
 interface InfoWidgetProps {
   data: Bond;
 }
 
 export const InfoWidget: React.FC<InfoWidgetProps> = ({data}) => {
-  return <>
-      URL: <a href={`${BACKEND_ADDR}/pr/${data.issuer}`}>/{data.matureDate}</a> <br/>
-        <br/>
-      {/* Oneliner: {data.one_liner} <br/>
-      Description: {data.description} <br/>
-      Title: {data.title}<br/>
-      Meta keywords: {data.meta_keywords} <br/>
-      Meta description: {data.meta_description}<br/> */}
+    return (
+        <Card>
+            <Card.Header className="card-header">
+                <h6 className="mg-b-0">Info</h6>
+            </Card.Header>
+            <Card.Body className="pd-20">
+                <div className="table-responsive">
+                    Issuer: <a href={`/company/${data.issuer.id}`}>{data.issuer.name}</a> <br/>
+                    Mature Date: {moment(data.matureDate).format("YYYY-MM-DD")} <br/>
+                    Total amount: {data.total} <br/>
+                </div>
+            </Card.Body>
+        </Card>
+    );
 
-      {/*Total clicks: {data.total_clicks} <br/>*/}
-
-  </>;
 };

@@ -10,6 +10,7 @@ import React from 'react';
 import {Table} from 'react-bootstrap';
 import {Bond, getBondTicker} from '../../core/bonds';
 import moment from 'moment';
+import {numberWithCommas} from '../../utils/formaters';
 
 interface BondsListProps {
   items: Bond[];
@@ -18,22 +19,20 @@ interface BondsListProps {
 
 export const BondsList: React.FC<BondsListProps> = ({
   items,
-    onItemSelected
+  onItemSelected,
 }: BondsListProps) => {
   const renderLine = (h: Bond) => (
     <tr onClick={() => onItemSelected(h.id)} key={h.id}>
       <td className="tx-color-03 tx-normal">{getBondTicker(h)}</td>
-      <td className="text-center tx-medium">{moment(h.matureDate).format('YYYY-MM-DD')}</td>
-      <td className="text-right tx-medium">{h.total}</td>
       <td className="text-center tx-medium">
-          {moment(h.createdAt).format('YYYY-MM-DD')}
-        {/*<span className="mg-l-5 tx-10 tx-normal tx-success">*/}
-        {/*  <i className="icon ion-md-arrow-up"></i> 4.5%*/}
-        {/*</span>*/}
+        {moment(h.matureDate).format('YYYY-MM-DD')}
+      </td>
+      <td className="text-right tx-medium">{numberWithCommas(h.total)}</td>
+      <td className="text-center tx-medium">
+        {moment(h.createdAt).format('YYYY-MM-DD')}
       </td>
     </tr>
   );
-// tx-teal tx-pink
   const renderTableContent = items.map(h => renderLine(h));
 
   return (
@@ -46,14 +45,12 @@ export const BondsList: React.FC<BondsListProps> = ({
               <tr>
                 <th>Ticker</th>
                 <th className="text-center">Mature date</th>
-                <th className="text-right">Amount</th>
-                <th className="text-center">Date of issue</th>
+                <th className="text-right">Total supply</th>
+                <th className="text-right">Current supply</th>
+                <th className="text-center">Avg. interest</th>
               </tr>
             </thead>
-            <tbody>
-              {renderTableContent}
-
-            </tbody>
+            <tbody>{renderTableContent}</tbody>
           </Table>
         </div>
       </div>

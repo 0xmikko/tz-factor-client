@@ -34,13 +34,12 @@ export const BondIssueScreen: React.FC<BondIssueScreenProps> = ({
   const dispatch = useDispatch();
 
   const history = useHistory();
-  let operationStatus: STATUS;
 
   const [hash, setHash] = useState('0');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  operationStatus = useSelector((state: RootState) =>
-      state.operations.data[hash]?.status);
+  const operationStatus = useSelector((state: RootState) =>
+      state.operations.data[hash]?.data?.status);
 
   const fromAccounts = useSelector(
     (state: RootState) => state.accounts.LocalList.data,

@@ -1,6 +1,7 @@
 export interface Operation {
     id: string,
     status: string,
+    error?: string,
 }
 
 export const namespace = 'operations';

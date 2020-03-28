@@ -33,8 +33,14 @@ interface PaymentFormViewProps extends FormikFormViewProps<TransferBondsDTO> {
   toAccounts: Account[];
 }
 
+interface TransferBondsFormFields {
+  bond: string;
+  from: string;
+  to: string;
+  amount: string;
+}
+
 export const TransferBondsFormView: React.FC<PaymentFormViewProps> = ({
-  data,
   onSubmit,
   isSubmitted,
   bondsAvaible,
@@ -59,11 +65,11 @@ export const TransferBondsFormView: React.FC<PaymentFormViewProps> = ({
     from: {
       label: 'From account',
       type: 'autocomplete',
-      options: fromAccounts.map<TypeaheadOptions>(account => ({
-        id: account.id,
+      options: fromAccounts.map<TypeaheadOptions>((account, index) => ({
+        id: index.toString(),
         value: `${account.name} (${account.id})`,
       })),
-      onChange: setFromAccount,
+      onChange: (value:string) => setFromAccount(fromAccounts[parseInt(value)].id),
     },
 
     bond: {
@@ -89,16 +95,28 @@ export const TransferBondsFormView: React.FC<PaymentFormViewProps> = ({
     },
   };
 
-  const alignTypesAndSubmit = (values: TransferBondsDTO) => {
-    values.amount = parseInt(values.amount.toString());
-    onSubmit(values);
-  };
+  const initialValues : TransferBondsFormFields = {
+    bond: '',
+    from: '',
+    to: '',
+    amount: '0',
+  }
+
+  const alignTypesAndSubmit = (values: TransferBondsFormFields) => {
+    console.log(values);
+      onSubmit({
+        bond: parseInt(values.bond),
+        from: fromAccounts[parseInt(values.from.toString())],
+        to: values.to,
+        amount: parseInt(values.amount),
+      });
+    };
 
   return (
     <FormikForm
       formSchema={formSchema}
       fields={fields}
-      initialValues={data}
+      initialValues={initialValues}
       onSubmit={alignTypesAndSubmit}
       isSubmitted={isSubmitted}
     />

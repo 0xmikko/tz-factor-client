@@ -6,26 +6,24 @@
  *
  */
 import React, {useEffect} from 'react';
-import PageHeader from '../../components/PageHeader/PageHeader';
-import {PaymentsList} from '../../containers/Payments/ListView';
 import {useDispatch, useSelector} from 'react-redux';
-import * as actions from '../../store/payments/actions';
-import {Breadcrumb} from '../../components/PageHeader/Breadcrumb';
-import {Button} from 'react-bootstrap';
+
 import {useHistory} from 'react-router';
+import PageHeader from '../../components/PageHeader/PageHeader';
+import {Breadcrumb} from '../../components/PageHeader/Breadcrumb';
+import {PaymentsList} from '../../containers/Payments/ListView';
+import {ToolbarButton} from '../../containers/ToolbarButton';
 import {Loading} from '../../components/Loading';
 import {STATUS} from '../../store/utils/status';
-import {Payment} from '../../core/payments';
-import {ToolbarButton} from '../../containers/ToolbarButton';
 import {RootState} from '../../store';
-import {PaymentListItem} from '../../core/payments';
+import actions from '../../store/actions';
 
-export const R_PaymentsListScreen: React.FC = () => {
+export const PaymentsListScreen: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(actions.getList());
+    dispatch(actions.payments.getList());
   }, [dispatch]);
 
   const {data, status} = useSelector((state: RootState) => state.payments.List);
@@ -52,8 +50,6 @@ export const R_PaymentsListScreen: React.FC = () => {
     </>
   );
 
-  const onItemSelected = (id: string) => history.push(`/payments/${id}`);
-
   return (
     <div className="content content-fixed">
       <PageHeader
@@ -62,7 +58,7 @@ export const R_PaymentsListScreen: React.FC = () => {
         rightPanel={rightToolbar}
       />
       {status === STATUS.SUCCESS ? (
-        <PaymentsList items={data} onItemSelected={onItemSelected} />
+        <PaymentsList items={data}  />
       ) : (
         <Loading />
       )}

@@ -61,10 +61,9 @@ export const getList: () => SocketEmitAction = () => ({
 });
 
 export const transferMoney = (
-  ophash: string,
   dto: TransferMoneyDTO,
+  opHash: string,
 ): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
-
   console.log('Transfer money', dto);
 
   if (!dto.from) return;
@@ -79,18 +78,38 @@ export const transferMoney = (
     const op = await contractInstance.methods
       .transferMoney(dto.to, dto.amount)
       .send();
-    dispatch(updateStatus(ophash, STATUS.LOADING));
+    dispatch(updateStatus(opHash, STATUS.LOADING));
     console.log('DDD');
     await op.confirmation(1);
-    dispatch(updateStatus(ophash, STATUS.SUCCESS));
+    dispatch(updateStatus(opHash, STATUS.SUCCESS));
   } catch (e) {
     console.log('OOOPS', e);
-    dispatch(updateStatus(ophash, STATUS.FAILURE));
+    dispatch(updateStatus(opHash, STATUS.FAILURE, e.toString()));
   }
 };
 
 export const transferBonds = (
   dto: TransferBondsDTO,
+  opHash: string,
 ): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
-  console.log('Transfer bonds', dto);
+  if (!dto.from) return;
+  try {
+    Tezos.setProvider({
+      rpc: tezosNode,
+      signer: new InMemorySigner(dto.from.keystore.privateKey),
+    });
+    const contractInstance = await Tezos.contract.at(contractAddress);
+    console.log('CI', contractInstance);
+
+    const op = await contractInstance.methods
+      .transferBonds(dto.bond, dto.to, dto.amount)
+      .send();
+    dispatch(updateStatus(opHash, STATUS.LOADING));
+    console.log('DDD');
+    await op.confirmation(1);
+    dispatch(updateStatus(opHash, STATUS.SUCCESS));
+  } catch (e) {
+    console.log('OOOPS', e);
+    dispatch(updateStatus(opHash, STATUS.FAILURE, e.toString()));
+  }
 };

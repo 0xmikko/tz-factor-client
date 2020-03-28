@@ -5,10 +5,17 @@ import {AccountKey, FaucetAccount} from '../../core/accounts';
 import {KeyStore} from 'conseiljs/dist/types/wallet/KeyStore';
 import {TezosNodeWriter, TezosWalletUtil} from 'conseiljs';
 import {ACCOUNTS_KEY_PREFIX, ACCOUNTS_PREFIX, namespace} from './index';
-import {DETAIL_FAILURE, DETAIL_SUCCESS, LIST_FAILURE, LIST_SUCCESS} from '../dataloader';
+import {
+  DETAIL_FAILURE,
+  DETAIL_SUCCESS,
+  LIST_FAILURE,
+  LIST_SUCCESS,
+} from '../dataloader';
 import {tezosNode} from '../../config';
-import {SocketEmitAction} from "../socketMiddleware";
-import {PAYMENTS_PREFIX} from "../payments";
+import {SocketEmitAction} from '../socketMiddleware';
+import {PAYMENTS_PREFIX} from '../payments';
+import {updateStatus} from '../operations/actions';
+import {STATUS} from '../utils/status';
 
 export const addNewKey = (
   fa: FaucetAccount,
@@ -41,39 +48,49 @@ export const addNewKey = (
 export const RevealAccount = (
   account: AccountKey,
 ): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
-
-    console.log("Try to reveal account for ", account.name)
+  console.log('Try to reveal account for ', account.name);
   try {
     const result = await TezosNodeWriter.sendKeyRevealOperation(
-        tezosNode,
-        account.keystore,
+      tezosNode,
+      account.keystore,
     );
-    console.log(`Injected REVEAL operation group id ${result.operationGroupID}`);
+    console.log(
+      `Injected REVEAL operation group id ${result.operationGroupID}`,
+    );
     account.status = 'Revealed';
     dispatch(updateAccountKey(account));
-  }
-  catch (e) {
-      console.log("Error during revealing account", e)
-
+  } catch (e) {
+    console.log('Error during revealing account', e);
   }
 };
 
-export const registerAccount: (id: string, opHash: string) => SocketEmitAction = (id, opHash) => ({
-  type: 'SOCKET_EMIT',
-  namespace,
-  event: 'accounts:create',
-  typeOnFailure: ACCOUNTS_PREFIX + DETAIL_FAILURE,
-  payload: { id, opHash },
-});
+export const registerAccount = (
+  id: string,
+  opHash: string,
+): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
+  dispatch(updateStatus(opHash, STATUS.LOADING));
+  dispatch({
+    type: 'SOCKET_EMIT',
+    namespace,
+    event: 'accounts:create',
+    typeOnFailure: ACCOUNTS_PREFIX + DETAIL_FAILURE,
+    payload: {id, opHash},
+  });
+};
 
-export const deposit: (id: string, opHash: string) => SocketEmitAction = (id, opHash) => ({
-  type: 'SOCKET_EMIT',
-  namespace,
-  event: 'accounts:deposit',
-  typeOnFailure: ACCOUNTS_PREFIX + DETAIL_FAILURE,
-  payload: {id, opHash},
-});
-
+export const deposit = (
+  id: string,
+  opHash: string,
+): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
+  dispatch(updateStatus(opHash, STATUS.LOADING));
+  dispatch({
+    type: 'SOCKET_EMIT',
+    namespace,
+    event: 'accounts:deposit',
+    typeOnFailure: ACCOUNTS_PREFIX + DETAIL_FAILURE,
+    payload: {id, opHash},
+  });
+};
 
 export const updateAccountKey = (
   updatedKey: AccountKey,
@@ -84,7 +101,7 @@ export const updateAccountKey = (
     const existingKeys = JSON.parse(keysJSON) as AccountKey[];
     let found = false;
     for (const k of existingKeys) {
-        console.log(k, updatedKey, found)
+      console.log(k, updatedKey, found);
       if (k.id === updatedKey.id) {
         keys.push(updatedKey);
         found = true;
@@ -110,24 +127,19 @@ export const getLocalAccountsList = () => {
   };
 };
 
-
-
-
 export const connectSocket = (): ThunkAction<
-    void,
-    RootState,
-    unknown,
-    Action<string>
-    > => async dispatch => {
+  void,
+  RootState,
+  unknown,
+  Action<string>
+> => async dispatch => {
   dispatch({
     type: 'SOCKET_ON',
     namespace,
     event: 'accounts:updateList',
     typeOnSuccess: ACCOUNTS_PREFIX + LIST_SUCCESS,
   });
-
 };
-
 
 export const getList: () => SocketEmitAction = () => ({
   type: 'SOCKET_EMIT',

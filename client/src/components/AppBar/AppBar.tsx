@@ -15,6 +15,7 @@ import {isAuthenticated} from '../../store/auth';
 import actions from '../../store/actions';
 import {Role} from '../../core/profile';
 import {AppBarElement} from './AppBarElement';
+import logo from './logo.png'
 
 // import AppSearch from "./AppSearch"
 
@@ -31,26 +32,27 @@ export const AppBar = () => {
       <AppBarElement title="Bonds" to="/bonds" key="bonds" />
       <AppBarElement title="Companies" to="/companies" key="companies" />
       <AppBarElement title="Wallet" to="/wallet" key="wallet" />
-      <div className="navbar-right">
-        <NavDropdown title="Account" id="basic-nav-dropdown" alignRight>
+    </>
+  );
+
+  const authRightMenu = ( <div className="navbar-right">
+      <NavDropdown title="Account" id="basic-nav-dropdown" alignRight>
           <NavDropdown.Item href="#action/3.1">
-            <i data-feather="life-buoy" key={'11'} />
-            Action
+              <i data-feather="life-buoy" key={'11'} />
+              Action
           </NavDropdown.Item>
           <NavDropdown.Item href="#action/3.2" key={12}>
-            Another action
+              Another action
           </NavDropdown.Item>
           <NavDropdown.Item href="#action/3.3" key={13}>
-            Something
+              Something
           </NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={onLogout}>
-            <i data-feather="log-out" />Logout
+              <i data-feather="log-out" />Logout
           </NavDropdown.Item>
-        </NavDropdown>
-      </div>
-    </>
-  );
+      </NavDropdown>
+  </div>);
 
   const nonAutheticatedMenu = (
     <div className="navbar-right">
@@ -75,43 +77,23 @@ export const AppBar = () => {
       </a>
       <Navbar.Brand>
         <Link to="/" className="df-logo">
-          Lean<span>tool</span>
+          <img src={logo} height={25} alt={'Logo'}/>
         </Link>
       </Navbar.Brand>
       <div id="navbarMenu" className="navbar-menu-wrapper">
         <div className="navbar-menu-header">
           <Link to="/" className="df-logo">
-            dash<span>forge</span>
+            TZ<span>factor</span>
           </Link>
           <a id="mainMenuClose" href="#">
             <i data-feather="x" />
           </a>
         </div>
-        <Nav className="navbar-menu">
-          {/*<NavDropdown title="Account" id="basic-nav-dropdown">*/}
-          {/*  <NavDropdown.Item href="#action/3.1" className={'nav-sub-item'}>*/}
-          {/*    Action*/}
-          {/*  </NavDropdown.Item>*/}
-          {/*  <NavDropdown.Item href="#action/3.2">*/}
-          {/*    Another action*/}
-          {/*  </NavDropdown.Item>*/}
-          {/*  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>*/}
-          {/*  <NavDropdown.Divider />*/}
-          {/*  <NavDropdown.Item onClick={onLogout}>Logout</NavDropdown.Item>*/}
-          {/*</NavDropdown>*/}
+        <Nav className="navbar-menu" style={{justifyContent: 'center'}}>
 
-          {/*<li className="nav-item">*/}
-          {/*  <Link to="/hypotheses/" className="nav-link">*/}
-          {/*    <i data-feather="box" /> Components*/}
-          {/*  </Link>*/}
-          {/*</li>*/}
-          {/*<li className="nav-item">*/}
-          {/*  <Link to="/hypotheses/" className="nav-link">*/}
-          {/*    <i data-feather="archive" /> Collections*/}
-          {/*  </Link>*/}
-          {/*</li>*/}
-          {isSignIn ? authetificatedMenu : nonAutheticatedMenu}
+          {isSignIn ? authetificatedMenu : ''}
         </Nav>
+          {isSignIn ? authRightMenu : nonAutheticatedMenu}
       </div>
     </Navbar>
   );

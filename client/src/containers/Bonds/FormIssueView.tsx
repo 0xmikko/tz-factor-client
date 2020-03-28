@@ -46,8 +46,8 @@ export const BondIssueFormView: React.FC<BondIssueViewProps> = ({
   isSubmitted,
 }) => {
   const initialValues: BondFormFields = {
-    matureDate: moment(data.matureDate).format('YYYY-MM-DD'),
-    amount: data.amount.toString(),
+    matureDate: moment(data?.matureDate).format('YYYY-MM-DD'),
+    amount: data?.amount.toString() || '0',
     account: '0',
   };
 

@@ -21,7 +21,6 @@ export const TransferMoneyScreen: React.FC = () => {
   const dispatch = useDispatch();
 
   const history = useHistory();
-  let operationStatus: STATUS;
 
   const [hash, setHash] = useState('0');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -31,8 +30,8 @@ export const TransferMoneyScreen: React.FC = () => {
     amount: 0,
   };
 
-  operationStatus = useSelector((state: RootState) =>
-      state.operations.data[hash]?.status);
+  const operationStatus = useSelector((state: RootState) =>
+      state.operations.data[hash]?.data);
 
   const fromAccounts = useSelector((state: RootState) =>
       state.accounts.LocalList.data);
@@ -47,7 +46,7 @@ export const TransferMoneyScreen: React.FC = () => {
 
   useEffect(() => {
     if (hash !== '0') {
-      switch (operationStatus) {
+      switch (operationStatus?.status) {
         case STATUS.SUCCESS:
           history.push('/payments/');
           break;
@@ -65,7 +64,7 @@ export const TransferMoneyScreen: React.FC = () => {
     setIsSubmitted(true);
     const newHash = Date.now().toString();
     setHash(newHash);
-    dispatch(actions.payments.transferMoney(newHash, values));
+    dispatch(actions.payments.transferMoney(values, newHash));
   };
 
   const breadcrumbs: Breadcrumb[] = [

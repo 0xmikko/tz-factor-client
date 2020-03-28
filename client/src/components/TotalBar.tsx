@@ -1,42 +1,49 @@
 import React from 'react';
+import {Card, Col, Container, Row} from 'react-bootstrap';
+import {numberWithCommas} from "../utils/formaters";
 
 interface TotalBarProps {
   total_amount: number;
 }
 
+interface ToolbarDataItemProps {
+  title: string;
+  measure: string;
+  amount: string;
+}
+
+const ToolbarDataItem: React.FC<ToolbarDataItemProps> = ({
+  title,
+  measure,
+  amount,
+}) => (
+    <>
+    <h6 className="tx-12 tx-lg-14 tx-semibold tx-uppercase tx-spacing-1 mg-b-5">
+      { title } <span className="tx-normal tx-color-03">{ measure } </span>
+    </h6>
+    <div className="d-flex align-items-baseline">
+    <h2 className="tx-20 tx-lg-28 tx-normal tx-rubik tx-spacing--2 lh-2 mg-b-0">
+      { amount }
+    </h2>
+    </div>
+      </>);
+
 export const TotalBar: React.FC<TotalBarProps> = ({total_amount}) => (
-      <div className="card card-body">
-        <div className="d-md-flex align-items-center justify-content-between">
-          <div className="media align-sm-items-center">
-            <div className="tx-40 tx-lg-60 lh-0 tx-orange">
-              <i className="fab fa-bitcoin"></i>
-            </div>
-            <div className="media-body mg-l-15">
-              <h6 className="tx-12 tx-lg-14 tx-semibold tx-uppercase tx-spacing-1 mg-b-5">
-                MARKET CAP{' '}
-                <span className="tx-normal tx-color-03">(USD)</span>
-              </h6>
-              <div className="d-flex align-items-baseline">
-                <h2 className="tx-20 tx-lg-28 tx-normal tx-rubik tx-spacing--2 lh-2 mg-b-0">
-                  ${total_amount}
-                </h2>
-                <h6 className="tx-11 tx-lg-16 tx-normal tx-rubik tx-danger mg-l-5 lh-2 mg-b-0">
-                  -$7.98(0.2006%)
-                </h6>
-              </div>
-            </div>
-          </div>
-          <div className="d-flex flex-column flex-sm-row mg-t-20 mg-md-t-0">
-            <button className="btn btn-sm btn-white btn-uppercase pd-x-15">
-              <i data-feather="download" className="mg-r-5"></i> Export CSV
-            </button>
-            <button className="btn btn-sm btn-white btn-uppercase pd-x-15 mg-t-5 mg-sm-t-0 mg-sm-l-5">
-              <i data-feather="share-2" className="mg-r-5"></i> Share
-            </button>
-            <button className="btn btn-sm btn-white btn-uppercase pd-x-15 mg-t-5 mg-sm-t-0  mg-sm-l-5">
-              <i data-feather="eye" className="mg-r-5"></i> Watch
-            </button>
-          </div>
-        </div>
-      </div>
+  <Card>
+    <Card.Body>
+      <Container>
+        <Row>
+          <Col lg={4} md={4} xs={12}>
+            <ToolbarDataItem title={"Mature date"} measure={''} amount={'2020-12-20'}/>
+          </Col>
+          <Col lg={4} md={4} xs={12}>
+            <ToolbarDataItem title={"Total supply"} measure={'(USD)'} amount={numberWithCommas(1000000)}/>
+          </Col>
+          <Col lg={4} md={4} xs={12}>
+            <ToolbarDataItem title={"AVG. INTEREST"} measure={''} amount={'6.55%'}/>
+          </Col>
+        </Row>
+      </Container>
+    </Card.Body>
+  </Card>
 );

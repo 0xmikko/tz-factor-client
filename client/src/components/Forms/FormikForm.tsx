@@ -20,7 +20,7 @@ export interface FieldI {
 }
 
 export interface FormikFormViewProps<T> {
-  data: T;
+  data?: T;
   onSubmit: (values: T) => void;
   isSubmitted: boolean;
 }

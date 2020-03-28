@@ -3,17 +3,16 @@ import {PrivateRoute} from '../components/PrivateRoute';
 import {withTracker} from '../utils/ga';
 import {BondsListScreen} from './Bonds/BondsListScreen';
 import {Redirect, Route, Switch} from 'react-router';
-import {R_PaymentsListScreen} from './Payments/PaymentsListScreen';
+import {PaymentsListScreen} from './Payments/PaymentsListScreen';
 import AppBar from '../components/AppBar/AppBar';
 import {TransferMoneyScreen} from './Payments/TransferMoneyScreen';
-import {PaymentDetailsScreen} from './Payments/PaymentDetailsScreen';
 import {CompaniesListScreen} from "./Companies/CompaniesListScreen";
 import {CompanyDetailsScreen} from "./Companies/CompanyDetailsScreen";
 import {BondDetailsScreen} from "./Bonds/BondDetailsScreen";
 import {BondIssueScreen} from "./Bonds/BondIssueScreen";
 import {NewAccountScreen} from "./Wallet/NewAccountScreen";
-import {AccountsListScreen} from "./Wallet/AccountsListScreen";
 import {TransferBondsScreen} from "./Payments/TransferBondsScreen";
+import {WalletScreen} from "./Wallet/WalletScreen";
 
 export const Router: React.FC = () => {
   return (
@@ -23,7 +22,7 @@ export const Router: React.FC = () => {
         <PrivateRoute
             exact
             path="/wallet"
-            component={withTracker(AccountsListScreen)}
+            component={withTracker(WalletScreen)}
         />
         <PrivateRoute
             exact
@@ -42,13 +41,8 @@ export const Router: React.FC = () => {
         />
         <PrivateRoute
           exact
-          path="/payments/:id"
-          component={withTracker(PaymentDetailsScreen)}
-        />
-        <PrivateRoute
-          exact
           path="/payments"
-          component={withTracker(R_PaymentsListScreen)}
+          component={withTracker(PaymentsListScreen)}
         />
 
         <PrivateRoute

@@ -6,12 +6,10 @@
  *
  */
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Table} from 'react-bootstrap';
 import {Account, AccountKey} from '../../core/accounts';
-import {useDispatch, useSelector} from 'react-redux';
-import actions from '../../store/actions';
-import {useHistory} from "react-router";
+import {AccountsListItem} from './ListItem';
 
 interface AccountsListProps {
   items: AccountKey[];
@@ -23,76 +21,10 @@ export const AccountsList: React.FC<AccountsListProps> = ({
   registeredAccounts,
 }: AccountsListProps) => {
 
-  const dispatch = useDispatch();
-  const history = useHistory();
-
-  const onRegisterAccount =  (id: string) => {
-    const opHash = Date.now().toString();
-    dispatch(actions.accounts.registerAccount(id, opHash));
-  }
-
-  const onDeposit = (id: string) => {
-    const opHash = Date.now().toString();
-    dispatch(actions.accounts.deposit(id, opHash));
-  }
-
-
-  const renderLine = (h: AccountKey) => {
-    let actionButton: React.ReactElement;
-
-    for (const a of registeredAccounts) {
-      console.log('HOHA', h, a);
-      if (h.id === a.id) {
-        h.status = 'Registered';
-        h.amount = a.amount;
-        break;
-      }
-    }
-
-    switch (h.status) {
-      default:
-      case 'New':
-        actionButton = (
-          <Button
-            size="sm"
-            variant="outline-primary"
-            onClick={() => dispatch(actions.accounts.RevealAccount(h))}>
-            Reaveal
-          </Button>
-        );
-        break;
-      case 'Revealed':
-        actionButton = (
-          <Button
-            size="sm"
-            variant="outline-primary"
-            onClick={() => onRegisterAccount(h.id)}>
-            Register
-          </Button>
-        );
-        break;
-      case 'Registered':
-        actionButton =  <Button
-            size="sm"
-            variant="outline-primary"
-            onClick={() => onDeposit(h.id)}>
-            Deposit
-        </Button>
-        break;
-    }
-
-    return (
-      <tr>
-        <td className="tx-color-03 tx-normal text-left">{h.name}</td>
-        <td className="tx-color-03 tx-normal text-left">{h.id}</td>
-        <td className="tx-color-03 tx-normal text-center">{h.amount}</td>
-        <td className="tx-color-03 tx-normal text-center">{h.status}</td>
-        <td className="tx-color-03 tx-normal text-center">{actionButton}</td>
-      </tr>
-    );
-  };
   // tx-teal tx-pink
-  const renderTableContent = items.map(h => renderLine(h));
+  const renderTableContent = items.map(h => (
+    <AccountsListItem item={h} registeredAccounts={registeredAccounts} />
+  ));
 
   return (
     <div className="card card-dashboard-table mg-t-20">
@@ -103,9 +35,9 @@ export const AccountsList: React.FC<AccountsListProps> = ({
             <tr>
               <th>Name</th>
               <th>Address</th>
-              <th className='text-center'>Amount</th>
-              <th className='text-center'>Status</th>
-              <th className='text-center'>Action</th>
+              <th className="text-center">Amount</th>
+              <th className="text-center">Status</th>
+              <th className="text-center">Action</th>
             </tr>
           </thead>
           <tbody>{renderTableContent}</tbody>

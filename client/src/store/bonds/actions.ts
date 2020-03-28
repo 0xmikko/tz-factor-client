@@ -21,8 +21,8 @@ import {BondCreateDTO} from '../../core/bonds';
 import {Tezos} from '@taquito/taquito';
 import {InMemorySigner} from '@taquito/signer';
 import {contractAddress, tezosNode} from '../../config';
-import {updateStatus} from "../operations/actions";
-import {STATUS} from "../utils/status";
+import {updateStatus} from '../operations/actions';
+import {STATUS} from '../utils/status';
 
 export const connectSocket = (): ThunkAction<
   void,
@@ -64,7 +64,7 @@ export const create = (
   dto: BondCreateDTO,
   opHash: string,
 ): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
-  console.log("Start delivering Bond", dto)
+  console.log('Start delivering Bond', dto);
   dispatch(updateStatus(opHash, STATUS.LOADING));
   try {
     Tezos.setProvider({
@@ -72,18 +72,23 @@ export const create = (
       signer: new InMemorySigner(dto.account.keystore.privateKey),
     });
     const contractInstance = await Tezos.contract.at(contractAddress);
-    console.log("CI", contractInstance)
-    console.log("CI", new Date(dto.matureDate).toISOString())
-
+    console.log('CI', contractInstance);
+    console.log('CI', new Date(dto.matureDate).toISOString());
 
     const op = await contractInstance.methods
-        .issueBond(new Date(dto.matureDate).toISOString(), dto.amount)
-        .send();
-    console.log("DDD")
+      .issueBond(new Date(dto.matureDate).toISOString(), dto.amount)
+      .send();
+
+    if (op.errors.length > 0) {
+      console.log("Errors!", op.errors)
+      dispatch(updateStatus(opHash, STATUS.FAILURE));
+      return;
+    }
+    console.log('DDD');
     await op.confirmation(1);
     dispatch(updateStatus(opHash, STATUS.SUCCESS));
-  }catch (e) {
-    console.log("OOOPS", e)
+  } catch (e) {
+    console.log('OOOPS', e);
     dispatch(updateStatus(opHash, STATUS.FAILURE));
   }
 };

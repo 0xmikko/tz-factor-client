@@ -8,9 +8,10 @@
 
 import React from 'react';
 import {Bond} from '../../core/bonds';
-import TabsBar from '../../components/PageHeader/TabsBar';
-import {TabPane} from '../../components/PageHeader/TabPane';
 import {InfoWidget} from './InfoWidget';
+import {Col, Container, Row} from "react-bootstrap";
+import {TotalBar} from "../../components/TotalBar";
+import {OffersWidget} from "./OffersWidget";
 
 interface BondDetailsProps {
   data: Bond;
@@ -19,16 +20,22 @@ interface BondDetailsProps {
 export const DetailsView: React.FC<BondDetailsProps> = ({
   data,
 }: BondDetailsProps) => {
-  const tabs: string[] = ['Info', 'Budget'];
+    return (
+        <Container className="pd-x-0 pd-lg-x-10 pd-xl-x-0 m-t-20-f pd-t-30-f">
+            <Row>
+                <Col lg={12} md={12} xs={12}>
+                    <TotalBar total_amount={12000345.45} />
+                </Col>
+            </Row>
+            <Row style={{marginTop: '20px'}}>
+                <Col lg={8} md={8} xs={12}>
+                    <OffersWidget />
+                </Col>
+                <Col lg={4} md={4} xs={12}>
+                    <InfoWidget data={data} />
+                </Col>
+            </Row>
+        </Container>
+    );
 
-  return (
-    <div className="container pd-x-0 pd-lg-x-10 pd-xl-x-0 m-t-20-f pd-t-30-f">
-      <TabsBar tabs={tabs} selected={'info'} />
-      <TabPane hash={'#info'}>
-        <InfoWidget data={data} />
-      </TabPane>
-      <TabPane hash={'#budget'}>Budget</TabPane>
-      {/*<TabPane hash={'budget'}>Hello, budget</TabPane>*/}
-    </div>
-  );
 };

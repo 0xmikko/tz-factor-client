@@ -19,40 +19,33 @@ import actions from '../../store/actions';
 
 export const TransferBondsScreen: React.FC = () => {
   const dispatch = useDispatch();
-
   const history = useHistory();
-  let operationStatus: STATUS;
 
   const [hash, setHash] = useState('0');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const data: TransferBondsDTO = {
-    bond: '',
-    to: '',
-    amount: 0,
-  };
+  const operationStatus = useSelector(
+    (state: RootState) => state.operations.data[hash]?.data,
+  );
 
-  operationStatus = useSelector((state: RootState) =>
-      state.operations.data[hash]?.status);
+  const bondsAvaible = useSelector((state: RootState) => state.bonds.List.data);
 
-  const bondsAvaible = useSelector((state: RootState) =>
-      state.bonds.List.data);
+  const fromAccounts = useSelector(
+    (state: RootState) => state.accounts.LocalList.data,
+  );
 
-  const fromAccounts = useSelector((state: RootState) =>
-      state.accounts.LocalList.data);
-
-  const toAccounts = useSelector((state: RootState) =>
-      state.accounts.List.data);
+  const toAccounts = useSelector(
+    (state: RootState) => state.accounts.List.data,
+  );
 
   useEffect(() => {
     dispatch(actions.bonds.getList());
     dispatch(actions.accounts.getList());
   }, []);
 
-
   useEffect(() => {
     if (hash !== '0') {
-      switch (operationStatus) {
+      switch (operationStatus?.status) {
         case STATUS.SUCCESS:
           history.push('/payments/');
           break;
@@ -60,17 +53,17 @@ export const TransferBondsScreen: React.FC = () => {
         case STATUS.FAILURE:
           setHash('0');
           setIsSubmitted(false);
-          alert('Cant submit your operation to server');
+          alert('Cant send bonds server. Error: ' + operationStatus?.error);
       }
     }
   }, [hash, operationStatus]);
 
   const onSubmit = (values: TransferBondsDTO) => {
-    console.log(values)
+    console.log(values);
     setIsSubmitted(true);
     const newHash = Date.now().toString();
     setHash(newHash);
-    dispatch(actions.payments.transferBonds(values));
+    dispatch(actions.payments.transferBonds(values, newHash));
   };
 
   const breadcrumbs: Breadcrumb[] = [
@@ -80,12 +73,10 @@ export const TransferBondsScreen: React.FC = () => {
     },
   ];
 
-
   return (
     <div className="content content-fixed">
-      <PageHeader title={'New payment'} breadcrumbs={breadcrumbs} />
+      <PageHeader title={'New bond payment'} breadcrumbs={breadcrumbs} />
       <TransferBondsFormView
-        data={data}
         onSubmit={onSubmit}
         isSubmitted={isSubmitted}
         bondsAvaible={bondsAvaible}

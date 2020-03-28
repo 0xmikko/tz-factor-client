@@ -44,13 +44,14 @@ export const CompanyFormView: React.FC<FormikFormViewProps<Company>> = ({
   onSubmit,
   isSubmitted,
 }) => {
-  return (
-    <FormikForm
-      formSchema={formSchema}
-      fields={fields}
-      initialValues={data}
-      onSubmit={onSubmit}
-      isSubmitted={isSubmitted}
-    />
-  );
+  return <div>CompnayFormView</div>
+  // return (
+  //   <FormikForm
+  //     formSchema={formSchema}
+  //     fields={fields}
+  //     initialValues={data}
+  //     onSubmit={onSubmit}
+  //     isSubmitted={isSubmitted}
+  //   />
+  // );
 };

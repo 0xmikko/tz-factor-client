@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {Table} from 'react-bootstrap';
+import {Table, Card} from 'react-bootstrap';
 import {Bond} from '../../core/bonds';
 import moment from 'moment';
 
@@ -23,13 +23,13 @@ export const BondsListWidget: React.FC<BondsListProps> = ({
   const renderLine = (h: Bond) => (
     <tr onClick={() => onItemSelected(h.id)}>
       <td>
-        <strong>{moment(h.matureDate).format("YYYY/MM/DD")}</strong>
+        <strong>{moment(h.matureDate).format('YYYY/MM/DD')}</strong>
       </td>
       <td className="text-right tx-rubik">${h.total}</td>
       <td className="text-right tx-rubik">
-                  <span className="tx-danger">
-                    0.77% <i className="icon ion-md-arrow-down"></i>
-                  </span>
+        <span className="tx-danger">
+          0.77% <i className="icon ion-md-arrow-down"></i>
+        </span>
       </td>
     </tr>
   );
@@ -37,13 +37,13 @@ export const BondsListWidget: React.FC<BondsListProps> = ({
   const renderTableContent = items.map(h => renderLine(h));
 
   return (
-    <div className="card">
-      <div className="card-header">
+    <Card>
+      <Card.Header className="card-header">
         <h6 className="mg-b-0">Bonds</h6>
-      </div>
-      <div className="card-body pd-10">
+      </Card.Header>
+      <Card.Body className="pd-10">
         <div className="table-responsive">
-          <table className="table table-borderless tx-13 mg-b-0">
+          <Table className="table-borderless tx-13 mg-b-0">
             <thead>
               <tr className="tx-uppercase tx-10 tx-spacing-1 tx-semibold tx-color-03">
                 <th>Mature date</th>
@@ -51,12 +51,10 @@ export const BondsListWidget: React.FC<BondsListProps> = ({
                 <th className="text-right">% Change</th>
               </tr>
             </thead>
-            <tbody>
-            {renderTableContent}
-            </tbody>
-          </table>
+            <tbody>{renderTableContent}</tbody>
+          </Table>
         </div>
-      </div>
-    </div>
+      </Card.Body>
+    </Card>
   );
 };

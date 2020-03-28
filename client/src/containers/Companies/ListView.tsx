@@ -25,8 +25,8 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
       <td className="tx-medium text-xl-left">{h.type}</td>
 
 
-      <td className="tx-medium text-xl-left">{h.web}</td>
-        <td className="tx-medium text-xl-left">{h.address}</td>
+      <td className="tx-medium text-xl-left">{h.website}</td>
+        <td className="tx-medium text-xl-left">{h.headquaters}</td>
 
     </tr>
   );
