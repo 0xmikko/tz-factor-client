@@ -17,41 +17,51 @@ interface CompaniesListProps {
 
 export const CompaniesList: React.FC<CompaniesListProps> = ({
   items,
-    onItemSelected
+  onItemSelected,
 }: CompaniesListProps) => {
   const renderLine = (h: Company) => (
     <tr onClick={() => onItemSelected(h.id)} key={h.id}>
-      <td className="tx-color-03 tx-normal">{h.name}</td>
-      <td className="tx-medium text-xl-left">{h.type}</td>
+      <td className="tx-color-03 text-left tx-normal">{h.name}</td>
+      <td className="tx-medium text-left">{h.headquaters}</td>
+      <td className="tx-medium text-left">{h.website}</td>
 
-
-      <td className="tx-medium text-xl-left">{h.website}</td>
-        <td className="tx-medium text-xl-left">{h.headquaters}</td>
-
+      <td className="tx-medium text-left">
+        {h.type === 'ISSUER' ? (
+          <span
+            style={{
+              backgroundColor: '#6bd66b',
+              paddingLeft: '10px',
+              paddingRight: '10px',
+              color: 'white',
+            }}>
+            ISSUER
+          </span>
+        ) : (
+          ''
+        )}
+      </td>
     </tr>
   );
-// tx-teal tx-pink
+  // tx-teal tx-pink
   const renderTableContent = items.map(h => renderLine(h));
 
   return (
-      <div className="card card-dashboard-table mg-t-20">
-        {/*<!-- card-body -->}*/}
-        <div className="table-responsive">
-          <Table className="table-dashboard mg-b-0" hover={true}>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Web</th>
-                <th>Address</th>
-              </tr>
-            </thead>
-            <tbody>
-              {renderTableContent}
+    <div className="card card-dashboard-table mg-t-20">
+      {/*<!-- card-body -->}*/}
+      <div className="table-responsive">
+        <Table className="table-dashboard mg-b-0" hover={true}>
+          <thead>
+            <tr>
+              <th style={{width: '25%'}}>Name</th>
 
-            </tbody>
-          </Table>
-        </div>
+              <th>Headquaters</th>
+              <th>Web</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>{renderTableContent}</tbody>
+        </Table>
       </div>
+    </div>
   );
 };

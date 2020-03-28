@@ -103,9 +103,9 @@ p {
 .btn {
   font-size: 11px;
   line-height: 1.773;
-  background-color: #0153c7;
-  border-color: #0153c7;
-  color: #fff;
+  /*background-color: #0153c7;*/
+  /*border-color: #0153c7;*/
+  /*color: #fff;*/
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: .5px;
