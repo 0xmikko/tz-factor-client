@@ -13,14 +13,14 @@ import {Col, Container, Row} from 'react-bootstrap';
 import {BondsListWidget} from '../Bonds/ListWidget';
 import {useHistory} from 'react-router';
 import {Bond} from '../../core/bonds';
-import {InfoWidget} from "./InfoWidget";
+import {InfoWidget} from './InfoWidget';
 
 interface CompanyDetailsProps {
   data: Company;
   companyBonds: Bond[];
 }
 
-export const IssuerDetailsView: React.FC<CompanyDetailsProps> = ({
+export const DetailsViewIssuer: React.FC<CompanyDetailsProps> = ({
   data,
   companyBonds,
 }: CompanyDetailsProps) => {
@@ -35,14 +35,12 @@ export const IssuerDetailsView: React.FC<CompanyDetailsProps> = ({
       <Row style={{marginTop: '20px'}}>
         <Col lg={8} md={8} xs={12}>
           <BondsListWidget
-              items={companyBonds}
-              onItemSelected={onBondSelected}
+            items={companyBonds}
+            onItemSelected={onBondSelected}
           />
-
-
         </Col>
         <Col lg={4} md={4} xs={12}>
-          <InfoWidget data={data}/>
+          <InfoWidget data={data} />
         </Col>
       </Row>
     </Container>

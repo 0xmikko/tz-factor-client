@@ -6,19 +6,18 @@
  *
  */
 import React, {useEffect} from 'react';
-import PageHeader from '../../components/PageHeader/PageHeader';
-import {DetailsView} from '../../containers/Companies/DetailsView';
-import {useDispatch, useSelector} from 'react-redux';
 
-import {RootState} from '../../store';
-import {Breadcrumb} from '../../components/PageHeader/Breadcrumb';
-import {Button} from 'react-bootstrap';
+import {useDispatch, useSelector} from 'react-redux';
 import {RouteComponentProps, useHistory} from 'react-router';
 
+import {RootState} from '../../store';
+
+import PageHeader from '../../components/PageHeader/PageHeader';
+import {Breadcrumb} from '../../components/PageHeader/Breadcrumb';
+import {DetailsViewIssuer} from '../../containers/Companies/DetailsViewIssuer';
+import {DetailsViewSupplier} from '../../containers/Companies/DetailsViewSupplier';
+
 import actions from '../../store/actions';
-import {Payment} from '../../core/payments';
-import {Company} from '../../core/companies';
-import {IssuerDetailsView} from '../../containers/Companies/IssuerDetailsView';
 import {STATUS} from '../../store/utils/status';
 import {Loading} from '../../components/Loading';
 import {getDetailsItem} from '../../store/dataloader';
@@ -64,20 +63,16 @@ export const CompanyDetailsScreen: React.FC<CompanyDetailsScreenProps> = ({
     },
   ];
 
-  const rightToolbar = (
-    <div className="d-none d-md-block">
-      <Button
-        className="btn-sm pd-x-15 btn-brand-01 btn-uppercase"
-        onClick={() => history.push(`/payments/${id}/edit/`)}>
-        Edit
-      </Button>
-    </div>
-  );
-
+  const detailView =
+    data.type === 'ISSUER' ? (
+      <DetailsViewIssuer data={data} companyBonds={companyBonds} />
+    ) : (
+      <DetailsViewSupplier data={data} />
+    );
   return (
     <div className="content content-fixed">
       <PageHeader title={data.name} breadcrumbs={breadcrumbs} />
-      <IssuerDetailsView data={data} companyBonds={companyBonds} />
+      {detailView}
     </div>
   );
 };

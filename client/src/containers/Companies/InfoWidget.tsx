@@ -11,6 +11,7 @@ import {Company} from '../../core/companies';
 import {BACKEND_ADDR} from '../../config';
 import {Card, Table} from 'react-bootstrap';
 import moment from 'moment';
+import {numberWithCommas} from "../../utils/formaters";
 
 interface InfoWidgetProps {
   data: Company;
@@ -18,22 +19,22 @@ interface InfoWidgetProps {
 
 export const InfoWidget: React.FC<InfoWidgetProps> = ({data}) => {
   const fields = [
-    'Type',
-    'Industry',
-    'Founded',
-    'Headquaters',
-    'Number of employees',
-    'Product',
-    'Revenue',
-    'Website',
+    ['Type', data.orgType],
+    ['Industry', data.industry],
+    ['Founded', data.founder],
+    ['Headquaters', data.headquaters],
+    ['Number of employees', numberWithCommas(data.numberOfEmployees)],
+    ['Product', data.product],
+    ['Revenue', data.revenue],
+    ['Website', data.website],
   ];
 
   const renderedFields = fields.map(a => (
-    <tr key={a}>
+    <tr key={a[0]}>
       <td>
-        <b>{a}</b>
+        <b>{a[0]}</b>
       </td>
-      <td>{a}</td>
+      <td>{a[1]}</td>
     </tr>
   ));
 

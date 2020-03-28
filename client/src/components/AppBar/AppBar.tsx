@@ -15,7 +15,7 @@ import {isAuthenticated} from '../../store/auth';
 import actions from '../../store/actions';
 import {Role} from '../../core/profile';
 import {AppBarElement} from './AppBarElement';
-import logo from './logo.png'
+import logo from './logo.png';
 
 // import AppSearch from "./AppSearch"
 
@@ -35,35 +35,35 @@ export const AppBar = () => {
     </>
   );
 
-  const authRightMenu = ( <div className="navbar-right">
+  const authRightMenu = (
+    <div className="navbar-right">
       <NavDropdown title="Account" id="basic-nav-dropdown" alignRight>
-          <NavDropdown.Item href="#action/3.1">
-              <i data-feather="life-buoy" key={'11'} />
-              Action
-          </NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.2" key={12}>
-              Another action
-          </NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.3" key={13}>
-              Something
-          </NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item onClick={onLogout}>
-              <i data-feather="log-out" />Logout
-          </NavDropdown.Item>
+        <NavDropdown.Item key={'myaccounts'}>
+          <Link to={'/wallet#accounts'} className="nav-link p-0">
+            My accounts
+          </Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item key={'mybonds'}>
+          <Link to={'/wallet#bonds'} className="nav-link p-0">
+            My bonds
+          </Link>
+        </NavDropdown.Item>
+
+        <NavDropdown.Divider />
+        <NavDropdown.Item onClick={onLogout} key={'logout'}>
+          <i data-feather="log-out" />
+          Logout
+        </NavDropdown.Item>
       </NavDropdown>
-  </div>);
+    </div>
+  );
 
   const nonAutheticatedMenu = (
     <div className="navbar-right">
       <Navbar id="basic-navbar-nav" className={'nav-link'}>
-        {/*<Nav className="mr-auto"></Nav>*/}
         <Nav variant={'pills'}>
           <Nav key={3.1}>
-            <Link to={'/login'}>SIGN IN </Link>
-          </Nav>
-          <Nav key={3.2}>
-            <Link to={'/signup'}>SIGN UP </Link>
+            <Link to={'/login'}>SIGN IN</Link>
           </Nav>
         </Nav>
       </Navbar>
@@ -77,7 +77,7 @@ export const AppBar = () => {
       </a>
       <Navbar.Brand>
         <Link to="/" className="df-logo">
-          <img src={logo} height={25} alt={'Logo'}/>
+          <img src={logo} height={25} alt={'Logo'} />
         </Link>
       </Navbar.Brand>
       <div id="navbarMenu" className="navbar-menu-wrapper">
@@ -90,10 +90,9 @@ export const AppBar = () => {
           </a>
         </div>
         <Nav className="navbar-menu" style={{justifyContent: 'center'}}>
-
           {isSignIn ? authetificatedMenu : ''}
         </Nav>
-          {isSignIn ? authRightMenu : nonAutheticatedMenu}
+        {isSignIn ? authRightMenu : nonAutheticatedMenu}
       </div>
     </Navbar>
   );

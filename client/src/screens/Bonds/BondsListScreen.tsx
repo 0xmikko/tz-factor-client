@@ -39,8 +39,6 @@ export const BondsListScreen: React.FC = () => {
     history.push('/bonds/new');
   };
 
-  const rightToolbar = <ToolbarButton title={'ISSUE'} onClick={onIssue} />;
-
   const onItemSelected = (id: string) => history.push(`/bonds/${id}`);
   const onFilter = (filter: string) => {
     history.push('/bonds#' + filter);
@@ -51,7 +49,6 @@ export const BondsListScreen: React.FC = () => {
       <PageHeader
         title={'Bonds'}
         breadcrumbs={breadcrumbs}
-        rightPanel={rightToolbar}
       />
       {status === STATUS.SUCCESS ? (
         <Container style={{padding: 0}}>
