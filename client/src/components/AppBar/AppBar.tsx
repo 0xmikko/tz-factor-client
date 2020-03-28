@@ -48,7 +48,11 @@ export const AppBar = () => {
             My bonds
           </Link>
         </NavDropdown.Item>
-
+          <NavDropdown.Item key={'profile'}>
+              <Link to={'/profile'} className="nav-link p-0">
+                  Edit profile
+              </Link>
+          </NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item onClick={onLogout} key={'logout'}>
           <i data-feather="log-out" />

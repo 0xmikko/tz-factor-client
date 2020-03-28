@@ -21,6 +21,7 @@ export interface SocketEmitAction {
   event: string;
   payload: unknown;
   typeOnFailure: string;
+  opHash?: string;
 }
 
 export interface SocketOnAction {
@@ -106,8 +107,8 @@ export function createSocketMiddleware(): ThunkMiddleware<
       case 'SOCKET_EMIT':
         if (jwt) {
           getNamespace(jwt).then(socket => {
-            socket.emit(action.event, action.payload);
-            console.log('[SOCKET.IO] : EMIT : ', action.event);
+            socket.emit(action.event, action.payload, action.opHash);
+            console.log(`[SOCKET.IO] : EMIT : ${action.event} with opHash ${action.opHash}`);
           });
         } else {
           dispatch({type: action.typeOnFailure});

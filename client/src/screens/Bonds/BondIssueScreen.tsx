@@ -31,10 +31,9 @@ export const BondIssueScreen: React.FC<BondIssueScreenProps> = ({
     params: {id, tab},
   },
 }: BondIssueScreenProps) => {
+
   const dispatch = useDispatch();
-
   const history = useHistory();
-
   const [hash, setHash] = useState('0');
   const [isSubmitted, setIsSubmitted] = useState(false);
 

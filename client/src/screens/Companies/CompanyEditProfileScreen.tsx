@@ -11,34 +11,33 @@ import {useHistory} from 'react-router';
 
 import PageHeader from '../../components/PageHeader/PageHeader';
 import {Breadcrumb} from '../../components/PageHeader/Breadcrumb';
-import {CompanyFormView} from '../../containers/Companies/FormView';
+import {FormViewProfile} from '../../containers/Companies/FormViewProfile';
 import {Loading} from '../../components/Loading';
 
 import {getDetailsItem} from '../../store/dataloader';
 import {STATUS} from '../../store/utils/status';
 import {RootState} from '../../store';
-import {Company} from '../../core/companies';
 import actions from '../../store/actions';
+import {Company} from "../../core/companies";
 
-export const CompanyEditScreen: React.FC = () => {
+export const CompanyEditProfileScreen: React.FC = () => {
+
   const dispatch = useDispatch();
-
   const history = useHistory();
-
   const [hash, setHash] = useState('0');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const id = useSelector((state: RootState) => state.profile.id);
+  const operationStatus = useSelector((state: RootState) =>
+      state.operations.data[hash]?.data?.status);
 
-  const operationStatus = useSelector(
-      (state: RootState) => state.operations.data[hash]?.data,
-  );
+  const id = useSelector((state: RootState) => state?.auth?.access?.user_id);
+  console.log(id);
 
   useEffect(() => {
     if (hash !== '0') {
-      switch (operationStatus?.status) {
+      switch (operationStatus) {
         case STATUS.SUCCESS:
-          history.push('/payments/' + data.id);
+          history.push(`/companies/${id}`);
           break;
 
         case STATUS.FAILURE:
@@ -49,12 +48,6 @@ export const CompanyEditScreen: React.FC = () => {
     }
   }, [hash, operationStatus]);
 
-  const onSubmit = (values: Company) => {
-    setIsSubmitted(true);
-    const newHash = Date.now().toString();
-    setHash(newHash);
-    // dispatch(actions.createUpdateDetails(data.id, values, newHash))
-  };
 
   useEffect(() => {
     if (id) dispatch(actions.companies.getDetails(id));
@@ -80,19 +73,28 @@ export const CompanyEditScreen: React.FC = () => {
 
   const breadcrumbs: Breadcrumb[] = [
     {
-      url: '/payments',
-      title: 'payments',
+      url: '/profile',
+      title: 'profile',
     },
   ];
+
+  const onSubmit = (values: Company) => {
+    setIsSubmitted(true);
+    const newHash = Date.now().toString();
+    setHash(newHash);
+
+    // Emit data
+    dispatch(actions.companies.updateProfile(values, newHash));
+  };
 
 
   return (
     <div className="content content-fixed">
       <PageHeader
-        title={data.name}
+        title='Profile'
         breadcrumbs={breadcrumbs}
       />
-      <CompanyFormView
+      <FormViewProfile
         data={data}
         onSubmit={onSubmit}
         isSubmitted={isSubmitted}
