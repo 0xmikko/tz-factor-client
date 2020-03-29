@@ -1,0 +1,160 @@
+<!--
+  ~ Lean tool - hypothesis testing application
+  ~
+  ~ https://github.com/MikaelLazarev/lean-tool/
+  ~ Copyright (c) 2020. Mikhail Lazarev
+  ~
+  -->
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- For IE -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- For Resposive Device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Twitter -->
+  <meta name="twitter:site" content="@willie_ai" />
+  <meta name="twitter:creator" content="@willie_ai" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Willie meeting assistant " />
+  <meta name="twitter:description" content="{{ .OneLiner}}" />
+  <meta
+    name="twitter:image"
+    content="http://themepixels.me/dashforge/img/dashforge-social.png"
+  />
+
+  <!-- Facebook -->
+  <meta property="og:url" content="https://willie.ai/pr/{{ .URL }}" />
+  <meta property="og:title" content="Willie meeting assistant" />
+  <meta property="og:description" content="{{ .OneLiner}}" />
+
+  <meta
+    property="og:image"
+    content="http://themepixels.me/dashforge/img/dashforge-social.png"
+  />
+  <meta
+    property="og:image:secure_url"
+    content="http://themepixels.me/dashforge/img/dashforge-social.png"
+  />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="600" />
+
+  <!-- Meta -->
+  <meta name="description" content="{{ .MetaDescription }}" />
+  <meta name="keywords" content="{{ .MetaKeywords }}" />
+  <meta name="author" content="Willie.AI" />
+
+  <!-- Title -->
+
+  <title>{{ .Title }} - Willie</title>
+
+  <!-- Main style sheet -->
+  <link rel="stylesheet" type="text/css" href="../assets/v2/css/style.css" />
+  <!-- responsive style sheet -->
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../assets/v2/css/responsive.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Poppins:300,400,500,600&display=swap"
+    rel="stylesheet"
+  />
+
+  <script
+    src="https://kit.fontawesome.com/1d8abf2009.js"
+    crossorigin="anonymous"
+  ></script>
+  <!-- Favicon -->
+
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="https://storage.googleapis.com/willie_landing/favicon/apple-icon-180x180.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="https://storage.googleapis.com/willie_landing/favicon/favicon-32x32.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="96x96"
+    href="https://storage.googleapis.com/willie_landing/favicon/favicon-96x96.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="https://storage.googleapis.com/willie_landing/favicon/favicon-16x16.png"
+  />
+
+  <meta name="msapplication-TileColor" content="#ffffff" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- Fix Internet Explorer ______________________________________-->
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Facebook Pixel Code -->
+  <script>
+    !(function(f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function() {
+        n.callMethod
+          ? n.callMethod.apply(n, arguments)
+          : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = "2.0";
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    })(
+      window,
+      document,
+      "script",
+      "https://connect.facebook.net/en_US/fbevents.js"
+    );
+    fbq("init", "3029354453775824");
+    fbq("track", "PageView");
+  </script>
+  <noscript
+    ><img
+      height="1"
+      width="1"
+      style="display:none"
+      src="https://www.facebook.com/tr?id=3029354453775824&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Facebook Pixel Code -->
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=UA-159014001-1"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "UA-159014001-1");
+  </script>
+
+  <!-- End of google tags -->
+</head>

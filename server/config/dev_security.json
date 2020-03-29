@@ -1,0 +1,7 @@
+{
+  "signing_key": "12av67bdh",
+  "sentry_dsn": "https://a8c0953f85314c7a800aa23cda13905f@sentry.io/2701035",
+  "private_key": "2B7247335C1DE95B12072C9C9FE58A7113CB4249465AC394C76E83C5C1AD6966",
+  "ssl_redirect": "no",
+  "ssl_redirect_site": "willie.ai"
+}

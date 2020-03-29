@@ -1,0 +1,758 @@
+<!--
+  ~ Lean tool - hypothesis testing application
+  ~
+  ~ https://github.com/MikaelLazarev/lean-tool/
+  ~ Copyright (c) 2020. Mikhail Lazarev
+  ~
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- For IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- For Resposive Device -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Willie | Your personal meeting assistant</title>
+
+    <!-- Main style sheet -->
+    <link rel="stylesheet" type="text/css" href="../assets/v2/css/style.css" />
+    <!-- responsive style sheet -->
+    <link rel="stylesheet" type="text/css" href="../assets/v2/css/responsive.css" />
+
+    <!-- Favicon -->
+
+    <link rel="apple-touch-icon" sizes="57x57" href="../assets/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../assets/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../assets/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../assets/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../assets/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../assets/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../assets/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="../assets/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../assets/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../assets/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="../assets/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Fix Internet Explorer ______________________________________-->
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="../assets/v2/vendor/html5shiv.js"></script>
+    <script src="../assets/v2/vendor/respond.js"></script>
+    <![endif]-->
+    <script src="https://kit.fontawesome.com/1d8abf2009.js" crossorigin="anonymous"></script>
+
+    <!-- Facebook Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '3029354453775824');
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+                   src="https://www.facebook.com/tr?id=3029354453775824&ev=PageView&noscript=1"
+      /></noscript>
+    <!-- End Facebook Pixel Code -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159014001-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-159014001-1');
+    </script>
+
+    <!-- End of google tags -->
+
+
+  </head>
+
+  <body>
+    <div class="main-page-wrapper home-page-one">
+      <!-- ===================================================
+				Loading Transition
+			==================================================== -->
+      <div id="loader-wrapper">
+        <div id="loader"></div>
+      </div>
+
+      <div class="html-top-content">
+        <!--
+        =============================================
+            Theme Header
+        ==============================================
+        -->
+        <header class="theme-main-header">
+          <div class="container">
+            <div class="menu-wrapper clearfix">
+              <div class="logo float-left">
+                <a href="/"
+                  ><img src="../assets/images/logo.png" alt="Logo" height="50px"
+                /></a>
+              </div>
+              <ul class="button-group float-right">
+                <li><a href="#" class="tran3s get-started-button">Get started</a></li>
+                <!--<li><a href="#" class="tran3s login">LOGIN</a></li>-->
+              </ul>
+            </div>
+            <!-- /.menu-wrapper -->
+          </div>
+          <!-- /.container -->
+        </header>
+        <!-- /.theme-main-header -->
+
+          <div id="myModal" class="modal modalscreen" tabindex="-1" role="dialog" >
+            <div style="display: flex; flex-direction: column; align-content: center; justify-content: center; align-items: center; margin: auto; height: 90vh">
+            <div class="modal-dialog" role="document" style="margin: auto">
+              <div class="modal-content" style="max-width: 600px">
+                <div class="modal-body">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                <img src="../assets/v2/images/icon/coffee.png" style="margin-left: auto; margin-right: auto; height: 80px; margin-bottom: 20px; margin-top: 20px">
+                  <h3 style="text-align: center; padding-bottom: 20px">Start free trial</h3>
+
+                  <form id="modal-form" action="#" class="subscribe-form form-validation top-form" method="post">
+                    <div class="input-wrapper">
+                      <div class="row" style="align-items: center">
+                        <div class="col-lg-12 col-md-12 col-xs-12">
+                          <input id="top-form-input" type="email" placeholder="Your business email" style="margin-bottom: 8px" name="email"/>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-xs-12">
+                          <div class="theme-button">
+                            <input id="top-form-button" type="submit" value="Create my Willie account" class="theme-button"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        <!--
+        =====================================================
+            Theme Main SLider
+        =====================================================
+        -->
+        <div id="theme-main-banner" class="banner-one">
+          <div data-src="../assets/v2/images/home/slide-1.jpg">
+            <div class="camera_caption">
+              <div class="main-container">
+                <div class="container">
+                  <h5 >
+                    Your personal AI meeting assistant
+                  </h5>
+                  <h1 >
+                    Run meetings shorter <br />with clear action plans
+                  </h1>
+                  <p >
+                    Set up tasks by voice and save up to 4* hours per week
+                  </p>
+                  <div class="container wow fadeInUp animated">
+                  <form id="top-form" action="#" class="subscribe-form form-validation top-form" method="post">
+                    <div class="input-wrapper">
+                      <div class="row" style="align-items: center">
+                        <div class="col-lg-4 col-md-6 col-xs-12">
+                          <input id="top-form-input" type="email" placeholder="Enter your business email" style="margin-bottom: 8px" name="email"/>
+                          <label>14 day trial · No credit card required</label>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-12">
+                          <div class="theme-button">
+                            <span></span>
+                            <input id="top-form-button" type="submit" value="Get started" class="theme-button"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  </div>
+                  <div
+                    class="image-wrapper wow fadeInUp animated"
+                    data-wow-delay="0.75s"
+                  >
+                    <img src="../assets/v2/images/banners/contacts.png" alt="" />
+                  </div>
+                </div>
+                <!-- /.container -->
+              </div>
+              <!-- /.main-container -->
+            </div>
+            <!-- /.camera_caption -->
+          </div>
+          <!--<div data-src="images/home/slide-1.jpg">
+            <div class="camera_caption">
+              <div class="main-container">
+                <div class="container">
+                  <h5 >#1 Cleaning App</h5>
+                  <h1 >
+                    Great Features with <br />Best Cleaner.
+                  </h1>
+                  <p >
+                    No need for a Wi-Fi network or mobile data plan. The <br />
+                    choice of OVER 1 billion users.
+                  </p>
+                  <a
+                    href="course-2-column.html"
+                    class="tran3s wow fadeInLeft animated button-one"
+                    data-wow-delay="0.499s"
+                    ><i class="fa fa-apple" aria-hidden="true"></i>App Store</a
+                  >
+                  <a
+                    href="course-2-column.html"
+                    class="tran3s wow fadeInRight animated button-two"
+                    data-wow-delay="0.499s"
+                    ><img src="images/icon/2.png" alt="" />GooglePlay</a
+                  >
+                  <div
+                    class="image-wrapper wow fadeInUp animated"
+                    data-wow-delay="0.75s"
+                  >
+                    <img src="images/home/shape-1.png" alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>-->
+        </div>
+        <!-- /#theme-main-banner -->
+
+        <!--
+        =====================================================
+            What We Do
+        =====================================================
+        -->
+        <div class="what-we-do bg">
+          <div class="container">
+            <div class="theme-title-one text-center">
+              <h6>What We Do</h6>
+              <h2>
+                Run meetings like clockwork
+              </h2>
+            </div>
+            <!-- /.theme-title-one -->
+
+            <div class="row">
+              <div class="col-md-4 col-sm-6 col-xs-12 wow fadeInUp">
+                <div class="single-block tran3s">
+                  <img src="../assets/v2/images/icon/plan2.png" alt="" class="tran4s" />
+                  <h6>Establish a clear agenda</h6>
+                  <p>
+                    Discuss topics with you team before meeting to prepare better and saving time.
+                  </p>
+                  <a href="#" class="tran3s theme-button goal-button" data-goal="agenda"
+                    ><span></span> Learn More</a
+                  >
+                </div>
+                <!-- /.single-block -->
+              </div>
+              <!-- /.col- -->
+              <div
+                class="col-md-4 col-sm-6 col-xs-12 wow fadeInUp"
+                data-wow-delay="0.1s"
+              >
+                <div class="single-block tran3s">
+                  <img src="../assets/v2/images/icon/materials.png" alt="" class="tran4s" />
+                  <h6>Keep materials in one place</h6>
+                  <p>
+                    Record notes and audio and keep them  with all meeting materials in one place.
+                  </p>
+                  <a href="#" class="tran3s theme-button goal-button" data-goal="materials-in-one-place"
+                    ><span></span> Learn More</a
+                  >
+                </div>
+                <!-- /.single-block -->
+              </div>
+              <!-- /.col- -->
+              <div
+                class="col-md-4 hidden-sm col-xs-12 wow fadeInUp"
+                data-wow-delay="0.150s"
+              >
+                <div class="single-block tran3s">
+                  <img src="../assets/v2/images/icon/tasks.png" alt="" class="tran4s" />
+                  <h6>Never Miss Action Points</h6>
+                  <p>
+                    Set up action points by voice. They will be properly added to your management system
+                  </p>
+                  <a href="#" class="tran3s theme-button goal-button" data-goal="never-miss-action-point"
+                    ><span></span> Learn More</a
+                  >
+                </div>
+                <!-- /.single-block -->
+              </div>
+              <!-- /.col- -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container -->
+        </div>
+        <!-- /.what-we-do -->
+
+        <!--
+        =====================================================
+            Boost Your Phone
+        =====================================================
+        -->
+
+
+        <div class="boost-your-phone">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 col-xs-12 float-right  wow fadeInRight">
+                <div class="text">
+                  <div class="theme-title-two">
+                    <h2>Save up to 4 hours* per week</h2>
+                    <p>
+                      Set tasks by voice during the meeting and control execution with your
+                      management systems like Asana, Salesforce or Wrike
+                    </p>
+                  </div>
+                  <!-- /.theme-title-two -->
+                  <ul>
+                    <li>
+                      <i class="fas fa-check" style="margin-top: 10px;"></i> Make decisions taken at the meeting clear and accessible to all participants
+                    </li>
+                    <li>
+                      <i class="fas fa-check" style="margin-top: 10px;"></i> Send follow-up emails with one click
+                    </li>
+                    <li>
+                      <i class="fas fa-check" style="margin-top: 10px;"></i> Easily check the progress from meeting to meeting
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="boster-image-wrapper  wow fadeInLeft">
+              <img src="../assets/v2/images/home/try.png" alt="" class="try" />
+              <input
+                type="checkbox"
+                id="ao-toggle"
+                class="ao-toggle"
+                name="ao-toggle"
+              />
+              <img src="../assets/v2/images/home/shape-2.png" alt="" />
+              <div class="ao-annotations">
+                <span>Set up tasks by voice</span>
+                <span>Copy meeting outcomes in one click</span>
+                <span>Collaborate</span>
+                <span>Analyze your meetings</span>
+                <span>Record notes</span>
+              </div>
+            </div>
+            <!-- /.boster-image-wrapper -->
+          </div>
+          <!-- /.container -->
+        </div>
+        <!-- /.features-block -->
+
+        <!--
+        =====================================================
+            Advance Feature
+        =====================================================
+        -->
+        <div class="advance-feature">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 col-xs-12 wow fadeInLeft">
+                <div class="feature-text">
+                  <div class="theme-title-two">
+                    <h2>More productivity.<br />Less routine</h2>
+                    <p>
+                      Willie could arrange a meeting for you. Tell time interval you prefer and he discuss it with other participants and schedule it.
+                    </p>
+                  </div>
+                  <!-- /.theme-title-two -->
+                  <p>
+                    You could share meeting files and notes with one click. All decisions will be automatically set as tasks in the control systems for each participant
+                  </p>
+                </div>
+              </div>
+              <!-- /.col- -->
+
+              <div class="col-md-6 col-xs-12 wow fadeInRight">
+                <div class="feature-warpper">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="single-feature bg-one m-fix js-tilt goal-button" data-goal="voice-recognition">
+                        <i class="fas fa-microphone"></i>
+                        <h5>Voice recognition</h5>
+                        <p>Convert your speech into meetings notes</p>
+                      </div>
+                      <div class="single-feature bg-two js-tilt goal-button" data-goal="post-materials">
+                        <i class="far fa-envelope"></i>
+                        <h5>Post materials</h5>
+                        <p>Send follow-up letters with one click</p>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="single-feature bg-three js-tilt goal-button" data-goal="smart-search">
+                        <i class="fas fa-search"></i>
+                        <h5>Smart search</h5>
+                        <p>Search in meetings, attached files and notes</p>
+                      </div>
+                      <div class="single-feature bg-four js-tilt goal-button" data-goal="secure-monitoring">
+                        <i class="fas fa-lock"></i>
+                        <h5>Secure Monitoring</h5>
+                        <p>Sed ut perspic unde omnis iste natus error volu.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.feature-warpper -->
+              </div>
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.container -->
+        </div>
+        <!-- /.advance-feature -->
+        <div class="integrations">
+          <div class="container">
+          <div class="theme-title-one text-center">
+            <h6>Integrations</h6>
+            <h2>
+              Improve your workflow by connecting<br /> tools you are already use
+            </h2>
+          </div>
+          <div class="row">
+            <div class="col-lg-2 col-md-2 col-xs-4">
+              <div class="single-blog goal-button" data-goal="integration-zoom">
+                <div class="image"><img src="../assets/v2/images/integrations/zoom.png" alt=""></div>
+              </div> <!-- /.single-blog -->
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+              <div class="single-blog goal-button" data-goal="integration-wrike">
+                <div class="image"><img src="../assets/v2/images/integrations/wrike.png" alt=""></div>
+              </div> <!-- /.single-blog -->
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+              <div class="single-blog goal-button" data-goal="integration-outlook">
+                <div class="image"><img src="../assets/v2/images/integrations/outlook.png" alt=""></div>
+              </div> <!-- /.single-blog -->
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+              <div class="single-blog goal-button" data-goal="integration-gcalendar">
+                <div class="image"><img src="../assets/v2/images/integrations/gcalendar.png" alt=""></div>
+              </div> <!-- /.single-blog -->
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-xs-4">
+              <div class="single-blog goal-button" data-goal="integration-asans">
+                <div class="image"><img src="../assets/v2/images/integrations/asana.png" alt=""></div>
+              </div> <!-- /.single-blog -->
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+              <div class="single-blog goal-button" data-goal="integration-trello">
+                <div class="image"><img src="../assets/v2/images/integrations/trello.png" alt=""></div>
+              </div> <!-- /.single-blog -->
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="two-section-wrapper">
+        <!--
+        =====================================================
+            Testimonial Slider
+        =====================================================
+        -->
+          <div class="testimonial-section">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-8 col-xs-12 float-right wow fadeInUp">
+                  <div class="theme-title-one" style="text-align: center">
+                    <h6>Testimonials</h6>
+                    <h2>Check what people say about us!</h2>
+                  </div>
+                  <!-- /.theme-title-one -->
+                </div>
+                <!-- /.col- -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.container -->
+            <div class="main-bg-wrapper">
+              <div class="overlay">
+                <div id="watch-video">
+                  <h6>Watch</h6>
+                  <h4><Demo></Demo> Video</h4>
+                  <a
+{{/*                    data-fancybox*/}}
+                    href="#"
+                    class="tran3s theme-button"
+                    ><i class="fa fa-play" aria-hidden="true"><span></span></i
+                  ></a>
+                </div>
+                <div class="main-slider-wrapper">
+                  <div class="testimonial-slider">
+                    <div class="item">
+                      <i class="fas fa-quote-right"></i>
+                      <p>
+                        We use Willie for online meetings ans spend 15% time less for discussion and setting up plans. Amazing!
+                      </p>
+                      <div class="clearfix">
+                        <img
+                          src="../assets/v2/images/home/user-1.png"
+                          alt=""
+                          class="float-left"
+                        />
+                        <div class="name float-left">
+                          <h6>Harvey Tweed</h6>
+                          <span>San Francisco</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="item">
+                      <i class="fas fa-quote-right"></i>
+                      <p>
+                        Willie helps my team set tasks quickly and clearly, we really like it voice recognition feature.
+                      </p>
+                      <div class="clearfix">
+                        <img
+                          src="../assets/v2/images/home/user-2.png"
+                          alt=""
+                          class="float-left"
+                        />
+                        <div class="name float-left">
+                          <h6>Harald Plattner</h6>
+                          <span>Berlin</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="item">
+                      <i class="fas fa-quote-right"></i>
+                      <p>
+                        I manage marketing agency, willie.ai helps us to be more productive during meetings.
+                        My team like the app and we use it for planning our meetings.
+                      </p>
+                      <div class="clearfix">
+                        <img
+                          src="../assets/v2/images/home/user-3.png"
+                          alt=""
+                          class="float-left"
+                        />
+                        <div class="name float-left">
+                          <h6>Ji-woo Hong</h6>
+                          <span>Seoul</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.testimonial-slider -->
+                </div>
+                <!-- /.main-slider-wrapper -->
+              </div>
+            </div>
+            <!-- /.main-bg-wrapper -->
+          </div>
+          <!-- /.testimonial-section -->
+
+
+        </div>
+        <!-- /.two-section-wrapper -->
+
+        <!--
+        =====================================================
+            App ScreenShot
+        =====================================================
+        -->
+        <div class="app-screenshot">
+          <h2>Get it right now</h2>
+          <div class="screenshot-container">
+            <div class="phone-mockup">
+              <img src="../assets/v2/images/home/mobile-mockup.png" alt="" class="" />
+            </div>
+            <div class="slider-row">
+              <div class="screenshoot-slider">
+                <div class="item">
+                  <img src="../assets/v2/images/home/apps-1.png" alt="" />
+                </div>
+                <div class="item">
+                  <img src="../assets/v2/images/home/apps-2.png" alt="" />
+                </div>
+                <div class="item">
+                  <img src="../assets/v2/images/home/apps-3.png" alt="" />
+                </div>
+                <div class="item">
+                  <img src="../assets/v2/images/home/apps-4.png" alt="" />
+                </div>
+                <div class="item">
+                  <img src="../assets/v2/images/home/apps-3.png" alt="" />
+                </div>
+              </div>
+              <!-- /.screenshoot-slider -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+              <div class="lg-12 md-12 xs-12" style="text-align: center; margin-top: 60px;">
+                <a href="#app" id="ios" style="margin-left: 10px; margin-right: 10px" class=" goal-button" data-goal="appstore"><img class="ios" src="../assets/v2/images/icon/appstore-apple.svg" alt="app-store" height="50px"></a>
+                <a href="#app" style="margin-left: 10px; margin-right: 10px" class=" goal-button" data-goal="google-store"><img class="android" src="../assets/v2/images/icon/appstore-android.png" alt="google play" height="50px"></a>
+              </div>
+
+            </div>
+          </div>
+          <!-- /.screenshot-container -->
+
+        </div>
+        <!-- /.app-screenshot -->
+
+      </div>
+      <!-- /.html-top-content -->
+
+      <!--
+      =====================================================
+          Footer
+      =====================================================
+      -->
+      <footer>
+        <div class="container">
+          <div class="footer-data-wrapper">
+            <form id="bottom-form" action="#" class="subscribe-form form-validation top-form" method="post">
+              <h2>Ready to increase your productivity?</h2>
+              <div class="input-wrapper">
+                <div class="row" style="align-items: center">
+                  <div class="col-md-2 col-md-2 col-xs-12 "></div>
+                  <div class="col-md-6 col-md-6 col-xs-12">
+                    <input id="top-form-input" type="email" placeholder="Enter your business email" style="margin-bottom: 8px" name="email"/>
+                    <label>14 day trial · No credit card required</label>
+                  </div>
+                  <div class="col-md-3 col-xs-12">
+                    <div class="theme-button">
+                      <input type="submit" value="Get started for free"  />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="bottom-footer">
+              <div class="row">
+                <div class="col-lg-6 col-md-7 col-xs-12 text-right pull-right">
+                  <ul class="footer-menu">
+                    <li><a href="/tour" class="tran3s goal-button" data-goal="product-toure">Product tour </a></li>
+                    <li><a href="/pricing" class="tran3s goal-button" data-goal="pricing">Pricing</a></li>
+                    <li><a href="/policy" class="tran3s goal-button" data-goal="policy">Policy</a></li>
+
+                    <li><a href="mailto:hello@willie.ai" class="tran3s">Contact</a></li>
+                  </ul>
+                  <ul class="social-icon">
+                    <li>
+                      <a href="https://m.facebook.com/willieai" class="tran3s"
+                        ><i class="fab fa-facebook" aria-hidden="true"></i
+                      ></a>
+                    </li>
+                    <li>
+                      <a href="#" class="tran3s"
+                        ><i class="fab fa-twitter" aria-hidden="true"></i
+                      ></a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-6 col-md-5 col-xs-12 footer-logo">
+                  <div class="logo">
+                    <a href="/"
+                      ><img src="../assets/images/logo.png" alt="Logo" height="40px" style="margin-top: -14px;"
+                    /></a>
+                  </div>
+                  <p>
+                    All Right Reserved 2020 &copy;
+                    <strong>Willie.ai</strong>
+                  </p>
+                </div>
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.bottom-footer -->
+          </div>
+        </div>
+        <!-- /.container -->
+      </footer>
+
+      <!-- Scroll Top Button -->
+      <button class="scroll-top tran3s color-one-bg">
+        <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+      </button>
+
+      <!-- Js File_________________________________ -->
+
+      <!-- j Query -->
+      <script type="text/javascript" src="../assets/v2/vendor/jquery.2.2.3.min.js"></script>
+
+      <!-- Bootstrap JS -->
+      <script
+              type="text/javascript"
+              src="../assets/v2/vendor/bootstrap/bootstrap.min.js"
+      ></script>
+
+      <!-- Vendor js _________ -->
+      <!-- Camera Slider -->
+      <script
+              type="text/javascript"
+              src="../assets/v2/vendor/Camera-master/scripts/jquery.mobile.customized.min.js"
+      ></script>
+      <script
+              type="text/javascript"
+              src="../assets/v2/vendor/Camera-master/scripts/jquery.easing.1.3.js"
+      ></script>
+      <script
+              type="text/javascript"
+              src="../assets/v2/vendor/Camera-master/scripts/camera.min.js"
+      ></script>
+      <!-- WOW js -->
+      <script
+              type="text/javascript"
+              src="../assets/v2/vendor/WOW-master/dist/wow.min.js"
+      ></script>
+      <!-- Tilt js -->
+      <script
+              type="text/javascript"
+              src="../assets/v2/vendor/tilt.js/src/tilt.jquery.js"
+      ></script>
+      <!-- Fancybox -->
+      <script
+              type="text/javascript"
+              src="../assets/v2/vendor/fancybox/dist/jquery.fancybox.min.js"
+      ></script>
+      <!-- Validation -->
+      <script
+              type="text/javascript"
+              src="../assets/v2/vendor/contact-form/validate.js"
+      ></script>
+      <script
+              type="text/javascript"
+              src="../assets/v2/vendor/contact-form/jquery.form.js"
+      ></script>
+
+      <!-- owl.carousel -->
+      <script
+              type="text/javascript"
+              src="../assets/v2/vendor/owl-carousel/owl.carousel.min.js"
+      ></script>
+
+      <!-- Theme js -->
+      <script type="text/javascript" src="../assets/v2/js/theme.js"></script>
+      <script type="text/javascript">
+      </script>
+
+    </div>
+    <!-- /.main-page-wrapper -->
+  </body>
+</html>
