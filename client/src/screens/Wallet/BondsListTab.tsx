@@ -32,13 +32,15 @@ export const BondsListTab: React.FC = () => {
   );
 
   let ownBonds: WalletBondInfo[] = [];
+  const bonds = [...data] as WalletBondInfo[];
   for (const account of registeredAccounts) {
-    const bondsOnAccount = (data as WalletBondInfo[])
+    const bondsOnAccount = bonds
       .filter(bond => getBalance(bond, account.id) !== undefined)
       .map(bond => {
-        bond.account = account.id;
-        bond.valueOnAccount = getBalance(bond, account.id);
-        return bond;
+        const nBond = {...bond};
+        nBond.account = account.id;
+        nBond.valueOnAccount = getBalance(bond, account.id);
+        return nBond;
       });
     ownBonds = [...ownBonds, ...bondsOnAccount];
   }

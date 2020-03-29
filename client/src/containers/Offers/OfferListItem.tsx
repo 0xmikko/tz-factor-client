@@ -28,7 +28,7 @@ export const OfferListItem: React.FC<OfferListItemProps> = ({
   }
 
   const onBuy = () => {
-    console.log('Buy');
+    history.push(`/bonds/${bond.id}/offer/${item.id}/buy`)
   };
   return (
     <tr key={item.id}>

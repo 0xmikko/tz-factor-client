@@ -15,6 +15,8 @@ import {TransferBondsScreen} from './Payments/TransferBondsScreen';
 import {WalletScreen} from './Wallet/WalletScreen';
 import {CompanyEditProfileScreen} from "./Companies/CompanyEditProfileScreen";
 import {OfferBondsScreen} from "./Offers/OfferBondsScreen";
+import {OfferBuyBondsFormView} from "../containers/Offers/OfferBuyFormView";
+import {OfferBuyBondsScreen} from "./Offers/OfferBuyBondsScreen";
 
 export const Router: React.FC = () => {
   return (
@@ -61,6 +63,11 @@ export const Router: React.FC = () => {
             exact
             path="/bonds/:id/offer/:account/new"
             component={withTracker(OfferBondsScreen)}
+        />
+        <PrivateRoute
+            exact
+            path="/bonds/:bondId/offer/:id/buy"
+            component={withTracker(OfferBuyBondsScreen)}
         />
         <PrivateRoute
           exact

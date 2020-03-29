@@ -16,18 +16,20 @@ import {OfferBondsFormView} from '../../containers/Offers/OfferFormIView';
 import {RootState} from '../../store';
 import {STATUS} from '../../store/utils/status';
 import actions from '../../store/actions';
-import {OfferCreateDTO} from '../../core/offers';
+import {OfferBuyDTO, OfferCreateDTO} from '../../core/offers';
+import {OfferBuyBondsFormView} from '../../containers/Offers/OfferBuyFormView';
+import {Loading} from "../../components/Loading";
 
 interface MatchParams {
   id: string;
-  account: string;
+  bondId: string;
 }
 
 interface OfferBondsScreenProps extends RouteComponentProps<MatchParams> {}
 
-export const OfferBondsScreen: React.FC<OfferBondsScreenProps> = ({
+export const OfferBuyBondsScreen: React.FC<OfferBondsScreenProps> = ({
   match: {
-    params: {id, account},
+    params: {id, bondId},
   },
 }: OfferBondsScreenProps) => {
   const dispatch = useDispatch();
@@ -40,17 +42,15 @@ export const OfferBondsScreen: React.FC<OfferBondsScreenProps> = ({
     (state: RootState) => state.operations.data[hash]?.data,
   );
 
-  const bondsAvaible = useSelector((state: RootState) => state.bonds.List.data);
-
+  const bonds = useSelector((state: RootState) => state.bonds.List.data);
   const fromAccounts = useSelector(
     (state: RootState) => state.accounts.LocalList.data,
   );
 
-  const data: OfferCreateDTO = {
-    bondId: parseInt(id),
-    account: account,
+  const data: OfferBuyDTO = {
+    offerId: id,
+    account: '',
     amount: 0,
-    price: 100,
   };
 
   useEffect(() => {
@@ -73,12 +73,12 @@ export const OfferBondsScreen: React.FC<OfferBondsScreenProps> = ({
     }
   }, [hash, operationStatus]);
 
-  const onSubmit = (values: OfferCreateDTO) => {
+  const onSubmit = (values: OfferBuyDTO) => {
     console.log(values);
     setIsSubmitted(true);
     const newHash = Date.now().toString();
     setHash(newHash);
-    dispatch(actions.offers.createOffer(values, newHash));
+    dispatch(actions.offers.buyOffer(values, newHash));
   };
 
   const breadcrumbs: Breadcrumb[] = [
@@ -88,14 +88,22 @@ export const OfferBondsScreen: React.FC<OfferBondsScreenProps> = ({
     },
   ];
 
+  const bond = bonds[parseInt(bondId)];
+  if (!bond) return <Loading/>
+
+  const offers = bond.offers.filter(o => (o.id === id))
+  if (!offers) return <div>Internal error</div>
+  const currentOffer = offers[0];
+
   return (
     <div className="content content-fixed">
       <PageHeader title={'New bond offer'} breadcrumbs={breadcrumbs} />
-      <OfferBondsFormView
+      <OfferBuyBondsFormView
         data={data}
         onSubmit={onSubmit}
         isSubmitted={isSubmitted}
-        bondsAvaible={bondsAvaible}
+        bond={bond}
+        offer={currentOffer}
         fromAccounts={fromAccounts}
       />
     </div>

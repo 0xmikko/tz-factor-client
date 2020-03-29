@@ -4,6 +4,8 @@
  * Copyright (c) 2020. Mikhail Lazarev
  */
 
+import {AccountKey} from "./accounts";
+
 export interface Offer {
     id: string;
     status: 'New' | 'Partial' | 'Done' | 'Cancelled';
