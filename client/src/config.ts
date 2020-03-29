@@ -17,4 +17,4 @@ export const SSO_ADDR =
     : window.location.protocol + '//crm.' + window.location.host;
 
 export const tezosNode = 'https://carthagenet.tezos.org.ua';
-export const contractAddress = 'KT1Dy4YM7Pa1HcnWrtBQ8JzS4kUPmgbbEWUJ';
+export const contractAddress = 'KT1LHqjd7ws48zsbno7TAfGJHe9meg5eqTt4';

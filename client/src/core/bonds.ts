@@ -1,14 +1,17 @@
 import {Company} from './companies';
-import moment from 'moment';
-import {Account, AccountKey} from "./accounts";
+import {AccountKey} from './accounts';
+import {toHumanDate} from "../utils/formaters";
+import {Offer} from "./offers";
 
 export interface Bond {
   id: string;
   createdAt: Date;
   issuer: Company;
-  matureDate: Date;
+  matureDate: string;
   total: number;
-  balance: Record<string, number>
+  balance: Record<string, number>;
+  avgInterest?: number;
+  offers: Offer[];
 }
 
 export interface BondCreateDTO {
@@ -17,14 +20,17 @@ export interface BondCreateDTO {
   matureDate: number;
 }
 
-
 export function getBondTicker(b: Bond): string {
   return (
-    b.issuer.name.toUpperCase() + moment(b.matureDate).format('-YYYY-MM-DD')
+    b.issuer.name.toUpperCase() + toHumanDate(b.matureDate)
   );
 }
 
-export function getBalance(b: Bond, account: string) : number | undefined {
-  return b.balance[account]
+export function getBalance(b: Bond, account: string): number | undefined {
+  return b.balance[account];
+}
 
+export interface WalletBondInfo extends Bond {
+  account: string;
+  valueOnAccount?: number;
 }

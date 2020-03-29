@@ -127,9 +127,16 @@ textarea {
   padding: 10px;
   border: 1px solid grey;
   border-radius: 0;
+}
 
+input:disabled,
+textarea:disabled{
+  background-color: rgba(205, 205, 205, 0.42);
+  color: #001471;
 
 }
+
+
 
 label{
   font-size: 14px;

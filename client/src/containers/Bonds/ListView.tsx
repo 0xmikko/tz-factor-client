@@ -10,7 +10,7 @@ import React from 'react';
 import {Table} from 'react-bootstrap';
 import {Bond, getBondTicker} from '../../core/bonds';
 import moment from 'moment';
-import {numberWithCommas} from '../../utils/formaters';
+import {numberWithCommas, toHumanDate} from '../../utils/formaters';
 
 interface BondsListProps {
   items: Bond[];
@@ -25,11 +25,11 @@ export const BondsList: React.FC<BondsListProps> = ({
     <tr onClick={() => onItemSelected(h.id)} key={h.id}>
       <td className="tx-color-03 tx-normal">{getBondTicker(h)}</td>
       <td className="text-center tx-medium">
-        {moment(h.matureDate).format('YYYY-MM-DD')}
+        {toHumanDate(h.matureDate)}
       </td>
       <td className="text-right tx-medium">{numberWithCommas(h.total)}</td>
       <td className="text-center tx-medium">
-        {moment(h.createdAt).format('YYYY-MM-DD')}
+        {toHumanDate(h.createdAt)}
       </td>
     </tr>
   );

@@ -13,9 +13,8 @@ import {useHistory} from 'react-router';
 import {Loading} from '../../components/Loading';
 import {STATUS} from '../../store/utils/status';
 import {RootState} from '../../store';
-import {AccountsList} from '../../containers/Accounts/ListView';
-import {ToolbarButton} from '../../containers/ToolbarButton';
-import {BondsList} from "../../containers/Bonds/ListView";
+import {WalletBondsListWidget} from '../../containers/Bonds/WalletListWidget';
+import {WalletBondInfo, getBalance} from '../../core/bonds';
 
 export const BondsListTab: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,15 +22,30 @@ export const BondsListTab: React.FC = () => {
 
   useEffect(() => {
     dispatch(actions.bonds.getList());
+    dispatch(actions.accounts.getList());
   }, [dispatch]);
 
-  const {data, status} = useSelector(
-    (state: RootState) => state.bonds.List,
+  const {data, status} = useSelector((state: RootState) => state.bonds.List);
+
+  const registeredAccounts = useSelector(
+    (state: RootState) => state.accounts.List.data,
   );
+
+  let ownBonds: WalletBondInfo[] = [];
+  for (const account of registeredAccounts) {
+    const bondsOnAccount = (data as WalletBondInfo[])
+      .filter(bond => getBalance(bond, account.id) !== undefined)
+      .map(bond => {
+        bond.account = account.id;
+        bond.valueOnAccount = getBalance(bond, account.id);
+        return bond;
+      });
+    ownBonds = [...ownBonds, ...bondsOnAccount];
+  }
 
   const onItemSelected = (id: string) => history.push(`/bonds/${id}`);
 
-  const onNewAccount = () => {
+  const onIssueNewBond = () => {
     history.push('/bonds/new/');
   };
 
@@ -42,8 +56,13 @@ export const BondsListTab: React.FC = () => {
     <Container style={{padding: 0}}>
       <Row>
         <Col lg={12} md={12} xs={12}>
-          <Button size={"sm"}>Issue new bond</Button>
-          <BondsList items={data} onItemSelected={onItemSelected} />
+          <Button size={'sm'} onClick={onIssueNewBond}>
+            Issue new bond
+          </Button>
+          <WalletBondsListWidget
+            items={ownBonds}
+            onItemSelected={onItemSelected}
+          />
         </Col>
       </Row>
     </Container>

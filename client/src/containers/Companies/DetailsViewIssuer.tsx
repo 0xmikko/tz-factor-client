@@ -8,7 +8,7 @@
 
 import React from 'react';
 import {Company} from '../../core/companies';
-import {TotalBar} from '../../components/TotalBar';
+import {TotalBar} from '../Bonds/TotalBar';
 import {Col, Container, Row} from 'react-bootstrap';
 import {BondsListWidget} from '../Bonds/ListWidget';
 import {useHistory} from 'react-router';

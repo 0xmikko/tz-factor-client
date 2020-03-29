@@ -10,8 +10,8 @@ import React from 'react';
 import {Bond} from '../../core/bonds';
 import {InfoWidget} from './InfoWidget';
 import {Col, Container, Row} from "react-bootstrap";
-import {TotalBar} from "../../components/TotalBar";
-import {OffersWidget} from "./OffersWidget";
+import {TotalBar} from "./TotalBar";
+import {OffersWidget} from "../Offers/OffersWidget";
 
 interface BondDetailsProps {
   data: Bond;
@@ -24,12 +24,12 @@ export const DetailsView: React.FC<BondDetailsProps> = ({
         <Container className="pd-x-0 pd-lg-x-10 pd-xl-x-0 m-t-20-f pd-t-30-f">
             <Row>
                 <Col lg={12} md={12} xs={12}>
-                    <TotalBar total_amount={12000345.45} />
+                    <TotalBar bond={data} />
                 </Col>
             </Row>
             <Row style={{marginTop: '20px'}}>
                 <Col lg={8} md={8} xs={12}>
-                    <OffersWidget />
+                    <OffersWidget data={data.offers} bond={data}/>
                 </Col>
                 <Col lg={4} md={4} xs={12}>
                     <InfoWidget data={data} />

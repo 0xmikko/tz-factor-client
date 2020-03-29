@@ -11,6 +11,7 @@ import {Bond} from '../../core/bonds';
 import {BACKEND_ADDR} from "../../config";
 import moment from 'moment';
 import {Card, Table} from "react-bootstrap";
+import {numberWithCommas, toHumanDate} from "../../utils/formaters";
 
 interface InfoWidgetProps {
   data: Bond;
@@ -25,8 +26,8 @@ export const InfoWidget: React.FC<InfoWidgetProps> = ({data}) => {
             <Card.Body className="pd-20">
                 <div className="table-responsive">
                     Issuer: <a href={`/company/${data.issuer.id}`}>{data.issuer.name}</a> <br/>
-                    Mature Date: {moment(data.matureDate).format("YYYY-MM-DD")} <br/>
-                    Total amount: {data.total} <br/>
+                    Mature Date: {toHumanDate(data.matureDate)} <br/>
+                    Total amount: {numberWithCommas(data.total)} <br/>
                 </div>
             </Card.Body>
         </Card>

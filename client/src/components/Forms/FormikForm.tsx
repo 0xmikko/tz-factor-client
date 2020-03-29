@@ -17,6 +17,7 @@ export interface FieldI {
   type?: 'input' | 'textarea' | 'autocomplete';
   options?: TypeaheadOptions[];
   onChange?: (value: string) => void;
+  disabled?: boolean;
 }
 
 export interface FormikFormViewProps<T> {
@@ -61,6 +62,7 @@ export function FormikForm<T, S>({
             placeholder={f.placeholder || f.label}
             name={name}
             component={f.type || 'input'}
+            disabled={f.disabled}
           />
         );
       case 'autocomplete':

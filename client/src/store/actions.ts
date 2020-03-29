@@ -14,6 +14,7 @@ import * as features from './features/actions';
 import * as companies from './companies/actions';
 import * as payments from './payments/actions';
 import * as operations from './operations/actions';
+import * as offers from './offers/actions';
 import {ThunkAction} from 'redux-thunk';
 import {RootState} from './index';
 import {Action} from 'redux';
@@ -32,6 +33,7 @@ export const actionsAfterAuth = (): ThunkAction<
   dispatch(companies.connectSocket());
   dispatch(payments.connectSocket());
   dispatch(operations.connectSocket());
+  dispatch(offers.connectSocket());
 };
 
 export default {
@@ -42,4 +44,5 @@ export default {
   profile,
   companies,
   payments,
+  offers,
 };

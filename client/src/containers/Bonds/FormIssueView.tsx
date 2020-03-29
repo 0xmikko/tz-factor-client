@@ -19,6 +19,7 @@ import {
 import {TypeaheadOptions} from '../../components/Forms/AutoCompleteField';
 import {TransferBondsDTO} from '../../core/payments';
 import {AccountKey} from '../../core/accounts';
+import {toHumanDate} from "../../utils/formaters";
 
 const formSchema = yup.object({
   matureDate: yup.date().required(),
@@ -46,7 +47,7 @@ export const BondIssueFormView: React.FC<BondIssueViewProps> = ({
   isSubmitted,
 }) => {
   const initialValues: BondFormFields = {
-    matureDate: moment(data?.matureDate).format('YYYY-MM-DD'),
+    matureDate: toHumanDate(data?.matureDate),
     amount: data?.amount.toString() || '0',
     account: '0',
   };
