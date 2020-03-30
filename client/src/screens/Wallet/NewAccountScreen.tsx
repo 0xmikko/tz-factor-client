@@ -27,7 +27,7 @@ export const NewAccountScreen: React.FC = () => {
     name: 'New account',
     mnemonic: '',
     secret: '',
-    pkh: '',
+    // pkh: '',
     password: '',
     email: '',
   };

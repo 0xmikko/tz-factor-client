@@ -1,11 +1,10 @@
 import {Company} from "./companies";
-import {KeyStore} from "conseiljs";
 
 export interface FaucetAccount {
     name: string,
     mnemonic: string,
     secret: string,
-    pkh: string,
+    // pkh: string,
     password: string,
     email: string,
 }
@@ -13,7 +12,9 @@ export interface FaucetAccount {
 export interface AccountKey {
     id: string,
     name: string,
-    keystore: KeyStore,
+    publicKey: string,
+    privateKey: string,
+    secret: string,
     amount?: number,
     status: 'New' | 'Registered' | 'Revealed',
 }

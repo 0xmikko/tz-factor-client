@@ -23,7 +23,7 @@ export const AccountsList: React.FC<AccountsListProps> = ({
 
   // tx-teal tx-pink
   const renderTableContent = items.map(h => (
-    <AccountsListItem item={h} registeredAccounts={registeredAccounts} />
+    <AccountsListItem item={h} registeredAccounts={registeredAccounts} key={h.id} />
   ));
 
   return (

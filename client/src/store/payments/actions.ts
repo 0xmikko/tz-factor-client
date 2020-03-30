@@ -70,7 +70,7 @@ export const transferMoney = (
   try {
     Tezos.setProvider({
       rpc: tezosNode,
-      signer: new InMemorySigner(dto.from.keystore.privateKey),
+      signer: new InMemorySigner(dto.from.privateKey),
     });
     const contractInstance = await Tezos.contract.at(contractAddress);
     console.log('CI', contractInstance);
@@ -93,10 +93,12 @@ export const transferBonds = (
   opHash: string,
 ): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
   if (!dto.from) return;
+  console.log(dto.from.privateKey)
+
   try {
     Tezos.setProvider({
       rpc: tezosNode,
-      signer: new InMemorySigner(dto.from.keystore.privateKey),
+      signer: new InMemorySigner(dto.from.privateKey),
     });
     const contractInstance = await Tezos.contract.at(contractAddress);
     console.log('CI', contractInstance);

@@ -33,8 +33,9 @@ export const PaymentsList: React.FC<PaymentsListProps> = ({
       {h.sender?.company.name + ' (' + h.sender?.id + ')'}
     </td>
 
+    console.log("IDDD", h);
     return (
-      <tr key={h.id}>
+      <tr key={h.id + h.sender?.id}>
         {amountTD}
 
         <td className="tx-color-03 text-left">{currency}</td>

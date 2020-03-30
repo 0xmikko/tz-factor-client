@@ -30,8 +30,10 @@ export const TabsBar: React.FC<TabsBarProps> = ({tabs}: TabsBarProps) => {
     return (
       <a
         href={itemHash}
-        className={'nav-link ' + active}>
+        className={'nav-link ' + active}
+        key={itemHash}>
         {title}
+
       </a>
     );
   });

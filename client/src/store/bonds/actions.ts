@@ -69,7 +69,7 @@ export const create = (
   try {
     Tezos.setProvider({
       rpc: tezosNode,
-      signer: new InMemorySigner(dto.account.keystore.privateKey),
+      signer: new InMemorySigner(dto.account.privateKey),
     });
     const contractInstance = await Tezos.contract.at(contractAddress);
     console.log('CI', contractInstance);

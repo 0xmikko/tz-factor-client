@@ -32,24 +32,22 @@ export const AccountsListTab: React.FC = () => {
     (state: RootState) => state.accounts.List.data,
   );
 
+  const registeredAccountsStatus = useSelector(
+      (state: RootState) => state.accounts.List.status,
+  );
+
   const onNewAccount = () => {
     history.push('/wallet/accounts/new/');
   };
 
-  const rightToolbar = (
-    <>
-
-    </>
-  );
-
-  if (status === STATUS.LOADING) {
+  if (status === STATUS.LOADING || registeredAccountsStatus !== STATUS.SUCCESS) {
     return <Loading />;
   }
   return (
     <Container style={{padding: 0}}>
       <Row>
         <Col lg={12} md={12} xs={12}>
-          <Button size={"sm"}>Create new account</Button>
+          <Button size={"sm"} onClick={onNewAccount}>Create new account</Button>
           <AccountsList items={data} registeredAccounts={registeredAccounts} />
         </Col>
       </Row>

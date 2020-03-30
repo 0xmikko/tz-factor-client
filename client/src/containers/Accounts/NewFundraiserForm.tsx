@@ -18,7 +18,7 @@ const formSchema = yup.object({
   name: yup.string().required(),
   mnemonic: yup.string().required(),
   secret: yup.string().required(),
-  pkh: yup.string().required(),
+  // pkh: yup.string().required(),
   password: yup.string().required(),
   email: yup
     .string()
@@ -46,9 +46,9 @@ export const FundraiserFormView: React.FC<AccountFundraiserFormViewProps> = ({
     secret: {
       label: 'Secret',
     },
-    pkh: {
-      label: 'Public key hash',
-    },
+    // pkh: {
+    //   label: 'Public key hash',
+    // },
     password: {
       label: 'Password',
     },
@@ -61,7 +61,7 @@ export const FundraiserFormView: React.FC<AccountFundraiserFormViewProps> = ({
     name: 'New account',
     mnemonic: '',
     secret: '',
-    pkh: '',
+    // pkh: '',
     password: '',
     email: '',
   }

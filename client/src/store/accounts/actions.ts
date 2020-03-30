@@ -2,8 +2,6 @@ import {ThunkAction} from 'redux-thunk';
 import {RootState} from '../index';
 import {Action} from 'redux';
 import {AccountKey, FaucetAccount} from '../../core/accounts';
-import {KeyStore} from 'conseiljs/dist/types/wallet/KeyStore';
-import {TezosNodeWriter, TezosWalletUtil} from 'conseiljs';
 import {ACCOUNTS_KEY_PREFIX, ACCOUNTS_PREFIX, namespace} from './index';
 import {
   DETAIL_FAILURE,
@@ -13,33 +11,45 @@ import {
 } from '../dataloader';
 import {tezosNode} from '../../config';
 import {SocketEmitAction} from '../socketMiddleware';
-import {PAYMENTS_PREFIX} from '../payments';
 import {updateStatus} from '../operations/actions';
 import {STATUS} from '../utils/status';
+import {Tezos} from "@taquito/taquito";
+import {InMemorySigner} from "@taquito/signer";
 
 export const addNewKey = (
   fa: FaucetAccount,
 ): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
-  const newKeystore: KeyStore = await TezosWalletUtil.unlockFundraiserIdentity(
-    fa.mnemonic,
-    fa.email,
-    fa.password,
-    fa.pkh,
-  );
+
+  const ims = InMemorySigner.fromFundraiser(fa.email, fa.password, fa.mnemonic)
+
+  const publicKey = await ims.publicKey()
+  const publicKeyHash = await ims.publicKeyHash()
+  const privateKey = await ims.secretKey();
+
+  console.log("QQQQQ-QQQQ-QQQ", publicKey, publicKeyHash, privateKey)
+
+  // const newKeystore: KeyStore = await TezosWalletUtil.unlockFundraiserIdentity(
+  //   fa.mnemonic,
+  //   fa.email,
+  //   fa.password,
+  //   fa.pkh,
+  // );
 
   const newAccountKey: AccountKey = {
-    id: newKeystore.publicKeyHash,
+    id: publicKeyHash,
     name: fa.name,
-    keystore: newKeystore,
+    secret: fa.secret,
+    publicKey,
+    privateKey,
     status: 'New',
   };
 
-  const result = await TezosNodeWriter.sendIdentityActivationOperation(
-    tezosNode,
-    newKeystore,
-    fa.secret,
-  );
-  console.log(`Injected operation group id ${result.operationGroupID}`);
+  // const result = await TezosNodeWriter.sendIdentityActivationOperation(
+  //   tezosNode,
+  //   newKeystore,
+  //   fa.secret,
+  // );
+  // console.log(`Injected operation group id ${result.operationGroupID}`);
 
   dispatch(updateAccountKey(newAccountKey));
   dispatch(RevealAccount(newAccountKey));
@@ -50,13 +60,12 @@ export const RevealAccount = (
 ): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
   console.log('Try to reveal account for ', account.name);
   try {
-    const result = await TezosNodeWriter.sendKeyRevealOperation(
-      tezosNode,
-      account.keystore,
-    );
-    console.log(
-      `Injected REVEAL operation group id ${result.operationGroupID}`,
-    );
+    Tezos.setProvider({ rpc: tezosNode,
+      signer: new InMemorySigner(account.privateKey),});
+      const op = await Tezos.tz.activate(account.id, account.secret);
+      console.log('Awaiting confirmation...');
+      await op.confirmation();
+      console.log(op.hash, op.includedInBlock);
     account.status = 'Revealed';
     dispatch(updateAccountKey(account));
   } catch (e) {
@@ -120,7 +129,7 @@ export const updateAccountKey = (
 
 export const getLocalAccountsList = () => {
   const results = localStorage.getItem('keys');
-  const keys: KeyStore[] = results ? (JSON.parse(results) as KeyStore[]) : [];
+  const keys: AccountKey[] = results ? (JSON.parse(results) as AccountKey[]) : [];
   return {
     type: ACCOUNTS_KEY_PREFIX + LIST_SUCCESS,
     payload: keys,
