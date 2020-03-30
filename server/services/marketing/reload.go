@@ -40,11 +40,12 @@ func (s *service) Reload(ctx context.Context) error {
 			// Check that landing indexed in database
 			_, err := s.store.GetLandingByURL(context.TODO(), url)
 
-			// If unexpected error was happened
-			if err != nil && err.Error() != errors.ErrorRecordNotFound.Error() {
-				sentry.ReportError(err)
-				continue
-			}
+			//log.Println(err)
+			//// If unexpected error was happened
+			//if err != nil && err.Error() != errors.ErrorRecordNotFound.Error() {
+			//	sentry.ReportError(err)
+			//	continue
+			//}
 
 			// if we do not find a landing page
 			if err != nil {
