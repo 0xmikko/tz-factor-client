@@ -1,9 +1,9 @@
 {
-  "name": "willie",
+  "name": "tz-factor-client",
   "version": "0.1.0",
   "private": true,
   "engines": { "node": "12.16.1", "npm": "6.13.4" },
   "scripts": {
-    "postinstall": "cd client && npm install --only=dev && npm install && npm run build"
+    "postinstall": "cd client"
   }
 }
