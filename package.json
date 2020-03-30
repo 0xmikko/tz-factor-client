@@ -4,6 +4,6 @@
   "private": true,
   "engines": { "node": "12.16.1", "npm": "6.13.4" },
   "scripts": {
-    "postinstall": "cd client"
+    "postinstall": "cd client  && npm install && npm run build"
   }
 }
