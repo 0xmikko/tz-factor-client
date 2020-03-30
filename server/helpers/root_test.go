@@ -20,7 +20,7 @@ func Test_Helpers_GetProjectRootDir(t *testing.T) {
 	assert.NoError(t, err)
 
 	got := GetProjectRootDir()
-	assert.Equal(t, "/Users/mikhail/Coding/willie-web/", got)
+	assert.Equal(t, "/Users/mikhail/Coding/tz-factor-client/", got)
 
 	err = os.Setenv("ENV", "PROD")
 	assert.NoError(t, err)

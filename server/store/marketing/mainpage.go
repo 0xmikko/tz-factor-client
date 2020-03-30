@@ -9,5 +9,5 @@
 package marketing
 
 func (s *store) GetMainPageURL() string {
-	return "run-meetings-shorter-with-clear-action-plans"
+	return "crowd-factoring-platform"
 }

@@ -413,7 +413,7 @@
 }
 #theme-main-banner .camera_caption .main-container {
   position: relative;
-  background-image: url('https://storage.googleapis.com/willie_landing/banners/background.jpg');
+  background-image: url('/assets/images/background.jpg');
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
