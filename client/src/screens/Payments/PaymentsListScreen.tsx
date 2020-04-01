@@ -23,6 +23,7 @@ export const PaymentsListScreen: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
+      dispatch(actions.payments.connectSocket())
     dispatch(actions.payments.getList());
   }, [dispatch]);
 

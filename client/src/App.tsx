@@ -13,10 +13,8 @@ import {Redirect, Route, Switch} from 'react-router';
 import {LoginScreen} from './screens/Auth/LoginScreen/LoginScreen';
 import {GoogleAuthDoneScreen} from './screens/Auth/GoogleDoneScreen';
 import {SplashScreen} from './screens/SplashScreen';
-import {PrivateRoute} from './components/PrivateRoute';
-import {ThankYouScreen} from './screens/ThankYouScreen/ThankYouScreen';
 import {EmailConfirmScreen} from './screens/Auth/EmailConfirmScreen';
-import {ResendScreen} from './screens/Auth/ResendScreen/ResendScreen';
+import {ResendScreen} from './screens/ResendScreen/ResendScreen';
 
 import actions from './store/actions';
 import {RootState} from './store';
@@ -33,6 +31,7 @@ import {
 
 import './App.css';
 import {Router} from './screens/Router';
+import {JoinScreen} from "./screens/JoinScreen/JoinScreen";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -75,6 +74,8 @@ const App = () => {
       );
 
     case APP_STATUS_FILLING_PROFILE:
+          return <JoinScreen />;
+    case APP_STATUS_CHOOSING_PLAN:
     case APP_STATUS_READY:
         return <Router />;
 

@@ -22,6 +22,7 @@ export const AccountsListTab: React.FC = () => {
 
   useEffect(() => {
     dispatch(actions.accounts.getLocalAccountsList());
+    dispatch(actions.accounts.connectSocket())
     dispatch(actions.accounts.getList());
   }, [dispatch]);
 

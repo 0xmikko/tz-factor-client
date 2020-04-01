@@ -23,7 +23,8 @@ export const BondsListScreen: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(actions.bonds.getList());
+    dispatch(actions.bonds.connectSocket())
+    dispatch(actions.bonds.getList())
   }, [dispatch]);
 
   const {data, status} = useSelector((state: RootState) => state.bonds.List);

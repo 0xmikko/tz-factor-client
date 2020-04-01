@@ -10,10 +10,10 @@ import React, {useState} from 'react';
 import {Button, Card, Col, Container, Row} from 'react-bootstrap';
 import Media from 'react-media';
 import {useDispatch} from 'react-redux';
-import {SelectBlock, SelectItem} from '../../../containers/Select/Select';
+import {SelectBlock, SelectItem} from '../../containers/Select/Select';
 import Image from './people.png';
 import './ResendScreen.css';
-import logo from '../../../logo.png';
+import logo from './logo.png';
 import robot from './robot.png';
 
 export const ResendScreen: React.FC = () => {
@@ -27,58 +27,46 @@ export const ResendScreen: React.FC = () => {
 
   const p1questions: SelectItem[] = [
     {
-      property: 'problem_timesaving',
-      title: 'Time savings',
+      property: "retailer",
+      title: 'I\'m interested to issue obligations to pay suppliers',
     },
     {
       property: 'problem_planning',
-      title: 'Better meeting planning',
+      title: 'I\'m interested reducing days debtors using bonds',
     },
     {
       property: 'problem_recording',
-      title: 'Voice recording',
-    },
-    {
-      property: 'problem_actionplan',
-      title: 'Clear action plan',
+      title: 'I\'m interested to invest money for factoring',
     },
   ];
 
   const p2questions: SelectItem[] = [
     {
-      property: 'meetings_0_3',
-      title: 'Less 3',
+      property: 'interest_0_2',
+      title: '< 2%',
     },
     {
-      property: 'meetings_3_5',
-      title: '3-5',
+      property: 'interest_2_4',
+      title: '2-4%',
     },
     {
-      property: 'meetings_5_15',
-      title: '5-15',
+      property: 'interest_4_6',
+      title: '4-6%',
     },
     {
-      property: 'meetings_15+',
-      title: '15+',
+      property: '6+',
+      title: '6%+',
     },
   ];
 
   const p3questions: SelectItem[] = [
     {
-      property: 'tool_outlook',
-      title: 'MS Outlook',
+      property: 'tezos_yes',
+      title: 'Yes',
     },
     {
-      property: 'tool_gcalendar',
-      title: 'Google Calendar',
-    },
-    {
-      property: 'tool_calendly',
-      title: 'Calendly',
-    },
-    {
-      property: 'tool_doodle',
-      title: 'Doodle',
+      property: 'tezos_no',
+      title: 'No',
     },
   ];
 
@@ -103,12 +91,12 @@ export const ResendScreen: React.FC = () => {
     <Col lg={6} md={0} xs={0}>
       <Card>
         <h2>Help us to deliver the best value for you</h2>
-        <h4>1. How many meetings do you have a week?</h4>
+        <h4>1. What is your role?</h4>
         <SelectBlock items={p1questions} allowMany={true} />
-        <h4>2. How many meetings you have a week?</h4>
+        <h4>2. What is applicable interest rate for your purposes?</h4>
         <SelectBlock items={p2questions} allowMany={false} />
 
-        <h4>3. Which tools do you use for organising meetings?</h4>
+        <h4>3. Do you know how tezos blockchain proofs your oprerations?</h4>
         <SelectBlock items={p3questions} allowMany={true} />
         <br />
         <br />
@@ -119,8 +107,8 @@ export const ResendScreen: React.FC = () => {
 
   const emailCol = (
     <Col lg={6} md={12} xs={12} style={{paddingLeft: '5%', paddingRight: '5%'}}>
-      <img src={logo} height={'80px'} />
-      <h1>Thank you for choosing Willie!</h1>
+      <img src={logo} height={'50px'} />
+      <h1>Thank you for choosing TZ-Factor!</h1>
       <p className={'notice'}>
         We’ve sent you a letter with activation link to your email address.{' '}
         <br />
