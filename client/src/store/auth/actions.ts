@@ -96,7 +96,7 @@ export const signup = (
 export const authenticate = (
   endpoint: string,
   body: string,
-): ThunkAction<void, RootState, unknown, Action<string>> => async dispatch => {
+): ThunkAction<void, RootState, unknown, Action<string>> => async (dispatch) => {
   const result = await dispatch<AuthPayload, void>({
     [RSAA]: {
       endpoint: getFullAPIAddress(endpoint, undefined, SSO_ADDR),
@@ -111,7 +111,7 @@ export const authenticate = (
     },
   });
 
-  if (
+  if (result &&
     !result.error &&
     result.payload.refresh &&
     result.type === actionTypes.LOGIN_SUCCESS
@@ -138,49 +138,50 @@ export const getTokenAtStartup = (): ThunkAction<
   Action<string>
 > => async dispatch => {
 
-  const token = {
-    access: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODU3NzY5NjAsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiIzNzU4NWYyMS03ZDljLTRlYTctOGQ1Yi1kYWQxYzZhMzZiYTYifQ.sHDAi0eZ19urUpvXVlRmcKtH1Yj44Y8SjCGkWOLhov0',
-    refresh: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODU3NzY5NjAsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiIzNzU4NWYyMS03ZDljLTRlYTctOGQ1Yi1kYWQxYzZhMzZiYTYifQ.sHDAi0eZ19urUpvXVlRmcKtH1Yj44Y8SjCGkWOLhov0',
-
-  }
-  await dispatch({
-    type: LOGIN_SUCCESS,
-    payload: token,
-  })
-
-  const profile : Profile = {
-    id: '',
-    name: "Mikhail Lazarev",
-    email: "mikael.lazarev@gmail.com",
-    status: 'READY',
-    job: 'CEO',
-    industry: 'Retail',
-    role: 'ISSUER',
-
-  }
-
-  await dispatch({
-    type: 'PROFILE_SUCCESS',
-    payload: profile
-  })
-
-  await dispatch(actionsAfterAuth());
+  // const token = {
+  //   access: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODU3NzY5NjAsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiIzNzU4NWYyMS03ZDljLTRlYTctOGQ1Yi1kYWQxYzZhMzZiYTYifQ.sHDAi0eZ19urUpvXVlRmcKtH1Yj44Y8SjCGkWOLhov0',
+  //   refresh: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODU3NzY5NjAsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOiIzNzU4NWYyMS03ZDljLTRlYTctOGQ1Yi1kYWQxYzZhMzZiYTYifQ.sHDAi0eZ19urUpvXVlRmcKtH1Yj44Y8SjCGkWOLhov0',
   //
-  // const token = localStorage.getItem('token');
-  // if (token) {
-  //   const result = await dispatch(refreshAccessToken(token));
-  //   if (
-  //     !result.error &&
-  //     result.payload.refresh &&
-  //     result.type === actionTypes.TOKEN_RECEIVED
-  //   ) {
-  //     await dispatch(getProfile());
-  //   } else {
-  //     await dispatch(updateStatusInternally(APP_STATUS_AUTH_REQUIRED));
-  //   }
-  // } else {
-  //   await dispatch(updateStatusInternally(APP_STATUS_AUTH_REQUIRED));
   // }
+  // await dispatch({
+  //   type: LOGIN_SUCCESS,
+  //   payload: token,
+  // })
+  //
+  // const profile : Profile = {
+  //   id: '',
+  //   name: "Mikhail Lazarev",
+  //   email: "mikael.lazarev@gmail.com",
+  //   status: 'READY',
+  //   job: 'CEO',
+  //   industry: 'Retail',
+  //   role: 'ISSUER',
+  //
+  // }
+  //
+  // await dispatch({
+  //   type: 'PROFILE_SUCCESS',
+  //   payload: profile
+  // })
+  //
+  // await dispatch(actionsAfterAuth());
+
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    const result = await dispatch(refreshAccessToken(token));
+    if (
+      !result.error &&
+      result.payload.refresh &&
+      result.type === actionTypes.TOKEN_RECEIVED
+    ) {
+      await dispatch(getProfile());
+    } else {
+      await dispatch(updateStatusInternally(APP_STATUS_AUTH_REQUIRED));
+    }
+  } else {
+    await dispatch(updateStatusInternally(APP_STATUS_AUTH_REQUIRED));
+  }
 };
 
 export const clearStatus = () => ({

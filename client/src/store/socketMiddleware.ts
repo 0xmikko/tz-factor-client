@@ -97,46 +97,50 @@ export function createSocketMiddleware(): ThunkMiddleware<
    ** Middleware gets connection and emits new request or start to listen on
    */
 
-  return ({dispatch, getState}) => (next: Dispatch) => (
-    action: SocketEmitAction | SocketOnAction,
-  ) => {
-    const jwt = getState().auth.access?.token;
+  return ({dispatch, getState}) => {
 
-    console.log('DISPATCH', action);
-    switch (action.type) {
-      case 'SOCKET_EMIT':
-        if (jwt) {
-          getNamespace(jwt).then(socket => {
-            socket.emit(action.event, action.payload, action.opHash);
-            console.log(`[SOCKET.IO] : EMIT : ${action.event} with opHash ${action.opHash}`);
-          });
-        } else {
-          dispatch({type: action.typeOnFailure});
-        }
+    return (next: Dispatch) => (
+        action: SocketEmitAction | SocketOnAction,
+    ) => {
+      const jwt = getState().auth.access?.token;
 
-        return;
-
-      case 'SOCKET_ON':
-        if (jwt) {
-          getNamespace(jwt).then(socket => {
-            socket.on(action.event, (payload: any) => {
-              console.log('[SOCKET.IО] : GET NEW INFO : ', payload);
-              dispatch({
-                type: action.typeOnSuccess,
-                payload: payload,
-              });
+      console.log('DISPATCH', action);
+      switch (action.type) {
+        case 'SOCKET_EMIT':
+          if (jwt) {
+            getNamespace(jwt).then(socket => {
+              socket.emit(action.event, action.payload, action.opHash);
+              console.log(`[SOCKET.IO] : EMIT : ${action.event} with opHash ${action.opHash}`);
             });
-            console.log('[SOCKET.IO] : LISTENER ADDED : ', action.event);
-          });
-        } else {
-          console.log('Cant connect');
-        }
-        return;
+          } else {
+            dispatch({type: action.typeOnFailure});
+          }
 
-      default:
-        next(action);
+          return next(action);
+
+        case 'SOCKET_ON':
+          if (jwt) {
+            getNamespace(jwt).then(socket => {
+              socket.on(action.event, (payload: any) => {
+                console.log('[SOCKET.IО] : GET NEW INFO : ', payload);
+                dispatch({
+                  type: action.typeOnSuccess,
+                  payload: payload,
+                });
+              });
+              console.log('[SOCKET.IO] : LISTENER ADDED : ', action.event);
+            });
+          } else {
+            console.log('Cant connect');
+          }
+          return next(action);
+
+        default:
+          console.log("NEXT", action);
+          return next(action);
+      }
     }
-  };
+  }
 }
 
 export default createSocketMiddleware();

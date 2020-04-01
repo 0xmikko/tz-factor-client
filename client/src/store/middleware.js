@@ -18,6 +18,9 @@ export function createApiMiddleware() {
     const rsaaMiddleware = apiMiddleware({dispatch, getState});
 
     return next => action => {
+
+      console.log("DISPATCH RSAA", action)
+
       const nextCheckPostoned = nextAction => {
         // Run postponed actions after token refresh
         if (nextAction.type === TOKEN_RECEIVED) {

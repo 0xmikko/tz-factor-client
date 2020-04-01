@@ -27,6 +27,6 @@ export type RootState = ReturnType<typeof reducer>;
 export default function configureStore() {
   return createStore(
     reducer,
-    composeEnhancers(applyMiddleware(createApiMiddleware, thunk, createSocketMiddleware)),
+    composeEnhancers(applyMiddleware(thunk, createApiMiddleware, createSocketMiddleware)),
   );
 }
