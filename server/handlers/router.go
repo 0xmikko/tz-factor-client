@@ -31,7 +31,14 @@ func registerRouter(services services.Services) *gin.Engine {
 	// CORS setup
 	router.Use(cors.New(cors.Config{
 		//AllowAllOrigins:  true,
-		AllowOrigins:     []string{"http://localhost:3000", "http://localhost:8080", "https://willie-lean-stage.herokuapp.com", "https://willie.ai"},
+		AllowOrigins:     []string{
+		"http://localhost:3000",
+		"http://localhost:8080",
+		"https://willie-lean-stage.herokuapp.com",
+		 "https://willie.ai",
+		 "https://tz-factor.com",
+
+		 },
 		AllowMethods:     []string{"POST", "GET", "PUT", "PATCH", "DELETE"},
 		AllowHeaders:     []string{"Content-Type", "Content-Length", "X-CSRF-Token", "Authorization", "accept", "origin", "Cache-Control", "X-Requested-With"},
 		AllowCredentials: true,
