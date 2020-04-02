@@ -9,8 +9,7 @@
 export const BACKEND_ADDR =
   process.env.NODE_ENV === 'development'
     ? 'localhost:4000'
-    : 'https://tz-factor-server-stage.herokuapp.com/'
-    // : window.location.protocol + '//' + window.location.host;
+    : 'https://tz-factor-server-stage.herokuapp.com'
 
 export const SSO_ADDR =
   process.env.NODE_ENV === 'development'
