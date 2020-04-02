@@ -15,7 +15,7 @@ import (
 
 func (s *service) CreateLead(ctx context.Context, userID, url string, userAgent string) error {
 
-	if url == "" {
+	if url == "" || url == "/" {
 		url = s.store.GetMainPageURL()
 	}
 
