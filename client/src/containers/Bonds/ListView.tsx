@@ -31,6 +31,9 @@ export const BondsList: React.FC<BondsListProps> = ({
       <td className="text-center tx-medium">
         {toHumanDate(h.createdAt)}
       </td>
+        <td className="text-center tx-medium">
+            {h.avgInterest ? `${numberWithCommas(h.avgInterest)}%` : '-'}
+        </td>
     </tr>
   );
   const renderTableContent = items.map(h => renderLine(h));
