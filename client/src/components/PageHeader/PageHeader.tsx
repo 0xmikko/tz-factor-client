@@ -9,6 +9,7 @@
 import React from 'react';
 // import ComponentSearch from './ComponentSearch';
 import {Breadcrumb} from './Breadcrumb';
+import Helmet from "react-helmet";
 
 interface PageHeaderProps {
   breadcrumbs: Breadcrumb[];
@@ -23,6 +24,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 }: PageHeaderProps) => {
   return (
     <>
+      <Helmet title={title} />
       <div className="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
         <div className="d-sm-flex align-items-center justify-content-between">
           <div>
