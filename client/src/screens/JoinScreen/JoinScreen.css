@@ -12,7 +12,7 @@
 
 .join-screen{
     padding-top: 30px;
-    /*background-image: url('../bck.png');*/
+    background-image: url('./bck.png');
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;

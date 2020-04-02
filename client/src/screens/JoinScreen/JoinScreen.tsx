@@ -71,7 +71,7 @@ export const JoinScreen: React.FC = () => {
     <Container className="join-screen onescreen" fluid>
       <Row>
         <Col>
-          <h1>Welcome to Willie!</h1>
+          <h1>Welcome to TZ-factor!</h1>
           <h2>Please, finish your registration</h2>
           <Formik
             validationSchema={formSchema}
