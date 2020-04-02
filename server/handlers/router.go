@@ -37,7 +37,7 @@ func registerRouter(services services.Services) *gin.Engine {
 		"https://willie-lean-stage.herokuapp.com",
 		 "https://willie.ai",
 		 "https://tz-factor.com",
-
+		 "https://tz-factor-app.herokuapp.com",
 		 },
 		AllowMethods:     []string{"POST", "GET", "PUT", "PATCH", "DELETE"},
 		AllowHeaders:     []string{"Content-Type", "Content-Length", "X-CSRF-Token", "Authorization", "accept", "origin", "Cache-Control", "X-Requested-With"},
