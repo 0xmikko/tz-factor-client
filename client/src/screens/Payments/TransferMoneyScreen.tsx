@@ -40,6 +40,7 @@ export const TransferMoneyScreen: React.FC = () => {
       state.accounts.List.data);
 
   useEffect(() => {
+    dispatch(actions.accounts.connectSocket());
     dispatch(actions.accounts.getList());
   }, []);
 

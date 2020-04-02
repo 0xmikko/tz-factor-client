@@ -21,11 +21,13 @@ export const BondsListTab: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
+    dispatch(actions.bonds.connectSocket());
     dispatch(actions.bonds.getList());
     dispatch(actions.accounts.getList());
   }, [dispatch]);
 
   const {data, status} = useSelector((state: RootState) => state.bonds.List);
+  const id = useSelector((state: RootState) => state.profile.id);
 
   const registeredAccounts = useSelector(
     (state: RootState) => state.accounts.List.data,
@@ -33,7 +35,10 @@ export const BondsListTab: React.FC = () => {
 
   let ownBonds: WalletBondInfo[] = [];
   const bonds = [...data] as WalletBondInfo[];
+  console.log(registeredAccounts)
   for (const account of registeredAccounts) {
+    console.log("ID", id, account.company.id)
+    if (account.company.id !== id) continue;
     const bondsOnAccount = bonds
       .filter(bond => getBalance(bond, account.id) !== undefined)
       .map(bond => {

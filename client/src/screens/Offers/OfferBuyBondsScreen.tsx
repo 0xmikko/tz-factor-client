@@ -54,8 +54,11 @@ export const OfferBuyBondsScreen: React.FC<OfferBondsScreenProps> = ({
   };
 
   useEffect(() => {
+    dispatch(actions.bonds.connectSocket());
+    dispatch(actions.bonds.connectSocket());
     dispatch(actions.bonds.getList());
     dispatch(actions.accounts.getList());
+    dispatch(actions.accounts.getLocalAccountsList());
   }, []);
 
   useEffect(() => {

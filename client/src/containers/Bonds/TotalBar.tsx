@@ -61,7 +61,7 @@ export const TotalBar: React.FC<TotalBarProps> = ({
             <ToolbarDataItem
               title={'AVG. INTEREST'}
               measure={''}
-              amount={bond.avgInterest?.toFixed(2) + '%'}
+              amount={(bond.avgInterest !== undefined)? bond.avgInterest.toFixed(2) + '%' : "no offers now"}
             />
           </Col>
         </Row>

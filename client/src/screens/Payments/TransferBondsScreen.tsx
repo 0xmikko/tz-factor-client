@@ -39,8 +39,11 @@ export const TransferBondsScreen: React.FC = () => {
   );
 
   useEffect(() => {
+    dispatch(actions.accounts.connectSocket());
+    dispatch(actions.bonds.connectSocket());
     dispatch(actions.bonds.getList());
     dispatch(actions.accounts.getList());
+    dispatch(actions.accounts.getLocalAccountsList());
   }, []);
 
   useEffect(() => {
