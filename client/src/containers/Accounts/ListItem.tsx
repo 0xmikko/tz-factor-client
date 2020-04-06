@@ -37,6 +37,7 @@ export const AccountsListItem: React.FC<AccountsListItemProps> = ({
   const onButtonPressed = (id: string, operation: string) => {
     const opHash = Date.now().toString();
     setHash(opHash);
+    setIsSubmitted(true);
     switch (operation) {
       case 'Register':
         dispatch(actions.accounts.registerAccount(id, opHash));
@@ -51,23 +52,22 @@ export const AccountsListItem: React.FC<AccountsListItemProps> = ({
   useEffect(() => {
     if (hash !== '0') {
       switch (operationStatus?.status) {
-        // case STATUS.SUCCESS:
-        //   history.push('/payments/');
-        //   break;
+        case STATUS.SUCCESS:
+          setHash('0');
+          setIsSubmitted(false);
+          break;
 
         case STATUS.FAILURE:
           setHash('0');
           setIsSubmitted(false);
           alert('Cant send bonds server. Error: ' + operationStatus?.error);
+          break;
       }
     }
   }, [hash, operationStatus]);
 
 
   let actionButton: React.ReactElement;
-
-  const isButtonDisabled = (operationStatus?.status === STATUS.LOADING)
-  console.log(operationStatus, isButtonDisabled)
 
   for (const a of registeredAccounts) {
     console.log('HOHA', item, a);
@@ -85,9 +85,9 @@ export const AccountsListItem: React.FC<AccountsListItemProps> = ({
         <Button
           size="sm"
           variant="outline-primary"
-          disabled={isButtonDisabled}
+          disabled={isSubmitted}
           onClick={() => dispatch(actions.accounts.RevealAccount(item))}>
-          { isButtonDisabled ? 'In progress' : 'Reaveal'}
+          { isSubmitted ? 'In progress' : 'Reaveal'}
 
         </Button>
       );
@@ -97,9 +97,9 @@ export const AccountsListItem: React.FC<AccountsListItemProps> = ({
         <Button
           size="sm"
           variant="outline-primary"
-          disabled={isButtonDisabled}
+          disabled={isSubmitted}
           onClick={() => onButtonPressed(item.id, 'Register')}>
-          { isButtonDisabled ? 'In progress' : 'Register'}
+          { isSubmitted ? 'In progress' : 'Register'}
         </Button>
       );
       break;
@@ -108,9 +108,9 @@ export const AccountsListItem: React.FC<AccountsListItemProps> = ({
         <Button
           size="sm"
           variant="outline-primary"
-          disabled={isButtonDisabled}
+          disabled={isSubmitted}
           onClick={() => onButtonPressed(item.id, 'Deposit')}>
-          { isButtonDisabled ? 'In progress' : 'Deposit'}
+          { isSubmitted ? 'In progress' : 'Deposit'}
         </Button>
       );
       break;

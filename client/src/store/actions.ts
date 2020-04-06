@@ -34,6 +34,7 @@ export const actionsAfterAuth = (): ThunkAction<
   dispatch(payments.connectSocket());
   dispatch(operations.connectSocket());
   dispatch(offers.connectSocket());
+  console.log("[SOCKET.IO]: All listeners connected!")
 };
 
 export default {

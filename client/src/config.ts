@@ -13,7 +13,7 @@ export const BACKEND_ADDR =
 
 export const SSO_ADDR =
   process.env.NODE_ENV === 'development'
-    ? 'http://localhost:5000'
+    ? 'https://crm.tz-factor.com'
     : window.location.protocol + '//crm.' + window.location.host;
 
 export const tezosNode = 'https://carthagenet.tezos.org.ua';

@@ -62,13 +62,13 @@ export const OfferBondsScreen: React.FC<OfferBondsScreenProps> = ({
     if (hash !== '0') {
       switch (operationStatus?.status) {
         case STATUS.SUCCESS:
-          history.push('/payments/');
+          history.push(`/bonds/${id}`);
           break;
 
         case STATUS.FAILURE:
           setHash('0');
           setIsSubmitted(false);
-          alert('Cant send bonds server. Error: ' + operationStatus?.error);
+          alert('Error! ' + operationStatus?.error);
       }
     }
   }, [hash, operationStatus]);
@@ -83,8 +83,8 @@ export const OfferBondsScreen: React.FC<OfferBondsScreenProps> = ({
 
   const breadcrumbs: Breadcrumb[] = [
     {
-      url: '/payments',
-      title: 'payments',
+      url: '/bonds',
+      title: 'bonds',
     },
   ];
 

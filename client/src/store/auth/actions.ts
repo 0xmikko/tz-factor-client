@@ -118,6 +118,7 @@ export const authenticate = (
   ) {
     localStorage.setItem('token', result.payload.refresh.toString());
     await dispatch(getProfile());
+    await dispatch(actionsAfterAuth());
   }
 
   console.log(result);
@@ -164,7 +165,7 @@ export const getTokenAtStartup = (): ThunkAction<
   //   payload: profile
   // })
   //
-  // await dispatch(actionsAfterAuth());
+  //
 
   const token = localStorage.getItem('token');
 
@@ -176,6 +177,7 @@ export const getTokenAtStartup = (): ThunkAction<
       result.type === actionTypes.TOKEN_RECEIVED
     ) {
       await dispatch(getProfile());
+      await dispatch(actionsAfterAuth());
     } else {
       await dispatch(updateStatusInternally(APP_STATUS_AUTH_REQUIRED));
     }
