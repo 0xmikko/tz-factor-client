@@ -34,7 +34,7 @@
     "global": "^4.4.0",
     "history": "^4.10.1",
     "jwt-decode": "^2.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "prettier": "^1.19.1",
     "query-string": "latest",
     "react": "^16.12.0",
